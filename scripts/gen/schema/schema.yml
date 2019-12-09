@@ -1,0 +1,6 @@
+version: 1
+version_name: 1 - Init project
+
+schemas:
+  tables: scripts/gen/schema/tables
+  functions: scripts/gen/schema/functions

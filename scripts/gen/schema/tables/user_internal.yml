@@ -1,0 +1,11 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: user_id
+    type: INT8
+    primary: true
+  - name: user_type
+    type: TEXT
+  - name: hash_pwd
+    type: TEXT

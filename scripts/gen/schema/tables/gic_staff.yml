@@ -1,0 +1,30 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: INT8
+    primary: true
+  - name: code
+    type: TEXT
+  - name: created_at
+    type: TIMESTAMPTZ
+  - name: updated_at
+    type: TIMESTAMPTZ
+  - name: deleted_at
+    type: TIMESTAMPTZ
+  - name: disabled_at
+    type: TIMESTAMPTZ
+  - name: roles
+    type: TEXT[]
+  - name: name
+    type: TEXT
+    not_null: true
+  - name: email
+    type: TEXT
+    not_null: true
+  - name: phone
+    type: TEXT
+    not_null: true
+  - name: avatar
+    type: TEXT

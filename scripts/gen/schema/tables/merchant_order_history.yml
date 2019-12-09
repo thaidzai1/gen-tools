@@ -1,0 +1,29 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: merchant_order_id
+    type: INT8
+    not_null: true
+  - name: revision
+    type: INT2
+    not_null: true
+  - name: user_id
+    type: INT8
+    not_null: true
+  - name: updated_at
+    type: TIMESTAMPTZ
+    not_null: true
+  - name: prev_state
+    type: TEXT
+  - name: curr_state
+    type: TEXT
+    not_null: true
+  - name: state_final
+    type: INT2
+    not_null: true
+  - name: changes
+    type: JSONB
+indexs:
+  - name: merchant_order_history_merchant_order_id_idx
+    key: merchant_order_id

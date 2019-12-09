@@ -1,0 +1,18 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: code
+    type: TEXT
+    primary: true
+  - name: name
+    type: TEXT
+    not_null: true
+  - name: country_code
+    type: TEXT
+    not_null: true
+indexs:
+  - name: province_code_idx
+    key: code
+  - name: province_country_code_idx
+    key: country_code

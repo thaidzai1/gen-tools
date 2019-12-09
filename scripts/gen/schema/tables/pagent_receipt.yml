@@ -1,0 +1,27 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: INT8
+    primary: true
+  - name: pagent_id
+    type: INT8
+  - name: admin_id
+    type: INT8
+  - name: created_at
+    type: TIMESTAMPTZ
+  - name: receipt_at
+    type: TIMESTAMPTZ
+  - name: pagent_purchasing_amount_x
+    type: INT4
+  - name: commission_percent
+    type: INT2
+  - name: commission_amount_x
+    type: INT4
+  - name: commission_amount_vnd
+    type: INT4
+  - name: exchange_rate
+    type: INT4
+  - name: note_purchase_commission
+    type: TEXT

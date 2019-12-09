@@ -1,0 +1,26 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: code
+    type: TEXT
+    primary: true
+  - name: name
+    type: TEXT
+    not_null: true
+  - name: description
+    type: TEXT
+  - name: address
+    type: TEXT
+  - name: ward
+    type: TEXT
+  - name: district
+    type: TEXT
+  - name: province
+    type: TEXT
+  - name: country
+    type: TEXT,
+  - name: phone
+    type: TEXT
+  - name: consignee
+    type: TEXT
