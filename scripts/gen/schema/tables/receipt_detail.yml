@@ -20,7 +20,10 @@ fields:
 indexs:
   - name: booking_id_idx
     key: booking_id
+    using: btree
   - name: parcel_id_idx
     key: parcel_id
+    using: btree
   - name: receipt_detail_receipt_idx
     key: receipt_id
+    using: btree

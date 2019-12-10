@@ -36,17 +36,25 @@ fields:
 indexs:
   - name: stock_box_code_idx
     key: code
+    using: btree
   - name: stock_box_created_at_idx
     key: created_at
+    using: btree
   - name: stock_box_id_idx
     key: id
+    using: btree
   - name: stock_box_state_final_idx
     key: state_final
+    using: btree
   - name: stock_box_state_idx
     key: state
+    using: btree
   - name: stock_box_stock_request_number_idx
     key: stock_request_number
+    using: btree
   - name: stock_box_updated_at_idx
     key: updated_at
+    using: btree
   - name: stock_box_warehouse_idx
     key: warehouse
+    using: btree

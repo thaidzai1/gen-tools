@@ -34,23 +34,31 @@ fields:
   - name: category
     type: text
   - name: cost_of_sale_percent
-    type: double
+    type: double precision
   - name: profit_margin_percent
-    type: double
+    type: double precision
 indexs:
   - name: pricing_config_action_admin_id_idx
     key: action_admin_id
+    using: btree
   - name: pricing_config_active_idx
     key: active
+    using: btree
   - name: pricing_config_category_idx
     key: category
+    using: btree
   - name: pricing_config_country_idx
     key: country
+    using: btree
   - name: pricing_config_created_at_idx
     key: created_at
+    using: btree
   - name: pricing_config_id_idx
     key: id
+    using: btree
   - name: pricing_config_plan_id_idx
     key: plan_id
+    using: btree
   - name: pricing_config_updated_at_idx
     key: updated_at
+    using: btree

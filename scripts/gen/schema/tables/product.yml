@@ -51,17 +51,25 @@ fields:
 indexs:
   - name: product_category_idx
     key: category
+    using: btree
   - name: product_created_at_idx
     key: created_at
+    using: btree
   - name: product_gift_idx
     key: gift
+    using: btree
   - name: product_id_idx
     key: id
+    using: btree
   - name: product_merchant_order_id_idx
     key: merchant_order_id
+    using: btree
   - name: product_package_info_id_idx
     key: package_info_id
+    using: btree
   - name: product_sku_idx
     key: sku
+    using: btree
   - name: product_updated_at_idx
     key: updated_at
+    using: btree

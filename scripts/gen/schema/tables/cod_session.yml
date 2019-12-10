@@ -34,25 +34,35 @@ fields:
   - name: updated_at
     type: timestamp
 indexs:
-  - name: INDEX
+  - name: cod_session_code_idx
     key: code
+    using: btree
     unique: true
   - name: cod_session_created_at_idx
     key: created_at
+    using: btree
   - name: cod_session_has_child_idx
     key: has_child
-  - name: INDEX
+    using: btree
+  - name: cod_session_id_pkey
     key: id
+    using: btree
     unique: true
   - name: cod_session_parent_id_idx
     key: parent_id
+    using: btree
   - name: cod_session_rid_idx
     key: rid
+    using: btree
   - name: cod_session_state_idx
     key: state
+    using: btree
   - name: cod_session_transaction_date_idx
     key: transaction_date
+    using: btree
   - name: cod_session_type_idx
     key: type
+    using: btree
   - name: cod_session_updated_at_idx
     key: updated_at
+    using: btree

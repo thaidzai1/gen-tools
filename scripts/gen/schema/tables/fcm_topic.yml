@@ -18,9 +18,13 @@ fields:
 indexs:
   - name: fcm_topic_created_at_idx
     key: created_at
+    using: btree
   - name: fcm_topic_disabled_at_idx
     key: disabled_at
+    using: btree
   - name: fcm_topic_name_idx
     key: name
+    using: btree
   - name: fcm_topic_updated_at_idx
     key: updated_at
+    using: btree

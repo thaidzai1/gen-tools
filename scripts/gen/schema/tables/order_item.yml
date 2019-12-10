@@ -79,27 +79,40 @@ fields:
 indexs:
   - name: order_item_cancelled_at_idx
     key: cancelled_at
+    using: btree
   - name: order_item_created_at_idx
     key: created_at
+    using: btree
   - name: order_item_f4parcel_id_idx
     key: vnhub_parcel_id
+    using: btree
   - name: order_item_gscode_idx
     key: gscode
+    using: btree
   - name: order_item_parcel_id_idx
     key: parcel_id
+    using: btree
   - name: order_item_rid_idx
     key: rid
+    using: btree
   - name: order_item_sku_idx
     key: sku
+    using: btree
   - name: order_item_state_final_idx
     key: state_final
+    using: btree
   - name: order_item_state_idx
     key: state
+    using: btree
   - name: order_item_supplier_tracking_number_idx
     key: supplier_tracking_number
+    using: btree
   - name: order_item_updated_at_idx
     key: updated_at
+    using: btree
   - name: order_item_warehouse_idx
     key: warehouse
+    using: btree
   - name: order_merchant_order_id_idx
     key: merchant_order_id
+    using: btree

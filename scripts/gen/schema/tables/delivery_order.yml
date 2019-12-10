@@ -47,21 +47,31 @@ fields:
 indexs:
   - name: delivery_order_admin_id_idx
     key: action_admin_id
+    using: btree
   - name: delivery_order_code_idx
     key: code
+    using: btree
   - name: delivery_order_created_at_idx
     key: created_at
+    using: btree
   - name: delivery_order_customs_broker_agent_idx
     key: customs_broker_agent
+    using: btree
   - name: delivery_order_forwarding_agent_idx
     key: forwarding_agent
+    using: btree
   - name: delivery_order_id_idx
     key: id
+    using: btree
   - name: delivery_order_pickup_at_idx
     key: pickup_at
+    using: btree
   - name: delivery_order_state_idx
     key: state
+    using: btree
   - name: delivery_order_updated_at_idx
     key: updated_at
+    using: btree
   - name: delivery_order_warehouse_idx
     key: warehouse
+    using: btree

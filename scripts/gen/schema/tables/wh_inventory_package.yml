@@ -23,15 +23,21 @@ fields:
 indexs:
   - name: wh_inventory_package_created_at_idx
     key: created_at
-  - name: INDEX
+    using: btree
+  - name: wh_inventory_package_id_idx
     key: id
+    using: btree
     unique: true
   - name: wh_inventory_package_rid_idx
     key: rid
-  - name: INDEX
+    using: btree
+  - name: wh_inventory_package_supplier_tracking_number_idx
     key: supplier_tracking_number
+    using: btree
     unique: true
   - name: wh_inventory_package_updated_at_idx
     key: updated_at
+    using: btree
   - name: wh_inventory_package_warehouse_idx
     key: warehouse
+    using: btree

@@ -19,3 +19,4 @@ fields:
 indexs:
   - name: order_price_history_revision_idx
     key: revision
+    using: btree

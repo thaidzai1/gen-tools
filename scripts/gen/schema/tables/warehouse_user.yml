@@ -16,9 +16,13 @@ fields:
 indexs:
   - name: warehouse_user_created_at_idx
     key: created_at
+    using: btree
   - name: warehouse_user_updated_at_idx
     key: updated_at
+    using: btree
   - name: warehouse_user_user_id_idx
     key: user_id
+    using: btree
   - name: warehouse_user_warehouse_idx
     key: warehouse
+    using: btree

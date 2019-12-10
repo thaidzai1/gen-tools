@@ -19,9 +19,13 @@ fields:
 indexs:
   - name: parcel_item_created_at_idx
     key: created_at
+    using: btree
   - name: parcel_item_parcel_id_idx
     key: parcel_id
+    using: btree
   - name: parcel_item_updated_at_idx
     key: updated_at
+    using: btree
   - name: parcel_item_wh_inventory_item_id_idx
     key: wh_inventory_item_id
+    using: btree

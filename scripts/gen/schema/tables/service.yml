@@ -23,6 +23,7 @@ fields:
   - name: action_admin_id
     type: text
 indexs:
-  - name: INDEX
+  - name: "PK_service"
     key: id
+    using: btree
     unique: true

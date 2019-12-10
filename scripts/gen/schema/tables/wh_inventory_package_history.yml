@@ -24,3 +24,4 @@ fields:
 indexs:
   - name: wh_inventory_package_history_revision_idx
     key: revision
+    using: btree

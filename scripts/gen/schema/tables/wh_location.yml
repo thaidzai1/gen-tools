@@ -23,12 +23,16 @@ fields:
   - name: active
     type: boolean
 indexs:
-  - name: INDEX
+  - name: wh_location_code_idx
     key: code
+    using: btree
     unique: true
   - name: wh_location_id_idx
     key: id
+    using: btree
   - name: wh_location_parent_id_idx
     key: parent_id
+    using: btree
   - name: wh_location_warehouse_idx
     key: warehouse
+    using: btree

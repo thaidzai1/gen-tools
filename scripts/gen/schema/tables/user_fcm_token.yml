@@ -21,16 +21,23 @@ fields:
 indexs:
   - name: user_fcm_access_token_token_idx
     key: access_token
+    using: btree
   - name: user_fcm_token_application_idx
     key: application
+    using: btree
   - name: user_fcm_token_created_at_idx
     key: created_at
+    using: btree
   - name: user_fcm_token_platform_idx
     key: platform
-  - name: INDEX
+    using: btree
+  - name: user_fcm_token_token_idx
     key: token
+    using: btree
     unique: true
   - name: user_fcm_token_updated_at_idx
     key: updated_at
+    using: btree
   - name: user_fcm_token_user_id_idx
     key: user_id
+    using: btree

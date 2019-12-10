@@ -6,10 +6,10 @@ fields:
     type: bigint
     not_null: true
   - name: value_vnd
-    type: double
+    type: double precision
     not_null: true
   - name: actual_value_vnd
-    type: double
+    type: double precision
   - name: type
     type: text
     not_null: true
@@ -48,11 +48,16 @@ fields:
 indexs:
   - name: wallet_transaction_created_at_idx
     key: created_at
+    using: btree
   - name: wallet_transaction_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: wallet_transaction_state_final_idx
     key: state_final
+    using: btree
   - name: wallet_transaction_state_idx
     key: state
+    using: btree
   - name: wallet_transaction_type_idx
     key: type
+    using: btree

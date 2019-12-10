@@ -22,5 +22,7 @@ fields:
 indexs:
   - name: district_code_idx
     key: code
+    using: btree
   - name: district_province_code_idx
     key: province
+    using: btree

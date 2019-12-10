@@ -20,6 +20,8 @@ fields:
 indexs:
   - name: order_price_service_order_price_id_idx
     key: order_price_id
-  - name: INDEX
+    using: btree
+  - name: pk_order_price_service
     key: id
+    using: btree
     unique: true

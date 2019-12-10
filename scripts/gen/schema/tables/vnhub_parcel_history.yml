@@ -24,5 +24,7 @@ fields:
 indexs:
   - name: vnhub_parcel_history_code_idx
     key: parcel_code
+    using: btree
   - name: vnhub_parcel_history_revision_idx
     key: revision
+    using: btree

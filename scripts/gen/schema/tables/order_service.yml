@@ -16,10 +16,13 @@ fields:
   - name: updated_at
     type: timestamp
 indexs:
-  - name: INDEX
+  - name: "PK_order_service"
     key: id
+    using: btree
     unique: true
   - name: "fkIdx_231"
     key: merchant_order_id
+    using: btree
   - name: "fkIdx_241"
     key: service_id
+    using: btree

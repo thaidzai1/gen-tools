@@ -19,3 +19,4 @@ fields:
 indexs:
   - name: users_group_history_group_id_idx
     key: users_group_id
+    using: btree

@@ -9,9 +9,9 @@ fields:
     type: bigint
     not_null: true
   - name: prev_balance
-    type: double
+    type: double precision
   - name: curr_balance
-    type: double
+    type: double precision
   - name: user_id
     type: bigint
     not_null: true

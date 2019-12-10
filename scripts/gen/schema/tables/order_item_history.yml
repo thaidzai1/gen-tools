@@ -27,5 +27,7 @@ fields:
 indexs:
   - name: order_item_history_order_item_id_idx
     key: order_item_id
+    using: btree
   - name: order_item_history_revision_idx
     key: revision
+    using: btree

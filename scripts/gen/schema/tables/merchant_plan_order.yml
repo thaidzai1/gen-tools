@@ -13,9 +13,13 @@ fields:
 indexs:
   - name: merchant_plan_order_merchant_order_id
     key: merchant_order_id
+    using: btree
   - name: merchant_plan_order_merchant_plan_id
     key: merchant_plan_id
+    using: btree
   - name: merchant_plan_order_plan_id
     key: plan_id
+    using: btree
   - name: merchant_plan_order_updated_at
     key: updated_at
+    using: btree

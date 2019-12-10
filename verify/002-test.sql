@@ -1,4 +1,4 @@
--- Verify sqitch:init-schema on pg
+-- Verify sqitch:002-test on pg
 
 BEGIN;
 

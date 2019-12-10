@@ -15,11 +15,16 @@ fields:
 indexs:
   - name: user_fcm_topic_created_at_idx
     key: created_at
+    using: btree
   - name: user_fcm_topic_disabled_at_idx
     key: disabled_at
+    using: btree
   - name: user_fcm_topic_topic_id_idx
     key: topic_id
+    using: btree
   - name: user_fcm_topic_updated_at_idx
     key: updated_at
+    using: btree
   - name: user_fcm_topic_user_id_idx
     key: user_id
+    using: btree

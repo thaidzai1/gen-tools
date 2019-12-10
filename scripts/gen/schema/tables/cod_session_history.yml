@@ -25,14 +25,20 @@ fields:
     not_null: true
 indexs:
   - name: cod_session_history_changes_idx
-    key: sonb_path_ops
+    key: changes jsonb_path_ops
+    using: gin
   - name: cod_session_history_cod_session_id_idx
     key: cod_session_id
+    using: btree
   - name: cod_session_history_curr_state_idx
     key: curr_state
+    using: btree
   - name: cod_session_history_id_idx
     key: id
+    using: btree
   - name: cod_session_history_prev_state_idx
     key: prev_state
+    using: btree
   - name: cod_session_history_updated_at_idx
     key: updated_at
+    using: btree

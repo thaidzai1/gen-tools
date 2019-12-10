@@ -19,3 +19,4 @@ fields:
 indexs:
   - name: coupon_condition_history_coupon_id_idx
     key: coupon_condition_id
+    using: btree

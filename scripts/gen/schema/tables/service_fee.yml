@@ -41,6 +41,7 @@ fields:
   - name: action_admin_id
     type: text
 indexs:
-  - name: INDEX
+  - name: pk_service_fee
     key: id
+    using: btree
     unique: true

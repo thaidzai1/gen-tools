@@ -22,15 +22,22 @@ fields:
 indexs:
   - name: pagent_order_history_curr_state_idx
     key: curr_state
+    using: btree
   - name: pagent_order_history_pagent_order_id_idx
     key: pagent_order_id
+    using: btree
   - name: pagent_order_history_prev_state_idx
     key: prev_state
+    using: btree
   - name: pagent_order_history_revision_idx
     key: revision
+    using: btree
   - name: pagent_order_history_state_final_idx
     key: state_final
+    using: btree
   - name: pagent_order_history_updated_at_idx
     key: updated_at
+    using: btree
   - name: pagent_order_history_user_id_idx
     key: user_id
+    using: btree

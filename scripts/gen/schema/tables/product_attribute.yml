@@ -18,13 +18,19 @@ fields:
 indexs:
   - name: product_attribute_attribute_id_idx
     key: attribute_id
+    using: btree
   - name: product_attribute_created_at_idx
     key: created_at
+    using: btree
   - name: product_attribute_id_idx
     key: id
+    using: btree
   - name: product_attribute_product_id_idx
     key: product_id
+    using: btree
   - name: product_attribute_updated_at_idx
     key: updated_at
+    using: btree
   - name: product_attribute_value_idx
     key: value
+    using: btree

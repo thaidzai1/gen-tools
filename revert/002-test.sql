@@ -1,4 +1,4 @@
--- Revert sqitch:init-schema from pg
+-- Revert sqitch:002-test from pg
 
 BEGIN;
 

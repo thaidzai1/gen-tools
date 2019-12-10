@@ -29,14 +29,19 @@ fields:
   - name: updated_at
     type: timestamp
 indexs:
-  - name: INDEX
+  - name: surcharge_category_idx
     key: category
+    using: btree
     unique: true
   - name: surcharge_id_idx
     key: id
+    using: btree
   - name: surcharge_is_vip_idx
     key: is_vip
+    using: btree
   - name: surcharge_rid_idx
     key: rid
+    using: btree
   - name: surcharge_surcharge_type_idx
     key: surcharge_type
+    using: btree

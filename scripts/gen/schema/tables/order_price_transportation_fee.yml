@@ -32,5 +32,7 @@ fields:
 indexs:
   - name: "fkIdx_194"
     key: order_price_id
+    using: btree
   - name: "fkIdx_203"
     key: transportation_fee_id
+    using: btree

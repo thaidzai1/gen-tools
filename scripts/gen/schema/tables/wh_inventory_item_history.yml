@@ -19,3 +19,4 @@ fields:
 indexs:
   - name: wh_inventory_item_history_revision_idx
     key: revision
+    using: btree

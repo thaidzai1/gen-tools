@@ -41,6 +41,7 @@ fields:
   - name: description
     type: text
 indexs:
-  - name: INDEX
+  - name: pk_transportation_fee
     key: id
+    using: btree
     unique: true

@@ -75,10 +75,14 @@ fields:
 indexs:
   - name: order_price_created_at_idx
     key: created_at
-  - name: INDEX
+    using: btree
+  - name: order_price_id_idx
     key: id
+    using: btree
     unique: true
   - name: order_price_order_id_idx
     key: order_id
+    using: btree
   - name: order_price_updated_at_idx
     key: updated_at
+    using: btree

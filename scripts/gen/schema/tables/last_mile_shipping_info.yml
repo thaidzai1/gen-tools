@@ -32,15 +32,19 @@ fields:
   - name: updated_at
     type: timestamp
   - name: longitude
-    type: double
+    type: double precision
   - name: latitude
-    type: double
+    type: double precision
 indexs:
   - name: last_mile_shipping_info_created_at_idx
     key: created_at
+    using: btree
   - name: last_mile_shipping_info_id_idx
     key: id
+    using: btree
   - name: last_mile_shipping_info_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: last_mile_shipping_info_updated_at_idx
     key: updated_at
+    using: btree

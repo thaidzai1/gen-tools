@@ -6,7 +6,7 @@ fields:
     type: bigint
     not_null: true
   - name: balance_vnd
-    type: double
+    type: double precision
     not_null: true
   - name: merchant_id
     type: bigint
@@ -34,9 +34,13 @@ fields:
 indexs:
   - name: wallet_created_at_idx
     key: created_at
+    using: btree
   - name: wallet_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: wallet_status_idx
     key: status
+    using: btree
   - name: wallet_updated_at_idx
     key: updated_at
+    using: btree

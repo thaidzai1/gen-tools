@@ -52,19 +52,28 @@ fields:
 indexs:
   - name: stock_request_created_at_idx
     key: created_at
+    using: btree
   - name: stock_request_id_idx
     key: id
+    using: btree
   - name: stock_request_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: stock_request_number_idx
     key: stock_request_number
+    using: btree
   - name: stock_request_pickup_request_idx
     key: pickup_request
+    using: btree
   - name: stock_request_state_final_idx
     key: state_final
+    using: btree
   - name: stock_request_state_idx
     key: state
+    using: btree
   - name: stock_request_updated_at_idx
     key: updated_at
+    using: btree
   - name: stock_request_warehouse_idx
     key: warehouse
+    using: btree

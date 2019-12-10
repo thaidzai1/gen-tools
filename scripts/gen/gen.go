@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"reflect"
 	"strings"
 	"text/template"
 
@@ -26,7 +27,7 @@ var (
 func Exec(inputPath string) {
 	CreateNewSqitchPlan(StartNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
-	GenerateSQLScript(genSchemaDefinations)
+	GenerateDeploySQLScript(genSchemaDefinations)
 }
 
 func StartNewSqitchPlan() string {
@@ -40,12 +41,12 @@ func StartNewSqitchPlan() string {
 
 func CreateNewSqitchPlan(planName string) {
 	ll.Print("planName: ", planName)
-	cmd := exec.Command("sqitch", "add", planName, "-n", `Add schema ${planName}`)
+	cmd := exec.Command("sqitch", "add", planName, "-n", "Add schema "+planName)
 	ll.Info("Run sqitch add plan... Done†")
 	cmd.Run()
 }
 
-func GenerateSQLScript(migrate *load.MigrateSchema) {
+func GenerateDeploySQLScript(migrate *load.MigrateSchema) {
 	var script string = `
 BEGIN;
 
@@ -53,28 +54,30 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
 {{- range $index, $field := $table.Fields}}
 	{{$field.Name}} {{$field.Type}} 
-{{- if eq $field.Primary true}} PRIMARY {{- end}}
+{{- if eq $field.Primary true}} PRIMARY KEY {{- end}}
 {{- if eq $field.NotNull true}} NOT NULL {{- end}}
-{{- if eq $field.Unique true}} Unique {{- end}}
+{{- if eq $field.Unique true}} Unique {{- end}}{{$lengthMinusOne := lengthMinusOne $table.Fields}}{{- if lt $index $lengthMinusOne}},{{- end}}
 {{- end}}
 );
 
 {{- if $table.Indexs}}
 {{- range $i, $index := $table.Indexs}}
-CREATE INDEX IF NOT EXISTS {{$index.Name}} ON "{{$table.TableName}}" ({{$index.Key}});
+CREATE {{- if eq $index.Unique true}} UNIQUE{{- end}} INDEX IF NOT EXISTS {{$index.Name}} ON "{{$table.TableName}}" USING {{$index.Using}} ({{$index.Key}});
 {{- end}}
 {{- end}}
 {{- end}}
 
 /*-- TRIGGER BEGIN --*/
-{{$.Triggers}} ......
+{{$.Triggers}}
 /*-- TRIGGER END --*/
 
 COMMIT;
 `
-
+	templateFuncMap := template.FuncMap{
+		"lengthMinusOne": lengthMinusOne,
+	}
 	var buf bytes.Buffer
-	tpl := template.Must(template.New("scripts").Parse(script))
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap).Parse(script))
 	tpl.Execute(&buf, &migrate)
 	dir := gen.GetAbsPath("gic/sqitch/deploy/")
 	absPath := gen.GetAbsPath(dir + "/" + planName + ".sql")
@@ -84,4 +87,8 @@ COMMIT;
 	}
 
 	ll.Print("==> Generate migrate deploy DONE†")
+}
+
+func lengthMinusOne(input interface{}) int {
+	return reflect.ValueOf(input).Len() - 1
 }

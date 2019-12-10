@@ -18,11 +18,16 @@ fields:
 indexs:
   - name: attribute_created_at_idx
     key: created_at
+    using: btree
   - name: attribute_id_idx
     key: id
+    using: btree
   - name: attribute_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: attribute_name_idx
     key: name
+    using: btree
   - name: attribute_updated_at_idx
     key: updated_at
+    using: btree

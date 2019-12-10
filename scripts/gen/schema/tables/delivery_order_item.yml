@@ -12,6 +12,7 @@ fields:
   - name: table_name
     type: text
 indexs:
-  - name: INDEX
-    key: tem_id
+  - name: delivery_order_id_item_id
+    key: delivery_order_id, item_id
+    using: btree
     unique: true

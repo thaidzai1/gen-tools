@@ -46,24 +46,34 @@ fields:
   - name: sensitive
     type: smallint
 indexs:
-  - name: INDEX
+  - name: box_code_idx
     key: code
+    using: btree
     unique: true
   - name: box_created_at_idx
     key: created_at
+    using: btree
   - name: box_delivery_order_id_idx
     key: delivery_order_id
+    using: btree
   - name: box_forwarding_agent_idx
     key: forwarding_agent
+    using: btree
   - name: box_rid_idx
     key: rid
+    using: btree
   - name: box_sensitive_idx
     key: sensitive
+    using: btree
   - name: box_type_idx
     key: type
+    using: btree
   - name: box_updated_at_idx
     key: updated_at
+    using: btree
   - name: box_warehouse_idx
     key: warehouse
+    using: btree
   - name: f4box_idx
     key: f4box_id
+    using: btree

@@ -20,7 +20,10 @@ fields:
 indexs:
   - name: province_code_idx
     key: code
+    using: btree
   - name: province_country_code_idx
     key: country
+    using: btree
   - name: province_sorting_code_idx
     key: sorting_code
+    using: btree

@@ -15,5 +15,7 @@ fields:
 indexs:
   - name: consignee_created_at_idx
     key: created_at
+    using: btree
   - name: consignee_updated_at_idx
     key: updated_at
+    using: btree

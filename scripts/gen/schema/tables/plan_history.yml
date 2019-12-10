@@ -16,3 +16,4 @@ fields:
 indexs:
   - name: plan_history_revision_idx
     key: revision
+    using: btree

@@ -32,12 +32,17 @@ fields:
 indexs:
   - name: plan_created_at_idx
     key: created_at
-  - name: INDEX
+    using: btree
+  - name: plan_name_idx
     key: name
+    using: btree
     unique: true
   - name: plan_rid_idx
     key: rid
+    using: btree
   - name: plan_status_idx
     key: status
+    using: btree
   - name: plan_updated_at_idx
     key: updated_at
+    using: btree

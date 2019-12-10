@@ -27,5 +27,7 @@ fields:
 indexs:
   - name: merchant_order_history_merchant_order_id_idx
     key: merchant_order_id
+    using: btree
   - name: merchant_order_history_revision_idx
     key: revision
+    using: btree

@@ -58,19 +58,28 @@ fields:
 indexs:
   - name: pagent_order_code_idx
     key: code
+    using: btree
   - name: pagent_order_created_at_idx
     key: created_at
+    using: btree
   - name: pagent_order_id_idx
     key: id
+    using: btree
   - name: pagent_order_merchant_order_id_idx
     key: merchant_order_id
+    using: btree
   - name: pagent_order_pagent_id_idx
     key: pagent_id
+    using: btree
   - name: pagent_order_state_final_idx
     key: state_final
+    using: btree
   - name: pagent_order_state_idx
     key: state
+    using: btree
   - name: pagent_order_updated_at_idx
     key: updated_at
+    using: btree
   - name: pagent_order_warehouse_idx
     key: warehouse
+    using: btree

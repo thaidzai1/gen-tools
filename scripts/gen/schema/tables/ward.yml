@@ -20,5 +20,7 @@ fields:
 indexs:
   - name: ward_code_idx
     key: code
+    using: btree
   - name: ward_district_code_idx
     key: district
+    using: btree

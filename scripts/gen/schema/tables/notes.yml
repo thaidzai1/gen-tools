@@ -16,6 +16,8 @@ fields:
 indexs:
   - name: note_code
     key: code
-  - name: INDEX
-    key: ode
+    using: btree
+  - name: note_code_type
+    key: type, code
+    using: btree
     unique: true

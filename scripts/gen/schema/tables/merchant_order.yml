@@ -129,25 +129,37 @@ fields:
 indexs:
   - name: merchant_order_cancelled_at_idx
     key: cancelled_at
+    using: btree
   - name: merchant_order_country_idx
     key: country
+    using: btree
   - name: merchant_order_created_at_idx
     key: created_at
+    using: btree
   - name: merchant_order_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: merchant_order_merchant_idx
     key: merchant
+    using: btree
   - name: merchant_order_platform
     key: platform
+    using: btree
   - name: merchant_order_rid_idx
     key: rid
+    using: btree
   - name: merchant_order_state_final_idx
     key: state_final
+    using: btree
   - name: merchant_order_state_idx
     key: state
+    using: btree
   - name: merchant_order_supplier_order_number_idx
     key: supplier_order_number
+    using: btree
   - name: merchant_order_supplier_tracking_number_idx
     key: supplier_tracking_number
+    using: btree
   - name: merchant_order_updated_at_idx
     key: updated_at
+    using: btree

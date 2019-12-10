@@ -19,3 +19,4 @@ fields:
 indexs:
   - name: surcharge_history_revision_idx
     key: revision
+    using: btree

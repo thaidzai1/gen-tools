@@ -9,7 +9,7 @@ fields:
     type: bigint
     not_null: true
   - name: value_vnd
-    type: double
+    type: double precision
     not_null: true
   - name: state
     type: text

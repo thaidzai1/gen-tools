@@ -16,11 +16,16 @@ fields:
 indexs:
   - name: fc_parcel_tracking_id_idx
     key: id
+    using: btree
   - name: fc_parcel_tracking_parcel_id_idx
     key: parcel_id
+    using: btree
   - name: fc_parcel_tracking_state_idx
     key: state
+    using: btree
   - name: fc_parcel_tracking_updated_at_idx
     key: updated_at
+    using: btree
   - name: fc_parcel_tracking_user_id_idx
     key: user_id
+    using: btree

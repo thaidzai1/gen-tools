@@ -24,6 +24,7 @@ fields:
   - name: updated_at
     type: timestamp
 indexs:
-  - name: INDEX
+  - name: pk_inspection_fee
     key: id
+    using: btree
     unique: true

@@ -22,11 +22,14 @@ fields:
   - name: rid
     type: bigint
 indexs:
-  - name: INDEX
-    key: erchant_order_id
+  - name: tracking_number_code_merchant_order_id
+    key: code, merchant_order_id
+    using: btree
     unique: true
-  - name: INDEX
-    key: erchant_order_id
+  - name: tracking_number_code_merchant_order_id_idx
+    key: code, merchant_order_id
+    using: btree
     unique: true
   - name: tracking_number_rid_idx
     key: rid
+    using: btree

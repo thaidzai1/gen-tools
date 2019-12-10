@@ -39,17 +39,24 @@ fields:
 indexs:
   - name: sku_asin_idx
     key: asin
+    using: btree
   - name: sku_created_at_idx
     key: created_at
-  - name: INDEX
+    using: btree
+  - name: sku_id_idx
     key: id
+    using: btree
     unique: true
   - name: sku_sensitive_idx
     key: sensitive
-  - name: INDEX
+    using: btree
+  - name: sku_sku_idx
     key: sku
+    using: btree
     unique: true
   - name: sku_source_idx
     key: source
+    using: btree
   - name: sku_updated_at_idx
     key: updated_at
+    using: btree

@@ -35,3 +35,4 @@ fields:
 indexs:
   - name: warehouse_active_idx
     key: active
+    using: btree

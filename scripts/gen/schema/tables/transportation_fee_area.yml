@@ -31,6 +31,8 @@ fields:
 indexs:
   - name: fkidx_174
     key: transportation_fee_id
-  - name: INDEX
+    using: btree
+  - name: pk_transportation_fee_area
     key: id
+    using: btree
     unique: true

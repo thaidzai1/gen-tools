@@ -51,15 +51,22 @@ fields:
 indexs:
   - name: merchant_contract_created_at
     key: created_at
+    using: btree
   - name: merchant_contract_id
     key: id
+    using: btree
   - name: merchant_contract_merchant_code
     key: merchant_code
+    using: btree
   - name: merchant_contract_term_state
     key: term_state
+    using: btree
   - name: merchant_contract_updated_at
     key: updated_at
+    using: btree
   - name: merchant_contract_user_id
     key: user_id
+    using: btree
   - name: merchant_contract_verify_state
     key: verify_state
+    using: btree

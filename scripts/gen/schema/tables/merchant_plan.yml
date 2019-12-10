@@ -64,27 +64,40 @@ fields:
 indexs:
   - name: merchant_plan_created_at_idx
     key: created_at
+    using: btree
   - name: merchant_plan_expired_at_idx
     key: expired_at
+    using: btree
   - name: merchant_plan_fallback_from_plan_id_idx
     key: fallback_from_plan_id
+    using: btree
   - name: merchant_plan_fallback_from_plan_name_idx
     key: fallback_from_plan_name
+    using: btree
   - name: merchant_plan_is_fallback_idx
     key: is_fallback
+    using: btree
   - name: merchant_plan_is_renewal_idx
     key: is_renewal
+    using: btree
   - name: merchant_plan_merchant_id_idx
     key: merchant_id
+    using: btree
   - name: merchant_plan_merchant_idx
     key: merchant
+    using: btree
   - name: merchant_plan_plan_id_idx
     key: plan_id
+    using: btree
   - name: merchant_plan_plan_name_idx
     key: plan_name
+    using: btree
   - name: merchant_plan_started_at_idx
     key: started_at
+    using: btree
   - name: merchant_plan_status_idx
     key: status
+    using: btree
   - name: merchant_plan_updated_at_idx
     key: updated_at
+    using: btree

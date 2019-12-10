@@ -42,11 +42,16 @@ fields:
 indexs:
   - name: package_info_created_at_idx
     key: created_at
+    using: btree
   - name: package_info_id_idx
     key: id
+    using: btree
   - name: package_info_merchant_order_id_idx
     key: merchant_order_id
+    using: btree
   - name: package_info_rid_idx
     key: rid
+    using: btree
   - name: package_info_updated_at_idx
     key: updated_at
+    using: btree

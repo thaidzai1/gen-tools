@@ -31,6 +31,7 @@ type Index struct {
 	Name   string
 	Key    string
 	Unique bool
+	Using  string
 }
 
 var (
@@ -75,20 +76,29 @@ func main() {
 
 		if strings.Index(line, uniqueIndexKeword) > -1 {
 			data := strings.Fields(line)
-			indexName := data[2]
+			indexName := data[3]
 			var tableName string
-			for _, dt := range data {
+			var usingKeyword string
+			var key string
+			for index, dt := range data {
 				if strings.Index(dt, "public.") > -1 {
 					tableName = strings.ReplaceAll(dt, "public.", "")
 				}
+				if dt == "USING" {
+					usingKeyword = data[index+1]
+				}
 			}
 
-			dataLength := len(data)
-			key := data[dataLength-1][1 : len(data[dataLength-1])-2]
+			keyStartPos := strings.Index(line, "(")
+			if keyStartPos > -1 {
+				key = line[keyStartPos+1 : len(line)-2]
+			}
+
 			index := Index{
 				Name:   indexName,
 				Key:    key,
 				Unique: true,
+				Using:  usingKeyword,
 			}
 
 			table[tableName].Indexs = append(table[tableName].Indexs, index)
@@ -97,20 +107,28 @@ func main() {
 
 		if strings.Index(line, indexKeyword) > -1 {
 			data := strings.Fields(line)
-			ll.Print("data: ", data)
 			indexName := data[2]
 			var tableName string
-			for _, dt := range data {
+			var usingKeyword string
+			var key string
+			for index, dt := range data {
 				if strings.Index(dt, "public.") > -1 {
 					tableName = strings.ReplaceAll(dt, "public.", "")
 				}
+				if dt == "USING" {
+					usingKeyword = data[index+1]
+				}
 			}
 
-			dataLength := len(data)
-			key := data[dataLength-1][1 : len(data[dataLength-1])-2]
+			keyStartPos := strings.Index(line, "(")
+			if keyStartPos > -1 {
+				key = line[keyStartPos+1 : len(line)-2]
+			}
+
 			index := Index{
-				Name: indexName,
-				Key:  key,
+				Name:  indexName,
+				Key:   key,
+				Using: usingKeyword,
 			}
 
 			table[tableName].Indexs = append(table[tableName].Indexs, index)
@@ -129,7 +147,11 @@ func main() {
 				if index == 0 {
 					fields.Name = d
 				} else if index == 1 {
-					fields.Type = d
+					if d == "double" {
+						fields.Type = "double precision"
+					} else {
+						fields.Type = d
+					}
 				} else {
 					switch d {
 					case "PRIMARY":
@@ -181,6 +203,7 @@ indexs:
 {{- range $i, $index := $.Indexs}}
   - name: {{$index.Name}}
     key: {{$index.Key}}
+    using: {{$index.Using}}
 {{- if $index.Unique}}
     unique: true
 {{- end}}

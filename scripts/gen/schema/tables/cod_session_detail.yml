@@ -22,17 +22,24 @@ fields:
 indexs:
   - name: cod_session_detail_cod_in_session_id_idx
     key: cod_in_session_id
+    using: btree
   - name: cod_session_detail_cod_out_session_id_idx
     key: cod_out_session_id
+    using: btree
   - name: cod_session_detail_created_at_idx
     key: created_at
+    using: btree
   - name: cod_session_detail_id_idx
     key: id
-  - name: INDEX
-    key: ecord_id
+    using: btree
+  - name: cod_session_detail_record_id_in_session_id_idx
+    key: cod_in_session_id, record_id
+    using: btree
     unique: true
-  - name: INDEX
-    key: ecord_id
+  - name: cod_session_detail_record_id_out_session_id_idx
+    key: cod_out_session_id, record_id
+    using: btree
     unique: true
   - name: cod_session_detail_updated_at_idx
     key: updated_at
+    using: btree

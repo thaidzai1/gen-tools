@@ -20,5 +20,7 @@ fields:
 indexs:
   - name: email_history_created_at
     key: created_at
+    using: btree
   - name: email_history_from_address
     key: from_address
+    using: btree
