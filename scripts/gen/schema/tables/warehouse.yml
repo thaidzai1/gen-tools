@@ -3,24 +3,35 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
-    type: TEXT
-    primary: true
+    type: text
+    not_null: true
   - name: name
-    type: TEXT
+    type: text
     not_null: true
   - name: description
-    type: TEXT
+    type: text
   - name: address
-    type: TEXT
+    type: text
   - name: ward
-    type: TEXT
+    type: text
   - name: district
-    type: TEXT
+    type: text
   - name: province
-    type: TEXT
+    type: text
   - name: country
-    type: TEXT,
+    type: text
   - name: phone
-    type: TEXT
+    type: text
   - name: consignee
-    type: TEXT
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: active
+    type: boolean
+  - name: sorting_code
+    type: text
+indexs:
+  - name: warehouse_active_idx
+    key: active

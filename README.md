@@ -1,2 +1,21 @@
-sqitch logs db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_test_sqitch_dev
-sqitch init sqitch --uri https://g.ghn.vn/gic/databases/sqitch --engine pg
+# Go ENV
+Run in command: 
+`'export GOPATH=$HOME/code/go'`
+`'export GOPRIVATE=gido.vn,g.ghn.vn'`
+`'export GOROOT=/usr/local/go'`
+
+# Download source
+
+Run in command `'go get gido.vn/gic/sqitch'`
+
+# Install
+
+Run in command `'./scripts/install-tool.sh'`
+
+# Generate Migrate plan
+
+Run in command `'./scripts/gen-migrate.sh'`
+
+or 
+
+Run in command `'go run ./scripts/migrate-gen.go'`

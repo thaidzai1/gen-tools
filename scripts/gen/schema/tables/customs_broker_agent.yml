@@ -1,0 +1,26 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: code
+    type: text
+    not_null: true
+  - name: name
+    type: text
+    not_null: true
+  - name: description
+    type: text
+  - name: short_name
+    type: text
+  - name: address
+    type: text
+  - name: phone
+    type: text
+  - name: fax
+    type: text
+  - name: pic
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

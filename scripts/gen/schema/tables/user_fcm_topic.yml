@@ -1,0 +1,25 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: user_id
+    type: bigint
+  - name: topic_id
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: disabled_at
+    type: timestamp
+indexs:
+  - name: user_fcm_topic_created_at_idx
+    key: created_at
+  - name: user_fcm_topic_disabled_at_idx
+    key: disabled_at
+  - name: user_fcm_topic_topic_id_idx
+    key: topic_id
+  - name: user_fcm_topic_updated_at_idx
+    key: updated_at
+  - name: user_fcm_topic_user_id_idx
+    key: user_id

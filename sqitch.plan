@@ -1,3 +1,6 @@
 %syntax-version=1.0.0
 %project=sqitch
 %uri=https://g.ghn.vn/gic/databases/sqitch
+
+init-schema 2019-12-09T16:25:45Z thaidzai <duongnt1@scommerce.vn> # Add schema ${planName}
+001-test 2019-12-10T08:33:15Z thaidzai <duongnt1@scommerce.vn> # Add schema ${planName}

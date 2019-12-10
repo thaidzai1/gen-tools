@@ -3,16 +3,22 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
-    type: TEXT
-    primary: true
+    type: text
+    not_null: true
   - name: name
-    type: TEXT
+    type: text
     not_null: true
+  - name: district
+    type: integer
+    not_null: true
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
   - name: district_code
-    type: INT4
-    not_null: true
+    type: integer
 indexs:
   - name: ward_code_idx
     key: code
   - name: ward_district_code_idx
-    key: district_code
+    key: district

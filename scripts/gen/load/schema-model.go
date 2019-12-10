@@ -24,3 +24,8 @@ type TableDefination struct {
 		Key  string `yaml:"key"`
 	} `yaml:"indexs"`
 }
+
+type MigrateSchema struct {
+	Tables   []TableDefination
+	Triggers string
+}

@@ -1,0 +1,43 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: name
+    type: text
+  - name: description
+    type: text
+  - name: max_weight
+    type: integer
+  - name: period
+    type: smallint
+  - name: shipping_price_per_weight_x
+    type: integer
+  - name: purchasing_price_percent
+    type: integer
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: disabled_at
+    type: timestamp
+  - name: status
+    type: boolean
+  - name: rid
+    type: bigint
+  - name: action_admin_id
+    type: bigint
+indexs:
+  - name: plan_created_at_idx
+    key: created_at
+  - name: INDEX
+    key: name
+    unique: true
+  - name: plan_rid_idx
+    key: rid
+  - name: plan_status_idx
+    key: status
+  - name: plan_updated_at_idx
+    key: updated_at

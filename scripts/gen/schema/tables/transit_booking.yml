@@ -1,0 +1,27 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: booking_id
+    type: bigint
+  - name: transit_no
+    type: text
+  - name: carrier
+    type: text
+  - name: port_of_loading
+    type: text
+  - name: port_of_discharge
+    type: text
+  - name: etd
+    type: timestamp
+  - name: eta
+    type: timestamp
+  - name: ata
+    type: timestamp
+  - name: atd
+    type: timestamp
+  - name: sequence
+    type: integer

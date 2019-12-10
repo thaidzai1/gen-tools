@@ -1,0 +1,7 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: text
+    not_null: true

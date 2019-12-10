@@ -1,0 +1,42 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+  - name: category
+    type: text
+  - name: min_item_price
+    type: integer
+  - name: min_surcharge
+    type: integer
+  - name: surcharge_percent
+    type: integer
+  - name: is_vip
+    type: boolean
+  - name: surcharge_type
+    type: smallint
+  - name: value
+    type: integer
+  - name: box_weight
+    type: integer
+  - name: action_admin_id
+    type: bigint
+  - name: rid
+    type: bigint
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+indexs:
+  - name: INDEX
+    key: category
+    unique: true
+  - name: surcharge_id_idx
+    key: id
+  - name: surcharge_is_vip_idx
+    key: is_vip
+  - name: surcharge_rid_idx
+    key: rid
+  - name: surcharge_surcharge_type_idx
+    key: surcharge_type

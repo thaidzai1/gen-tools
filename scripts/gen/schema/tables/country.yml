@@ -3,11 +3,15 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
-    type: TEXT
-    primary: true
-  - name: name
-    type: TEXT
+    type: text
     not_null: true
+  - name: name
+    type: text
+    not_null: true
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
 indexs:
   - name: country_code_idx
     key: code

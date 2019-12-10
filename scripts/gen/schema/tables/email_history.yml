@@ -1,0 +1,24 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: from_address
+    type: text
+  - name: to_address
+    type: text
+  - name: subject
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: status
+    type: boolean
+  - name: error_message
+    type: text
+indexs:
+  - name: email_history_created_at
+    key: created_at
+  - name: email_history_from_address
+    key: from_address

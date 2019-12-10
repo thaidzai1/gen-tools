@@ -5,4 +5,5 @@ go get -u github.com/golang/dep/cmd/dep
 go get -u github.com/golang/glog
 go get -u github.com/ghodss/yaml
 go get -u go.uber.org/zap
+go get -u gido.vn/gic/libs/common.git
 dep ensure -v

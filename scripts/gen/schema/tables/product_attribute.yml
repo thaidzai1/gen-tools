@@ -1,0 +1,30 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: product_id
+    type: bigint
+  - name: attribute_id
+    type: bigint
+  - name: value
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+indexs:
+  - name: product_attribute_attribute_id_idx
+    key: attribute_id
+  - name: product_attribute_created_at_idx
+    key: created_at
+  - name: product_attribute_id_idx
+    key: id
+  - name: product_attribute_product_id_idx
+    key: product_id
+  - name: product_attribute_updated_at_idx
+    key: updated_at
+  - name: product_attribute_value_idx
+    key: value

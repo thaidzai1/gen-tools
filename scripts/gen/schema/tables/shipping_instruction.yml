@@ -1,0 +1,17 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: mawb_id
+    type: bigint
+  - name: booking_id
+    type: bigint
+  - name: shipper_name
+    type: text
+  - name: f_agent
+    type: text
+  - name: f_consignee
+    type: text

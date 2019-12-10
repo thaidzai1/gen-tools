@@ -3,10 +3,20 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
-    type: TEXT
-    primary: true
+    type: text
+    not_null: true
   - name: name
-    type: TEXT
+    type: text
     not_null: true
   - name: description
-    type: TEXT
+    type: text
+  - name: country_name
+    type: text
+  - name: carrier_code1
+    type: text
+  - name: carrier_code2
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

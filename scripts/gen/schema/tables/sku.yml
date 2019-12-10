@@ -1,0 +1,55 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+  - name: sku
+    type: text
+  - name: title
+    type: text
+  - name: description
+    type: text
+  - name: brand
+    type: text
+  - name: model
+    type: text
+  - name: asin
+    type: text
+  - name: gtin
+    type: text
+  - name: size
+    type: text
+  - name: color
+    type: text
+  - name: dimension
+    type: text
+  - name: weight
+    type: text
+  - name: images
+    type: text[]
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: source
+    type: text
+  - name: sensitive
+    type: boolean
+indexs:
+  - name: sku_asin_idx
+    key: asin
+  - name: sku_created_at_idx
+    key: created_at
+  - name: INDEX
+    key: id
+    unique: true
+  - name: sku_sensitive_idx
+    key: sensitive
+  - name: INDEX
+    key: sku
+    unique: true
+  - name: sku_source_idx
+    key: source
+  - name: sku_updated_at_idx
+    key: updated_at

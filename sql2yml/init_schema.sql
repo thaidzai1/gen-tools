@@ -357,8 +357,7 @@ CREATE TABLE IF NOT EXISTS "order_item_history" (
     changes     JSONB
 );
 
-CREATE INDEX IF NOT EXISTS order_item_history_order_item_id_idx
-    ON order_item_history (order_item_id);
+CREATE INDEX IF NOT EXISTS order_item_history_order_item_id_idx ON order_item_history (order_item_id);
 
 
 CREATE TABLE IF NOT EXISTS "pagent_receipt" (

@@ -1,0 +1,56 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: price_per_item_x
+    type: integer
+  - name: price_per_weight_x
+    type: integer
+  - name: insurance_fee_percent
+    type: integer
+  - name: purchasing_fee_percent
+    type: integer
+  - name: exchange_rate
+    type: integer
+  - name: plan_id
+    type: bigint
+  - name: country
+    type: text
+  - name: currency
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: action_admin_id
+    type: bigint
+  - name: rid
+    type: bigint
+  - name: active
+    type: boolean
+  - name: category
+    type: text
+  - name: cost_of_sale_percent
+    type: double
+  - name: profit_margin_percent
+    type: double
+indexs:
+  - name: pricing_config_action_admin_id_idx
+    key: action_admin_id
+  - name: pricing_config_active_idx
+    key: active
+  - name: pricing_config_category_idx
+    key: category
+  - name: pricing_config_country_idx
+    key: country
+  - name: pricing_config_created_at_idx
+    key: created_at
+  - name: pricing_config_id_idx
+    key: id
+  - name: pricing_config_plan_id_idx
+    key: plan_id
+  - name: pricing_config_updated_at_idx
+    key: updated_at

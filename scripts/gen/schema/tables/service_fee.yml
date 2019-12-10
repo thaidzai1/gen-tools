@@ -1,0 +1,46 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: name
+    type: text
+    not_null: true
+  - name: code
+    type: text
+    not_null: true
+  - name: description
+    type: text
+    not_null: true
+  - name: fee
+    type: bigint
+    not_null: true
+  - name: lower_threshold
+    type: integer
+    not_null: true
+  - name: upper_threshold
+    type: integer
+    not_null: true
+  - name: unit
+    type: text
+    not_null: true
+  - name: active
+    type: boolean
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: unit_fee
+    type: text
+  - name: service_id
+    type: bigint
+  - name: country
+    type: text
+  - name: action_admin_id
+    type: text
+indexs:
+  - name: INDEX
+    key: id
+    unique: true

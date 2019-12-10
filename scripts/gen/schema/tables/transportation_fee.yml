@@ -1,0 +1,46 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: fee
+    type: bigint
+    not_null: true
+  - name: remark
+    type: text
+    not_null: true
+  - name: area
+    type: text
+    not_null: true
+  - name: active
+    type: boolean
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: service_id
+    type: bigint
+  - name: origin
+    type: text
+  - name: min_amount
+    type: numeric(4,0)
+  - name: currency
+    type: text
+  - name: lower_threshold
+    type: integer
+  - name: upper_threshold
+    type: integer
+  - name: unit
+    type: text
+  - name: country_side_fee
+    type: bigint
+  - name: action_admin_id
+    type: text
+  - name: description
+    type: text
+indexs:
+  - name: INDEX
+    key: id
+    unique: true

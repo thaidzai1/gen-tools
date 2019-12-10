@@ -1,0 +1,17 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: integer
+    not_null: true
+  - name: tel
+    type: text
+  - name: created_at
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    type: timestamp
+indexs:
+  - name: consignee_tel_idx
+    key: tel

@@ -1,0 +1,52 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: stock_request_number
+    type: text
+  - name: stock_request_id
+    type: bigint
+  - name: warehouse
+    type: text
+  - name: code
+    type: text
+  - name: length
+    type: integer
+  - name: width
+    type: integer
+  - name: height
+    type: integer
+  - name: state
+    type: text
+  - name: state_final
+    type: smallint
+  - name: action_admin_id
+    type: bigint
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: cancelled_at
+    type: timestamp
+  - name: weight
+    type: bigint
+indexs:
+  - name: stock_box_code_idx
+    key: code
+  - name: stock_box_created_at_idx
+    key: created_at
+  - name: stock_box_id_idx
+    key: id
+  - name: stock_box_state_final_idx
+    key: state_final
+  - name: stock_box_state_idx
+    key: state
+  - name: stock_box_stock_request_number_idx
+    key: stock_request_number
+  - name: stock_box_updated_at_idx
+    key: updated_at
+  - name: stock_box_warehouse_idx
+    key: warehouse

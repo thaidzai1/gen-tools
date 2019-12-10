@@ -3,28 +3,30 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: id
-    type: INT8
-    primary: true
+    type: bigint
+    not_null: true
   - name: code
-    type: TEXT
+    type: text
   - name: created_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: updated_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: deleted_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: disabled_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: name
-    type: TEXT
+    type: text
     not_null: true
   - name: email
-    type: TEXT
+    type: text
     not_null: true
   - name: phone
-    type: TEXT
+    type: text
     not_null: true
   - name: address
-    type: TEXT
+    type: text
   - name: avatar
-    type: TEXT
+    type: text
+  - name: commission_percent
+    type: double

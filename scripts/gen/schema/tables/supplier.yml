@@ -3,10 +3,10 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
-    type: TEXT
-    primary: true
+    type: text
+    not_null: true
   - name: name
-    type: TEXT
+    type: text
     not_null: true
   - name: description
-    type: TEXT
+    type: text

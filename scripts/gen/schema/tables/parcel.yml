@@ -1,0 +1,123 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: code
+    type: text
+  - name: description
+    type: text
+  - name: box_id
+    type: bigint
+  - name: warehouse
+    type: text
+  - name: shipper_name
+    type: text
+  - name: shipper_address
+    type: text
+  - name: shipper_country
+    type: text
+  - name: shipper_tel
+    type: text
+  - name: consignee_name
+    type: text
+  - name: consignee_address
+    type: text
+  - name: consignee_country
+    type: text
+  - name: consignee_tel
+    type: text
+  - name: consignee_checksum
+    type: text
+  - name: gross_weight
+    type: integer
+  - name: number_of_package
+    type: integer
+  - name: value
+    type: integer
+  - name: quantity
+    type: integer
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: active
+    type: boolean
+  - name: state
+    type: text
+  - name: action_admin_id
+    type: bigint
+  - name: rid
+    type: bigint
+  - name: real_weight
+    type: integer
+  - name: note
+    type: text
+  - name: dest_warehouse
+    type: text
+  - name: consignee_ward
+    type: integer
+  - name: consignee_district
+    type: integer
+  - name: consignee_province
+    type: integer
+  - name: last_mile_booking_id
+    type: bigint
+  - name: location
+    type: bigint
+  - name: weight
+    type: integer
+  - name: sorting_code
+    type: text
+  - name: parcel_type
+    type: text
+  - name: sensitive
+    type: boolean
+  - name: vnhub_box_id
+    type: bigint
+  - name: last_mile_status
+    type: text
+  - name: num_deliver
+    type: integer
+  - name: num_contact
+    type: integer
+  - name: num_re_attempt
+    type: integer
+  - name: last_mile_shipping_info_id
+    type: bigint
+  - name: cod_amount
+    type: integer
+  - name: actual_cod_amount
+    type: integer
+indexs:
+  - name: order_item_sorting_code_idx
+    key: sorting_code
+  - name: parcel_active_idx
+    key: active
+  - name: parcel_box_id_idx
+    key: box_id
+  - name: INDEX
+    key: code
+    unique: true
+  - name: parcel_consignee_checksum_idx
+    key: consignee_checksum
+  - name: parcel_created_at_idx
+    key: created_at
+  - name: parcel_last_mile_booking_idx
+    key: last_mile_booking_id
+  - name: parcel_parcel_type_idx
+    key: parcel_type
+  - name: parcel_rid_idx
+    key: rid
+  - name: parcel_sensitive_idx
+    key: sensitive
+  - name: parcel_sorting_code_idx
+    key: sorting_code
+  - name: parcel_updated_at_idx
+    key: updated_at
+  - name: parcel_warehouse_idx
+    key: warehouse
+  - name: vnhub_box_idx
+    key: vnhub_box_id

@@ -1,0 +1,10 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: coupon_code_id
+    type: bigint
+    not_null: true
+  - name: coupon_condition_id
+    type: bigint
+    not_null: true

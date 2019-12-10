@@ -3,230 +3,103 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: id
-    type: INT8
-    primary: true
+    type: bigint
+    not_null: true
   - name: gcode
-    type: TEXT
+    type: text
   - name: gscode
-    type: TEXT
+    type: text
   - name: flow
-    type: TEXT
-  - name: flow_version
-    type: INT2
+    type: text
   - name: state
-    type: TEXT
+    type: text
+    not_null: true
   - name: state_final
-    type: INT2
+    type: smallint
+    not_null: true
   - name: created_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: updated_at
-    type: TIMESTAMPTZ
-  - name: closed_at
-    type: TIMESTAMPTZ
+    type: timestamp
   - name: cancelled_at
-    type: TIMESTAMPTZ
-  - name: admin_id
-    type: INT8
-  - name: box_id
-    type: INT8
-  - name: created_by_admin_id
-    type: INT8
-  - name: merchant_id
-    type: INT8
+    type: timestamp
   - name: merchant_order_id
-    type: INT8
-  - name: pagent_id
-    type: INT8
-  - name: airline
-    type: TEXT
-  - name: airline_name
-    type: TEXT
-  - name: basket_value_vnd
-    type: INT4
-  - name: basket_value_x
-    type: INT4
-  - name: category
-    type: TEXT
-  - name: category_name
-    type: TEXT
-  - name: chargeable_weight
-    type: INT4
-  - name: cod_amount_vnd
-    type: INT4
-  - name: consol_warehouse
-    type: TEXT
-  - name: consol_warehouse_name
-    type: TEXT
-  - name: currency
-    type: TEXT
-  - name: custom_clearance_at
-    type: TIMESTAMPTZ
-  - name: delivered_to_customer_at
-    type: TIMESTAMPTZ
-  - name: delivered_xx_at
-    type: TIMESTAMPTZ
-  - name: discount_vnd
-    type: INT4
-  - name: est_delivery_to_customer_at
-    type: TIMESTAMPTZ
-  - name: est_delivery_xx_at
-    type: TIMESTAMPTZ
-  - name: exchange_rate
-    type: INT4
-  - name: height
-    type: INT4
-  - name: last_mile_fee_vnd
-    type: INT4
-  - name: length
-    type: INT4
-  - name: mark_paid_at
-    type: TIMESTAMPTZ
-  - name: merchant
-    type: TEXT
-  - name: merchant_cashback_vnd
-    type: INT4
+    type: bigint
+    not_null: true
+  - name: warehouse
+    type: text
   - name: note_admin
-    type: TEXT
+    type: text
   - name: note_cancel
-    type: TEXT
-  - name: note_product
-    type: TEXT
-  - name: note_shipping
-    type: TEXT
-  - name: pagent
-    type: TEXT
-  - name: pagent_assigned_at
-    type: TIMESTAMPTZ
-  - name: pagent_commission_percent
-    type: INT2
-  - name: pagent_commission_x
-    type: INT4
-  - name: pagent_est_purchasing_amount_x
-    type: INT4
-  - name: pagent_expired_at
-    type: TIMESTAMPTZ
-  - name: pagent_other_fee_x
-    type: INT4
-  - name: pagent_price_x
-    type: INT4
-  - name: pagent_proceed_price_x
-    type: INT4
-  - name: pagent_purchase_price_x
-    type: INT4
-  - name: pagent_purchased_at
-    type: TIMESTAMPTZ
-  - name: pagent_receipt_id
-    type: INT8
-  - name: payment_status
-    type: INT4
-  - name: payment_type
-    type: INT4
-  - name: prepaid_amount_vnd
-    type: INT4
-  - name: price_updated_at
-    type: TIMESTAMPTZ
-  - name: product_link
-    type: TEXT
-  - name: purchase_fee_vnd
-    type: INT4
-  - name: purchase_fee_x
-    type: INT4
-  - name: purchased_pagent_commission_at
-    type: TIMESTAMPTZ
-  - name: quantity
-    type: INT4
+    type: text
   - name: real_weight
-    type: INT4
-  - name: remain_amount_vnd
-    type: INT4
-  - name: shipping_address
-    type: TEXT
-  - name: shipping_district
-    type: TEXT
-  - name: shipping_district_name
-    type: TEXT
-  - name: shipping_name
-    type: TEXT
-  - name: shipping_phone
-    type: TEXT
-  - name: shipping_province
-    type: TEXT
-  - name: shipping_province_name
-    type: TEXT
-  - name: shipping_ward
-    type: TEXT
-  - name: shipping_ward_name
-    type: TEXT
-  - name: supplier
-    type: TEXT
+    type: integer
   - name: supplier_courier
-    type: TEXT
-  - name: supplier_courier_name
-    type: TEXT
-  - name: supplier_name
-    type: TEXT
-  - name: supplier_order_number
-    type: TEXT
-  - name: supplier_price_vnd
-    type: INT4
+    type: text
   - name: supplier_price_x
-    type: INT4
-  - name: supplier_shipping_fee_x
-    type: INT4
+    type: integer
   - name: supplier_tracking_number
-    type: TEXT
-  - name: surcharge_x
-    type: INT4
-  - name: t3pl
-    type: TEXT
-  - name: t3pl_name
-    type: TEXT
-  - name: tax_x
-    type: INT4
-  - name: total_amount_vnd
-    type: INT4
-  - name: total_fee_vnd
-    type: INT4
-  - name: update_pagent_price_at
-    type: TIMESTAMPTZ
-  - name: volumetric_weight
-    type: INT4
-  - name: width
-    type: INT4
+    type: text
+  - name: forwarding_agent
+    type: text
   - name: is_test
-    type: INT2
+    type: smallint
+  - name: product_name
+    type: text
+  - name: action_admin_id
+    type: bigint
+  - name: rid
+    type: bigint
+  - name: customs_broker_agent
+    type: text
+  - name: last_mile_provider
+    type: text
+  - name: last_mile_code
+    type: text
+  - name: sku
+    type: text
+  - name: last_mile_status
+    type: text
+  - name: wh_inventory_item_id
+    type: bigint
+  - name: parcel_id
+    type: bigint
+  - name: weight
+    type: integer
+  - name: vnhub_parcel_id
+    type: bigint
+  - name: product_id
+    type: bigint
+  - name: sorting_code
+    type: text
+  - name: tracking_number_id
+    type: bigint
+  - name: package_info_id
+    type: bigint
 indexs:
-  - name: order_item_admin_id_idx
-    key: admin_id
-  - name: order_item_box_id_idx
-    key: box_id
   - name: order_item_cancelled_at_idx
     key: cancelled_at
-  - name: order_item_closed_at_idx
-    key: closed_at
   - name: order_item_created_at_idx
     key: created_at
-  - name: order_item_delivered_to_customer_at_idx
-    key: delivered_to_customer_at
-  - name: order_item_delivered_xx_at_idx
-    key: delivered_xx_at
+  - name: order_item_f4parcel_id_idx
+    key: vnhub_parcel_id
   - name: order_item_gscode_idx
     key: gscode
-  - name: order_item_mark_paid_at_idx
-    key: mark_paid_at
-  - name: order_item_merchant_id_idx
-    key: merchant_id
-  - name: order_item_merchant_idx
-    key: merchant
-  - name: order_item_pagent_id_idx
-    key: pagent_id
-  - name: order_item_pagent_idx
-    key: pagent
+  - name: order_item_parcel_id_idx
+    key: parcel_id
+  - name: order_item_rid_idx
+    key: rid
+  - name: order_item_sku_idx
+    key: sku
   - name: order_item_state_final_idx
     key: state_final
   - name: order_item_state_idx
     key: state
+  - name: order_item_supplier_tracking_number_idx
+    key: supplier_tracking_number
   - name: order_item_updated_at_idx
     key: updated_at
+  - name: order_item_warehouse_idx
+    key: warehouse
   - name: order_merchant_order_id_idx
     key: merchant_order_id

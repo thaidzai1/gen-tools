@@ -1,0 +1,65 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: merchant_code
+    type: text
+  - name: tax_id
+    type: text
+  - name: company_name
+    type: text
+  - name: company_address
+    type: text
+  - name: company_register_at
+    type: text
+  - name: company_representor
+    type: text
+  - name: company_representor_position
+    type: text
+  - name: verify_state
+    type: text
+  - name: term_state
+    type: text
+  - name: ic_number
+    type: text
+  - name: ic_fullname
+    type: text
+  - name: ic_birthday_at
+    type: timestamp
+  - name: ic_place_of_permanent
+    type: text
+  - name: ic_issuance_at
+    type: timestamp
+  - name: ic_issuance_place
+    type: text
+  - name: ic_front_image
+    type: text
+  - name: ic_back_image
+    type: text
+  - name: user_id
+    type: bigint
+    not_null: true
+  - name: created_at
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    type: timestamp
+    not_null: true
+indexs:
+  - name: merchant_contract_created_at
+    key: created_at
+  - name: merchant_contract_id
+    key: id
+  - name: merchant_contract_merchant_code
+    key: merchant_code
+  - name: merchant_contract_term_state
+    key: term_state
+  - name: merchant_contract_updated_at
+    key: updated_at
+  - name: merchant_contract_user_id
+    key: user_id
+  - name: merchant_contract_verify_state
+    key: verify_state

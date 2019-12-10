@@ -1,11 +1,11 @@
 package main
 
 import (
-	tableGen "gicprime.com/sqitch/scripts/gen"
+	tableGen "gido.vn/gic/sqitch/scripts/gen"
 )
 
 const (
-	inputPath = "scripts/gen/schema/schema.yml"
+	inputPath = "gic/sqitch/scripts/gen/schema/schema.yml"
 )
 
 func main() {

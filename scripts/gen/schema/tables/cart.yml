@@ -1,0 +1,25 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: merchant_id
+    type: bigint
+  - name: name_cart
+    type: text
+  - name: link_cart
+    type: text
+  - name: image_cart
+    type: text
+  - name: site
+    type: text
+  - name: price_cart
+    type: text
+  - name: currency
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

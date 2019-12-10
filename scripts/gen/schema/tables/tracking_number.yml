@@ -1,0 +1,32 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: code
+    type: text
+  - name: action_admin_id
+    type: bigint
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: deleted_at
+    type: timestamp
+  - name: merchant_order_id
+    type: bigint
+  - name: no_packages
+    type: integer
+  - name: rid
+    type: bigint
+indexs:
+  - name: INDEX
+    key: erchant_order_id
+    unique: true
+  - name: INDEX
+    key: erchant_order_id
+    unique: true
+  - name: tracking_number_rid_idx
+    key: rid

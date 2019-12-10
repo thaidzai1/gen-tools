@@ -1,0 +1,58 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    type: bigint
+    not_null: true
+  - name: parent_id
+    type: bigint
+  - name: code
+    type: text
+  - name: type
+    type: text
+  - name: description
+    type: text
+  - name: action_admin_id
+    type: bigint
+  - name: total_amount
+    type: bigint
+  - name: actual_amount
+    type: bigint
+  - name: amount_of_discrepancy
+    type: bigint
+  - name: state
+    type: text
+  - name: has_child
+    type: boolean
+  - name: transaction_date
+    type: timestamp
+  - name: rid
+    type: bigint
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+indexs:
+  - name: INDEX
+    key: code
+    unique: true
+  - name: cod_session_created_at_idx
+    key: created_at
+  - name: cod_session_has_child_idx
+    key: has_child
+  - name: INDEX
+    key: id
+    unique: true
+  - name: cod_session_parent_id_idx
+    key: parent_id
+  - name: cod_session_rid_idx
+    key: rid
+  - name: cod_session_state_idx
+    key: state
+  - name: cod_session_transaction_date_idx
+    key: transaction_date
+  - name: cod_session_type_idx
+    key: type
+  - name: cod_session_updated_at_idx
+    key: updated_at

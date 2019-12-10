@@ -10,9 +10,9 @@ import (
 	"strings"
 	"text/template"
 
-	"gicprime.com/sqitch/common/gen"
-	"gicprime.com/sqitch/common/l"
-	"gicprime.com/sqitch/scripts/gen/load"
+	"gido.vn/gic/libs/common.git/gen"
+	"gido.vn/gic/libs/common.git/l"
+	"gido.vn/gic/sqitch/scripts/gen/load"
 )
 
 var (
@@ -24,11 +24,8 @@ var (
 
 // Exec...
 func Exec(inputPath string) {
-	genSchemaDefinations := load.LoadSchemaDefination(inputPath)
-	fmt.Printf("dbSchema: %v\n", genSchemaDefinations)
-	fmt.Printf("inputPath: %v\n", inputPath)
-
 	CreateNewSqitchPlan(StartNewSqitchPlan())
+	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
 	GenerateSQLScript(genSchemaDefinations)
 }
 
@@ -48,11 +45,11 @@ func CreateNewSqitchPlan(planName string) {
 	cmd.Run()
 }
 
-func GenerateSQLScript(table *[]load.TableDefination) {
+func GenerateSQLScript(migrate *load.MigrateSchema) {
 	var script string = `
 BEGIN;
 
-{{- range $index, $table := .}}
+{{- range $index, $table := $.Tables}}
 CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
 {{- range $index, $field := $table.Fields}}
 	{{$field.Name}} {{$field.Type}} 
@@ -68,17 +65,23 @@ CREATE INDEX IF NOT EXISTS {{$index.Name}} ON "{{$table.TableName}}" ({{$index.K
 {{- end}}
 {{- end}}
 {{- end}}
+
+/*-- TRIGGER BEGIN --*/
+{{$.Triggers}} ......
+/*-- TRIGGER END --*/
+
 COMMIT;
 `
 
 	var buf bytes.Buffer
 	tpl := template.Must(template.New("scripts").Parse(script))
-	tpl.Execute(&buf, &table)
-	dir := gen.GetAbsPath("deploy/")
+	tpl.Execute(&buf, &migrate)
+	dir := gen.GetAbsPath("gic/sqitch/deploy/")
 	absPath := gen.GetAbsPath(dir + "/" + planName + ".sql")
-	ll.Print("absPath: ", absPath)
 	err := ioutil.WriteFile(absPath, buf.Bytes(), os.ModePerm)
 	if err != nil {
-		fmt.Printf("Error write file failed, %v\n", err)
+		ll.Error("Error write file failed, %v\n", l.Error(err))
 	}
+
+	ll.Print("==> Generate migrate deploy DONE†")
 }

@@ -1,0 +1,36 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: user_id
+    type: bigint
+  - name: token
+    type: text
+  - name: access_token
+    type: text
+  - name: platform
+    type: text
+  - name: application
+    type: text
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
+  - name: disabled_at
+    type: timestamp
+indexs:
+  - name: user_fcm_access_token_token_idx
+    key: access_token
+  - name: user_fcm_token_application_idx
+    key: application
+  - name: user_fcm_token_created_at_idx
+    key: created_at
+  - name: user_fcm_token_platform_idx
+    key: platform
+  - name: INDEX
+    key: token
+    unique: true
+  - name: user_fcm_token_updated_at_idx
+    key: updated_at
+  - name: user_fcm_token_user_id_idx
+    key: user_id
