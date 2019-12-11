@@ -4,9 +4,11 @@ version_name: 1 - Init
 fields:
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: invoice_no
     type: text
+    unique: true
   - name: date
     type: date
   - name: payment_type

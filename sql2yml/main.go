@@ -48,13 +48,15 @@ func main() {
 
 	table := make(map[string]*Table)
 	isFetchingFields := false
+	isUpdatingField := false
 	var tableKeyword string
 	for scanner.Scan() {
 		line := scanner.Text()
 		startKeyword := "CREATE TABLE"
-		endKeyword := ");"
+		endKeyword := ";"
 		indexKeyword := "CREATE INDEX"
 		uniqueIndexKeword := "CREATE UNIQUE INDEX"
+		alterKeyword := "ALTER TABLE ONLY"
 
 		if strings.Index(line, startKeyword) > -1 {
 			startTableNamePos := len(startKeyword)
@@ -67,6 +69,17 @@ func main() {
 			table[tableKeyword].Name = tableKeyword
 
 			isFetchingFields = true
+			continue
+		}
+
+		if strings.Index(line, alterKeyword) > -1 {
+			data := strings.Fields(line)
+			lastElement := data[len(data)-1]
+			if strings.Contains(lastElement, "public.") {
+				tableKeyword = strings.ReplaceAll(lastElement, "public.", "")
+			}
+
+			isUpdatingField = true
 			continue
 		}
 
@@ -169,6 +182,41 @@ func main() {
 				}
 			}
 			table[tableKeyword].Fields = append(table[tableKeyword].Fields, fields)
+		}
+
+		if isUpdatingField && len(line) > 0 {
+			fieldNamePos := strings.Index(line, "(")
+			shouldUpdate := false
+			var updatedProperty string
+			if strings.Contains(line, "PRIMARY") {
+				updatedProperty = "PRIMARY"
+				shouldUpdate = true
+			} else if strings.Contains(line, "UNIQUE") {
+				updatedProperty = "UNIQUE"
+				shouldUpdate = true
+			}
+			if fieldNamePos > -1 && shouldUpdate {
+				fieldName := line[fieldNamePos+1 : len(line)-2]
+				for index, field := range table[tableKeyword].Fields {
+					ll.Print("checkfield: ", field.Name, fieldName)
+					if field.Name == fieldName {
+						switch updatedProperty {
+						case "PRIMARY":
+							table[tableKeyword].Fields[index].Primary = true
+							break
+						case "UNIQUE":
+							table[tableKeyword].Fields[index].Unique = true
+							break
+						default:
+							break
+						}
+					}
+					ll.Print("Field update: ", field)
+				}
+			}
+
+			ll.Print("Table update: ", table[tableKeyword])
+			isUpdatingField = false
 		}
 	}
 	createYML(table)

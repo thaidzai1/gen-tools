@@ -4,6 +4,7 @@ version_name: 1 - Init
 fields:
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: transit_booking_id
     type: bigint

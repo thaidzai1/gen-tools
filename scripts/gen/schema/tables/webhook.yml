@@ -4,6 +4,7 @@ version_name: 1 - Init
 fields:
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: type
     type: text
@@ -19,5 +20,3 @@ fields:
     type: timestamp
   - name: updated_at
     type: timestamp
-  - name: CONSTRAINT
-    type: check_method

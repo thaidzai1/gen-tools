@@ -4,6 +4,7 @@ version_name: 1 - Init
 fields:
   - name: user_id
     type: bigint
+    primary: true
     not_null: true
   - name: user_type
     type: text

@@ -4,9 +4,11 @@ version_name: 1 - Init
 fields:
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: code
     type: text
+    unique: true
   - name: created_at
     type: timestamp
   - name: updated_at
@@ -23,8 +25,10 @@ fields:
   - name: email
     type: text
     not_null: true
+    unique: true
   - name: phone
     type: text
     not_null: true
+    unique: true
   - name: avatar
     type: text

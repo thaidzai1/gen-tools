@@ -63,6 +63,7 @@ fields:
     type: bigint
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: type
     type: text

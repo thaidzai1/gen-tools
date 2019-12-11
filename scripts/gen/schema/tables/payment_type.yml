@@ -4,8 +4,10 @@ version_name: 1 - Init
 fields:
   - name: id
     type: bigint
+    primary: true
     not_null: true
   - name: code
     type: text
+    unique: true
   - name: description
     type: text
