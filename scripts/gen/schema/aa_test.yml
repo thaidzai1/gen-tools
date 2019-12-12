@@ -1,0 +1,17 @@
+version: 1
+version_name: 1 - Init
+fields:
+  - name: test
+    old_name: code
+    type: text
+  - name: name
+    old_name:
+    type: text
+indexs:
+  - name: aa_test_code_idx
+    key: code
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

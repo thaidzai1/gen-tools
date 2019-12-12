@@ -3,25 +3,34 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: id
+    old_name:
     type: bigint
     primary: true
     not_null: true
   - name: parent_id
+    old_name:
     type: bigint
   - name: code
+    old_name:
     type: text
   - name: name
+    old_name:
     type: text
   - name: warehouse
+    old_name:
     type: text
   - name: location_type
+    old_name:
     type: text
   - name: created_at
+    old_name:
     type: timestamp
     not_null: true
   - name: updated_at
+    old_name:
     type: timestamp
   - name: active
+    old_name:
     type: boolean
 indexs:
   - name: wh_location_code_idx
@@ -37,3 +46,7 @@ indexs:
   - name: wh_location_warehouse_idx
     key: warehouse
     using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

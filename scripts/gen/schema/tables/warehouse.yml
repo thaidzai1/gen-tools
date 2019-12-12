@@ -3,38 +3,56 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
+    old_name:
     type: text
     primary: true
     not_null: true
   - name: name
+    old_name:
     type: text
     not_null: true
     unique: true
   - name: description
+    old_name:
     type: text
   - name: address
+    old_name:
     type: text
   - name: ward
+    old_name:
     type: text
   - name: district
+    old_name:
     type: text
   - name: province
+    old_name:
     type: text
   - name: country
+    old_name:
     type: text
   - name: phone
+    old_name:
     type: text
   - name: consignee
+    old_name:
     type: text
   - name: created_at
+    old_name:
     type: timestamp
   - name: updated_at
+    old_name:
     type: timestamp
   - name: active
+    old_name:
     type: boolean
   - name: sorting_code
+    old_name:
     type: text
 indexs:
   - name: warehouse_active_idx
     key: active
     using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

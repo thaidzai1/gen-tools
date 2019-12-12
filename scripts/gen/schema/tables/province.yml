@@ -3,20 +3,26 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: code
+    old_name:
     type: text
     primary: true
     not_null: true
   - name: name
+    old_name:
     type: text
     not_null: true
   - name: country
+    old_name:
     type: text
     not_null: true
   - name: created_at
+    old_name:
     type: timestamp
   - name: updated_at
+    old_name:
     type: timestamp
   - name: sorting_code
+    old_name:
     type: text
 indexs:
   - name: province_code_idx
@@ -28,3 +34,7 @@ indexs:
   - name: province_sorting_code_idx
     key: sorting_code
     using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

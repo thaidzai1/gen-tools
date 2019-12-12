@@ -2,10 +2,12 @@ package load
 
 import (
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
+	"gido.vn/gic/sqitch/scripts/gen/models"
 	"gopkg.in/yaml.v2"
 )
 
@@ -14,15 +16,16 @@ var (
 )
 
 // LoadSchemaDefination ...
-func LoadSchemaDefination(inputPath string, planName string) *MigrateSchema {
+func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSchema {
 	data, err := ioutil.ReadFile(gen.GetAbsPath(inputPath))
 	NoError(err)
 
-	var dbSchema DBSchema
+	var dbSchema models.DBSchema
 	err = yaml.Unmarshal(data, &dbSchema)
 	NoError(err)
 
-	var tableDefs []TableDefination
+	var mapTableDefs map[string]models.TableDefination
+	var restrictedTableDefs map[string]models.TableDefination
 	var triggers string
 
 	for schemaKey, schemaPath := range dbSchema.Schemas {
@@ -32,22 +35,9 @@ func LoadSchemaDefination(inputPath string, planName string) *MigrateSchema {
 		NoError(err)
 		schemaTableText := "tables"
 		schemaFuncText := "functions"
+		schemaRestrictedText := "restricted"
 		if schemaKey == schemaTableText {
-			for _, file := range files {
-				ll.Print("file: ", file.Name())
-				if !(strings.HasSuffix(file.Name(), ".yml") || strings.HasSuffix(file.Name(), ".yaml")) {
-					continue
-				}
-
-				data, err := ioutil.ReadFile(gen.GetAbsPath(schemaPath + "/" + file.Name()))
-				NoError(err)
-				var tableDef TableDefination
-				err = yaml.Unmarshal(data, &tableDef)
-
-				lengthWithouSuffix := strings.Index(file.Name(), ".")
-				tableDef.TableName = file.Name()[:lengthWithouSuffix]
-				tableDefs = append(tableDefs, tableDef)
-			}
+			mapTableDefs = loadTableDefFromYaml(files, schemaPath)
 		}
 		if schemaKey == schemaFuncText {
 			byteTriggerContent, err := ioutil.ReadFile(gen.GetAbsPath("gic/sqitch/scripts/gen/schema/functions/" + planName + ".sql"))
@@ -56,12 +46,168 @@ func LoadSchemaDefination(inputPath string, planName string) *MigrateSchema {
 			}
 			triggers = string(byteTriggerContent)
 		}
+		if schemaKey == schemaRestrictedText {
+			restrictedTableDefs = loadTableDefFromYaml(files, schemaPath)
+		}
 	}
-	migrateSchema := MigrateSchema{
-		Tables:   tableDefs,
-		Triggers: triggers,
+
+	diffTables, newTables := compareDiffYaml(restrictedTableDefs, mapTableDefs)
+
+	migrateSchema := models.MigrateSchema{
+		Tables:      *newTables,
+		AlterTables: *diffTables,
+		Triggers:    triggers,
 	}
 	return &migrateSchema
+}
+
+func loadTableDefFromYaml(files []os.FileInfo, schemaPath string) map[string]models.TableDefination {
+	tableDefs := make(map[string]models.TableDefination)
+	for _, file := range files {
+		ll.Print("file: ", file.Name())
+		if !(strings.HasSuffix(file.Name(), ".yml") || strings.HasSuffix(file.Name(), ".yaml")) {
+			continue
+		}
+
+		data, err := ioutil.ReadFile(gen.GetAbsPath(schemaPath + "/" + file.Name()))
+		NoError(err)
+		var tableDef models.TableDefination
+		err = yaml.Unmarshal(data, &tableDef)
+
+		lengthWithouSuffix := strings.Index(file.Name(), ".")
+		nameWithoutSuffix := file.Name()[:lengthWithouSuffix]
+		tableDef.TableName = nameWithoutSuffix
+
+		tableDefs[nameWithoutSuffix] = tableDef
+	}
+
+	return tableDefs
+}
+
+func mapToSlice(mapTables map[string]models.TableDefination) []models.TableDefination {
+	var tableDefs []models.TableDefination
+
+	for _, mapTable := range mapTables {
+		tableDefs = append(tableDefs, mapTable)
+	}
+
+	return tableDefs
+}
+
+func compareDiffYaml(curTables, changedTables map[string]models.TableDefination) (*[]models.AlterTable, *[]models.TableDefination) {
+	var diffTables []models.AlterTable
+	var newTables []models.TableDefination
+
+	if len(curTables) == 0 {
+		newTables = mapToSlice(changedTables)
+	} else {
+		for changedTableKey, changedTable := range changedTables {
+			// Get New Table
+			if curTables[changedTableKey].TableName == "" {
+				newTables = append(newTables, changedTable)
+				continue
+			}
+
+			// Get Table Fields Changed or New
+			curFields := curTables[changedTableKey].Fields
+			curIndexs := curTables[changedTableKey].Indexs
+			var diffTable models.AlterTable
+			for _, changedField := range changedTable.Fields {
+				isAlreadyExisted := false
+				for _, curField := range curFields {
+					field := models.FieldChanged{}
+					isFieldUpdated := false
+					if changedField.Name == curField.Name || changedField.OldName == curField.Name {
+						isAlreadyExisted = true
+						field.Field.Name = changedField.Name
+						if changedField.OldName == curField.Name {
+							isFieldUpdated = true
+							field.Field.Name = changedField.Name
+							field.Field.OldName = changedField.OldName
+						}
+						if changedField.Primary != curField.Primary {
+							isFieldUpdated = true
+							field.Field.Primary = changedField.Primary
+							field.IsPrimaryChanged = true
+						}
+						if changedField.NotNull != curField.NotNull {
+							isFieldUpdated = true
+							field.Field.NotNull = changedField.NotNull
+							field.IsNotNullChanged = true
+						}
+						if changedField.Unique != curField.Unique {
+							isFieldUpdated = true
+							field.Field.Unique = changedField.Unique
+							field.IsUniqueChanged = true
+						}
+						if isFieldUpdated {
+							ll.Info("==> Append table field")
+							diffTable.Fields = append(diffTable.Fields, field)
+						}
+						// Not support change type yet.
+						// if changedField.Type != curField.Type {
+						// 	isFieldUpdated = true
+						// 	field.Type = changedField.Type
+						// }
+						break
+					}
+				}
+
+				if !isAlreadyExisted {
+					ll.Info("==> This is new field of table")
+					newField := models.FieldChanged{
+						Field: models.Field{
+							Name:    changedField.Name,
+							Type:    changedField.Type,
+							Primary: changedField.Primary,
+							NotNull: changedField.NotNull,
+							Unique:  changedField.Unique,
+						},
+						IsNewField: true,
+					}
+
+					diffTable.Fields = append(diffTable.Fields, newField)
+				}
+			}
+
+			var arrIndex []models.Index
+			for _, changedIndex := range changedTable.Indexs {
+				isAlreadyExisted := false
+				for _, curIndex := range curIndexs {
+					if changedIndex.Name == curIndex.Name {
+						isAlreadyExisted = true
+					}
+				}
+
+				if !isAlreadyExisted {
+					ll.Info("==> This is new index of table")
+					newIndex := models.Index{
+						Name:   changedIndex.Name,
+						Key:    changedIndex.Key,
+						Using:  changedIndex.Using,
+						Unique: changedIndex.Unique,
+					}
+
+					arrIndex = append(arrIndex, newIndex)
+				}
+			}
+
+			if len(diffTable.Fields) > 0 {
+				ll.Info("==> Must create new alter script")
+				diffTable.Name = changedTable.TableName
+				diffTables = append(diffTables, diffTable)
+			}
+
+			if len(arrIndex) > 0 {
+				newTables = append(newTables, models.TableDefination{
+					TableName: changedTable.TableName,
+					Indexs:    arrIndex,
+				})
+			}
+		}
+	}
+
+	return &diffTables, &newTables
 }
 
 func NoError(err error) {

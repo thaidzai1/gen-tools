@@ -233,11 +233,12 @@ version_name: 1 - Init
 fields:
 {{- range $index, $field := $.Fields}}
   - name: {{$field.Name}}
+    old_name:
     type: {{$field.Type}}
 {{- if eq $field.Primary true}}
     primary: true
 {{- end}}
-{{- if eq $field.NotNull true}}
+{{- if or $field.NotNull $field.Primary}}
     not_null: true
 {{- end}}
 {{- if eq $field.Unique true}}
@@ -257,6 +258,10 @@ indexs:
 {{- end}}
 {{- end}}
 {{- end}}
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname
 `
 
 		var buf bytes.Buffer

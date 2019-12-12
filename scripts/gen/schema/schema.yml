@@ -4,3 +4,4 @@ version_name: 1 - Init project
 schemas:
   tables: gic/sqitch/scripts/gen/schema/tables
   functions: gic/sqitch/scripts/gen/schema/functions
+  restricted: gic/sqitch/scripts/gen/schema/.restricted/tables

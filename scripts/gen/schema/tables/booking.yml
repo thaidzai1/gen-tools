@@ -3,22 +3,35 @@ version: 1
 version_name: 1 - Init
 fields:
   - name: id
+    old_name:
     type: bigint
     primary: true
     not_null: true
   - name: br_code
+    old_name:
     type: text
   - name: bc_code
+    old_name:
     type: text
   - name: quotation_id
+    old_name:
     type: bigint
   - name: etd
+    old_name:
     type: timestamp
   - name: eta
+    old_name:
     type: timestamp
   - name: doc_cut_off
+    old_name:
     type: timestamp
   - name: goods_cut_off
+    old_name:
     type: timestamp
   - name: state
+    old_name:
     type: text
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname
