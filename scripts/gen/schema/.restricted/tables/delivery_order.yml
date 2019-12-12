@@ -1,0 +1,102 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+  - name: warehouse
+    old_name:
+    type: text
+  - name: forwarding_agent
+    old_name:
+    type: text
+  - name: truck_number
+    old_name:
+    type: text
+  - name: driver_name
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: pickup_at
+    old_name:
+    type: timestamp
+  - name: est_pickup_at
+    old_name:
+    type: timestamp
+  - name: created_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: state
+    old_name:
+    type: text
+  - name: picking_type
+    old_name:
+    type: text
+  - name: est_weight
+    old_name:
+    type: integer
+  - name: weight
+    old_name:
+    type: integer
+  - name: admin_id
+    old_name:
+    type: bigint
+  - name: dest_warehouse
+    old_name:
+    type: text
+  - name: type
+    old_name:
+    type: smallint
+  - name: active
+    old_name:
+    type: boolean
+  - name: customs_broker_agent
+    old_name:
+    type: text
+indexs:
+  - name: delivery_order_admin_id_idx
+    key: action_admin_id
+    using: btree
+  - name: delivery_order_code_idx
+    key: code
+    using: btree
+  - name: delivery_order_created_at_idx
+    key: created_at
+    using: btree
+  - name: delivery_order_customs_broker_agent_idx
+    key: customs_broker_agent
+    using: btree
+  - name: delivery_order_forwarding_agent_idx
+    key: forwarding_agent
+    using: btree
+  - name: delivery_order_id_idx
+    key: id
+    using: btree
+  - name: delivery_order_pickup_at_idx
+    key: pickup_at
+    using: btree
+  - name: delivery_order_state_idx
+    key: state
+    using: btree
+  - name: delivery_order_updated_at_idx
+    key: updated_at
+    using: btree
+  - name: delivery_order_warehouse_idx
+    key: warehouse
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

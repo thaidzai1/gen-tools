@@ -1,0 +1,61 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: wallet_transaction_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: value_vnd
+    old_name:
+    type: double precision
+    not_null: true
+  - name: state
+    old_name:
+    type: text
+    not_null: true
+  - name: type
+    old_name:
+    type: text
+    not_null: true
+  - name: state_final
+    old_name:
+    type: integer
+    not_null: true
+  - name: merchant_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: wallet_id
+    old_name:
+    type: bigint
+  - name: bank_id
+    old_name:
+    type: bigint
+  - name: note_admin
+    old_name:
+    type: text
+  - name: user_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: rid
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+    not_null: true
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

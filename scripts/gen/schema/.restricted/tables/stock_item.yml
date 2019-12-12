@@ -1,0 +1,86 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: stock_request_number
+    old_name:
+    type: text
+  - name: stock_request_id
+    old_name:
+    type: bigint
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: merchant_code
+    old_name:
+    type: text
+  - name: type
+    old_name:
+    type: text
+  - name: code
+    old_name:
+    type: text
+  - name: title
+    old_name:
+    type: text
+  - name: unit_of_measurement
+    old_name:
+    type: text
+  - name: quantity
+    old_name:
+    type: integer
+  - name: warehouse
+    old_name:
+    type: text
+  - name: state
+    old_name:
+    type: text
+  - name: state_final
+    old_name:
+    type: smallint
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: cancelled_at
+    old_name:
+    type: timestamp
+indexs:
+  - name: stock_item_code_idx
+    key: code
+    using: btree
+  - name: stock_item_created_at_idx
+    key: created_at
+    using: btree
+  - name: stock_item_id_idx
+    key: id
+    using: btree
+  - name: stock_item_state_final_idx
+    key: state_final
+    using: btree
+  - name: stock_item_state_idx
+    key: state
+    using: btree
+  - name: stock_item_stock_request_number_idx
+    key: stock_request_number
+    using: btree
+  - name: stock_item_updated_at_idx
+    key: updated_at
+    using: btree
+  - name: stock_item_warehouse_idx
+    key: warehouse
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

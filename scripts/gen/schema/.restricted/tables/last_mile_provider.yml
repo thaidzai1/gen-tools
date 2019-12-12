@@ -2,28 +2,23 @@
 version: 1
 version_name: 1 - Init
 fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
   - name: code
     old_name:
     type: text
-    primary: true
-    not_null: true
   - name: name
     old_name:
     type: text
-    not_null: true
-    unique: true
   - name: description
     old_name:
     type: text
-  - name: country_name
+  - name: active
     old_name:
-    type: text
-  - name: carrier_code1
-    old_name:
-    type: text
-  - name: carrier_code2
-    old_name:
-    type: text
+    type: boolean
   - name: created_at
     old_name:
     type: timestamp

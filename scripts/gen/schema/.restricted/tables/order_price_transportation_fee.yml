@@ -1,0 +1,51 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: order_price_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: transportation_fee_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: service_type
+    old_name:
+    type: text
+    not_null: true
+  - name: value
+    old_name:
+    type: bigint
+    not_null: true
+  - name: chargeable_weight
+    old_name:
+    type: bigint
+    not_null: true
+  - name: service_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: id
+    old_name:
+    type: bigint
+    not_null: true
+indexs:
+  - name: "fkIdx_194"
+    key: order_price_id
+    using: btree
+  - name: "fkIdx_203"
+    key: transportation_fee_id
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

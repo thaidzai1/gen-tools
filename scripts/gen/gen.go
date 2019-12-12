@@ -49,9 +49,14 @@ func getPlanIndex() string {
 	for scanner.Scan() {
 		lastLine = scanner.Text()
 	}
-	ll.Print("last line: ", lastLine)
-	index, _ := strconv.ParseInt(lastLine[0:3], 10, 64)
+
+	var index int64
 	var prefixIndex string
+	if len(lastLine) != 0 {
+		index, _ = strconv.ParseInt(lastLine[0:3], 10, 64)
+	} else {
+		index = 0
+	}
 	switch {
 	case index >= 9:
 		prefixIndex = "0"
@@ -84,12 +89,6 @@ func startNewSqitchPlan() string {
 func createNewSqitchPlan(planName string) {
 	cmd := exec.Command("sqitch", "add", planName, "-n", "Add schema "+planName)
 	ll.Info("Run sqitch add plan... Done†")
-	cmd.Run()
-}
-
-func copyAllYamlSchema() {
-	path := "./scripts/gen/schema/"
-	cmd := exec.Command("cp", "-a", path+"tables", path+".restricted")
 	cmd.Run()
 }
 
@@ -159,7 +158,6 @@ COMMIT;
 	if err != nil {
 		ll.Error("Error write file failed, %v\n", l.Error(err))
 	}
-	copyAllYamlSchema()
 	ll.Info("==> Generate migrate deploy DONE†")
 }
 

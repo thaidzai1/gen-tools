@@ -11,25 +11,29 @@ fields:
     old_name:
     type: text
     not_null: true
-    unique: true
-  - name: description
+  - name: province
     old_name:
-    type: text
-  - name: country_name
-    old_name:
-    type: text
-  - name: carrier_code1
-    old_name:
-    type: text
-  - name: carrier_code2
-    old_name:
-    type: text
+    type: integer
+    not_null: true
   - name: created_at
     old_name:
     type: timestamp
   - name: updated_at
     old_name:
     type: timestamp
+  - name: province_code
+    old_name:
+    type: integer
+  - name: sorting_code
+    old_name:
+    type: text
+indexs:
+  - name: district_code_idx
+    key: code
+    using: btree
+  - name: district_province_code_idx
+    key: province
+    using: btree
 
 drop_fields:
 #  -name: fieldname

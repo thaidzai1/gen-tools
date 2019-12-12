@@ -11,25 +11,16 @@ fields:
     old_name:
     type: text
     not_null: true
-    unique: true
-  - name: description
-    old_name:
-    type: text
-  - name: country_name
-    old_name:
-    type: text
-  - name: carrier_code1
-    old_name:
-    type: text
-  - name: carrier_code2
-    old_name:
-    type: text
   - name: created_at
     old_name:
     type: timestamp
   - name: updated_at
     old_name:
     type: timestamp
+indexs:
+  - name: country_code_idx
+    key: code
+    using: btree
 
 drop_fields:
 #  -name: fieldname

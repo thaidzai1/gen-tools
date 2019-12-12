@@ -1,0 +1,90 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+    unique: true
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: deleted_at
+    old_name:
+    type: timestamp
+  - name: disabled_at
+    old_name:
+    type: timestamp
+  - name: name
+    old_name:
+    type: text
+    not_null: true
+  - name: email
+    old_name:
+    type: text
+    not_null: true
+  - name: phone
+    old_name:
+    type: text
+    not_null: true
+    unique: true
+  - name: address
+    old_name:
+    type: text
+  - name: avatar
+    old_name:
+    type: text
+  - name: refcode
+    old_name:
+    type: text
+  - name: admin_id
+    old_name:
+    type: bigint
+  - name: province
+    old_name:
+    type: text
+  - name: province_name
+    old_name:
+    type: text
+  - name: district
+    old_name:
+    type: text
+  - name: district_name
+    old_name:
+    type: text
+  - name: ward
+    old_name:
+    type: text
+  - name: ward_name
+    old_name:
+    type: text
+  - name: birthday
+    old_name:
+    type: timestamp
+  - name: gender
+    old_name:
+    type: smallint
+  - name: active
+    old_name:
+    type: boolean
+  - name: country
+    old_name:
+    type: text
+  - name: is_cbe
+    old_name:
+    type: boolean
+  - name: type
+    old_name:
+    type: text
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

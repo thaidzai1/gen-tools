@@ -1,0 +1,83 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+  - name: sku
+    old_name:
+    type: text
+  - name: title
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+  - name: brand
+    old_name:
+    type: text
+  - name: model
+    old_name:
+    type: text
+  - name: asin
+    old_name:
+    type: text
+  - name: gtin
+    old_name:
+    type: text
+  - name: size
+    old_name:
+    type: text
+  - name: color
+    old_name:
+    type: text
+  - name: dimension
+    old_name:
+    type: text
+  - name: weight
+    old_name:
+    type: text
+  - name: images
+    old_name:
+    type: text[]
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: source
+    old_name:
+    type: text
+  - name: sensitive
+    old_name:
+    type: boolean
+indexs:
+  - name: sku_asin_idx
+    key: asin
+    using: btree
+  - name: sku_created_at_idx
+    key: created_at
+    using: btree
+  - name: sku_id_idx
+    key: id
+    using: btree
+    unique: true
+  - name: sku_sensitive_idx
+    key: sensitive
+    using: btree
+  - name: sku_sku_idx
+    key: sku
+    using: btree
+    unique: true
+  - name: sku_source_idx
+    key: source
+    using: btree
+  - name: sku_updated_at_idx
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

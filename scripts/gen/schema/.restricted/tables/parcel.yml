@@ -1,0 +1,186 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+  - name: box_id
+    old_name:
+    type: bigint
+  - name: warehouse
+    old_name:
+    type: text
+  - name: shipper_name
+    old_name:
+    type: text
+  - name: shipper_address
+    old_name:
+    type: text
+  - name: shipper_country
+    old_name:
+    type: text
+  - name: shipper_tel
+    old_name:
+    type: text
+  - name: consignee_name
+    old_name:
+    type: text
+  - name: consignee_address
+    old_name:
+    type: text
+  - name: consignee_country
+    old_name:
+    type: text
+  - name: consignee_tel
+    old_name:
+    type: text
+  - name: consignee_checksum
+    old_name:
+    type: text
+  - name: gross_weight
+    old_name:
+    type: integer
+  - name: number_of_package
+    old_name:
+    type: integer
+  - name: value
+    old_name:
+    type: integer
+  - name: quantity
+    old_name:
+    type: integer
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: active
+    old_name:
+    type: boolean
+  - name: state
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+  - name: real_weight
+    old_name:
+    type: integer
+  - name: note
+    old_name:
+    type: text
+  - name: dest_warehouse
+    old_name:
+    type: text
+  - name: consignee_ward
+    old_name:
+    type: integer
+  - name: consignee_district
+    old_name:
+    type: integer
+  - name: consignee_province
+    old_name:
+    type: integer
+  - name: last_mile_booking_id
+    old_name:
+    type: bigint
+  - name: location
+    old_name:
+    type: bigint
+  - name: weight
+    old_name:
+    type: integer
+  - name: sorting_code
+    old_name:
+    type: text
+  - name: parcel_type
+    old_name:
+    type: text
+  - name: sensitive
+    old_name:
+    type: boolean
+  - name: vnhub_box_id
+    old_name:
+    type: bigint
+  - name: last_mile_status
+    old_name:
+    type: text
+  - name: num_deliver
+    old_name:
+    type: integer
+  - name: num_contact
+    old_name:
+    type: integer
+  - name: num_re_attempt
+    old_name:
+    type: integer
+  - name: last_mile_shipping_info_id
+    old_name:
+    type: bigint
+  - name: cod_amount
+    old_name:
+    type: integer
+  - name: actual_cod_amount
+    old_name:
+    type: integer
+indexs:
+  - name: order_item_sorting_code_idx
+    key: sorting_code
+    using: btree
+  - name: parcel_active_idx
+    key: active
+    using: btree
+  - name: parcel_box_id_idx
+    key: box_id
+    using: btree
+  - name: parcel_code_idx
+    key: code
+    using: btree
+    unique: true
+  - name: parcel_consignee_checksum_idx
+    key: consignee_checksum
+    using: btree
+  - name: parcel_created_at_idx
+    key: created_at
+    using: btree
+  - name: parcel_last_mile_booking_idx
+    key: last_mile_booking_id
+    using: btree
+  - name: parcel_parcel_type_idx
+    key: parcel_type
+    using: btree
+  - name: parcel_rid_idx
+    key: rid
+    using: btree
+  - name: parcel_sensitive_idx
+    key: sensitive
+    using: btree
+  - name: parcel_sorting_code_idx
+    key: sorting_code
+    using: btree
+  - name: parcel_updated_at_idx
+    key: updated_at
+    using: btree
+  - name: parcel_warehouse_idx
+    key: warehouse
+    using: btree
+  - name: vnhub_box_idx
+    key: vnhub_box_id
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

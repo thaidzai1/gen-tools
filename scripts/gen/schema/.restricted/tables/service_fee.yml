@@ -1,0 +1,67 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: name
+    old_name:
+    type: text
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+    not_null: true
+  - name: description
+    old_name:
+    type: text
+    not_null: true
+  - name: fee
+    old_name:
+    type: bigint
+    not_null: true
+  - name: lower_threshold
+    old_name:
+    type: integer
+    not_null: true
+  - name: upper_threshold
+    old_name:
+    type: integer
+    not_null: true
+  - name: unit
+    old_name:
+    type: text
+    not_null: true
+  - name: active
+    old_name:
+    type: boolean
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: unit_fee
+    old_name:
+    type: text
+  - name: service_id
+    old_name:
+    type: bigint
+  - name: country
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: text
+indexs:
+  - name: pk_service_fee
+    key: id
+    using: btree
+    unique: true
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

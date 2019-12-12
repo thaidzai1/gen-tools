@@ -1,0 +1,53 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: province
+    old_name:
+    type: text
+    not_null: true
+  - name: area
+    old_name:
+    type: text
+    not_null: true
+  - name: provider
+    old_name:
+    type: text
+    not_null: true
+  - name: transportation_fee_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: active
+    old_name:
+    type: boolean
+  - name: action_admin_id
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+indexs:
+  - name: fkidx_174
+    key: transportation_fee_id
+    using: btree
+  - name: pk_transportation_fee_area
+    key: id
+    using: btree
+    unique: true
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

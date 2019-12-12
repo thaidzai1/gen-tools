@@ -2,28 +2,26 @@
 version: 1
 version_name: 1 - Init
 fields:
-  - name: code
+  - name: id
     old_name:
-    type: text
+    type: bigint
     primary: true
     not_null: true
-  - name: name
+  - name: type
     old_name:
     type: text
-    not_null: true
-    unique: true
-  - name: description
+  - name: method
     old_name:
     type: text
-  - name: country_name
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: url
     old_name:
     type: text
-  - name: carrier_code1
+  - name: action_admin_id
     old_name:
-    type: text
-  - name: carrier_code2
-    old_name:
-    type: text
+    type: bigint
   - name: created_at
     old_name:
     type: timestamp

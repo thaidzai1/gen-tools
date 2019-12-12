@@ -1,0 +1,98 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: merchant_code
+    old_name:
+    type: text
+  - name: tax_id
+    old_name:
+    type: text
+  - name: company_name
+    old_name:
+    type: text
+  - name: company_address
+    old_name:
+    type: text
+  - name: company_register_at
+    old_name:
+    type: text
+  - name: company_representor
+    old_name:
+    type: text
+  - name: company_representor_position
+    old_name:
+    type: text
+  - name: verify_state
+    old_name:
+    type: text
+  - name: term_state
+    old_name:
+    type: text
+  - name: ic_number
+    old_name:
+    type: text
+  - name: ic_fullname
+    old_name:
+    type: text
+  - name: ic_birthday_at
+    old_name:
+    type: timestamp
+  - name: ic_place_of_permanent
+    old_name:
+    type: text
+  - name: ic_issuance_at
+    old_name:
+    type: timestamp
+  - name: ic_issuance_place
+    old_name:
+    type: text
+  - name: ic_front_image
+    old_name:
+    type: text
+  - name: ic_back_image
+    old_name:
+    type: text
+  - name: user_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+    not_null: true
+indexs:
+  - name: merchant_contract_created_at
+    key: created_at
+    using: btree
+  - name: merchant_contract_id
+    key: id
+    using: btree
+  - name: merchant_contract_merchant_code
+    key: merchant_code
+    using: btree
+  - name: merchant_contract_term_state
+    key: term_state
+    using: btree
+  - name: merchant_contract_updated_at
+    key: updated_at
+    using: btree
+  - name: merchant_contract_user_id
+    key: user_id
+    using: btree
+  - name: merchant_contract_verify_state
+    key: verify_state
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

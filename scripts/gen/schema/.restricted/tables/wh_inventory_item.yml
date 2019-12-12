@@ -1,0 +1,131 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: supplier_tracking_number
+    old_name:
+    type: text
+  - name: sku
+    old_name:
+    type: text
+  - name: product_name
+    old_name:
+    type: text
+  - name: color
+    old_name:
+    type: text
+  - name: size
+    old_name:
+    type: text
+  - name: asin
+    old_name:
+    type: text
+  - name: model
+    old_name:
+    type: text
+  - name: brand
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+  - name: weight
+    old_name:
+    type: integer
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: state
+    old_name:
+    type: smallint
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+  - name: active
+    old_name:
+    type: boolean
+  - name: status_amount
+    old_name:
+    type: jsonb
+  - name: total_weight
+    old_name:
+    type: integer
+  - name: total_item
+    old_name:
+    type: integer
+  - name: images
+    old_name:
+    type: text[]
+  - name: warehouse
+    old_name:
+    type: text
+  - name: location
+    old_name:
+    type: bigint
+  - name: merchant_code
+    old_name:
+    type: text
+  - name: scanned_times
+    old_name:
+    type: integer
+  - name: length
+    old_name:
+    type: integer
+  - name: width
+    old_name:
+    type: integer
+  - name: height
+    old_name:
+    type: integer
+indexs:
+  - name: wh_inventory_item_active_idx
+    key: active
+    using: btree
+  - name: wh_inventory_item_asin_idx
+    key: asin
+    using: btree
+  - name: wh_inventory_item_brand_idx
+    key: brand
+    using: btree
+  - name: wh_inventory_item_created_at_idx
+    key: created_at
+    using: btree
+  - name: wh_inventory_item_merchant_code_idx
+    key: merchant_code
+    using: btree
+  - name: wh_inventory_item_model_idx
+    key: model
+    using: btree
+  - name: wh_inventory_item_product_name_idx
+    key: product_name
+    using: btree
+  - name: wh_inventory_item_rid_idx
+    key: rid
+    using: btree
+  - name: wh_inventory_item_sku_idx
+    key: sku
+    using: btree
+  - name: wh_inventory_item_supplier_tracking_number_idx
+    key: supplier_tracking_number
+    using: btree
+  - name: wh_inventory_item_updated_at_idx
+    key: updated_at
+    using: btree
+  - name: wh_inventory_item_warehouse_idx
+    key: warehouse
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

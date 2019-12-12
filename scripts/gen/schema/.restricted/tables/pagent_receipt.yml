@@ -1,0 +1,43 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: pagent_id
+    old_name:
+    type: bigint
+  - name: admin_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: receipt_at
+    old_name:
+    type: timestamp
+  - name: pagent_purchasing_amount_x
+    old_name:
+    type: integer
+  - name: commission_percent
+    old_name:
+    type: smallint
+  - name: commission_amount_x
+    old_name:
+    type: integer
+  - name: commission_amount_vnd
+    old_name:
+    type: integer
+  - name: exchange_rate
+    old_name:
+    type: integer
+  - name: note_purchase_commission
+    old_name:
+    type: text
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

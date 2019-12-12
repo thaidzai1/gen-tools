@@ -1,3 +1,5 @@
 %syntax-version=1.0.0
-%project=sqitch1
-%uri=https://g.ghn.vn/gic/databases/sqitch1
+%project=test_1
+%uri=https://g.ghn.vn/gic/databases/test1
+
+001-first-migrate 2019-12-12T09:50:35Z thaidzai <duongnt1@scommerce.vn> # Add schema 001-first-migrate

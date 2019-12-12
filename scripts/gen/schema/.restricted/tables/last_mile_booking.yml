@@ -1,0 +1,58 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: last_mile_id
+    old_name:
+    type: bigint
+  - name: booking_code
+    old_name:
+    type: text
+  - name: booking_fee_vnd
+    old_name:
+    type: bigint
+  - name: est_delivery_time
+    old_name:
+    type: timestamp
+  - name: actual_delivery_time
+    old_name:
+    type: timestamp
+  - name: actual_weight
+    old_name:
+    type: integer
+  - name: dim_weight
+    old_name:
+    type: integer
+  - name: length
+    old_name:
+    type: integer
+  - name: width
+    old_name:
+    type: integer
+  - name: height
+    old_name:
+    type: integer
+  - name: state
+    old_name:
+    type: text
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

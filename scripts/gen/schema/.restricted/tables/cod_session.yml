@@ -1,0 +1,88 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: parent_id
+    old_name:
+    type: bigint
+  - name: code
+    old_name:
+    type: text
+  - name: type
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: total_amount
+    old_name:
+    type: bigint
+  - name: actual_amount
+    old_name:
+    type: bigint
+  - name: amount_of_discrepancy
+    old_name:
+    type: bigint
+  - name: state
+    old_name:
+    type: text
+  - name: has_child
+    old_name:
+    type: boolean
+  - name: transaction_date
+    old_name:
+    type: timestamp
+  - name: rid
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+indexs:
+  - name: cod_session_code_idx
+    key: code
+    using: btree
+    unique: true
+  - name: cod_session_created_at_idx
+    key: created_at
+    using: btree
+  - name: cod_session_has_child_idx
+    key: has_child
+    using: btree
+  - name: cod_session_id_pkey
+    key: id
+    using: btree
+    unique: true
+  - name: cod_session_parent_id_idx
+    key: parent_id
+    using: btree
+  - name: cod_session_rid_idx
+    key: rid
+    using: btree
+  - name: cod_session_state_idx
+    key: state
+    using: btree
+  - name: cod_session_transaction_date_idx
+    key: transaction_date
+    using: btree
+  - name: cod_session_type_idx
+    key: type
+    using: btree
+  - name: cod_session_updated_at_idx
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

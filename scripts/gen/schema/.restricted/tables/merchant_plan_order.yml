@@ -1,0 +1,33 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: merchant_plan_id
+    old_name:
+    type: bigint
+  - name: plan_id
+    old_name:
+    type: bigint
+  - name: merchant_order_id
+    old_name:
+    type: bigint
+  - name: updated_at
+    old_name:
+    type: timestamp
+indexs:
+  - name: merchant_plan_order_merchant_order_id
+    key: merchant_order_id
+    using: btree
+  - name: merchant_plan_order_merchant_plan_id
+    key: merchant_plan_id
+    using: btree
+  - name: merchant_plan_order_plan_id
+    key: plan_id
+    using: btree
+  - name: merchant_plan_order_updated_at
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

@@ -1,0 +1,159 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: gcode
+    old_name:
+    type: text
+    unique: true
+  - name: gscode
+    old_name:
+    type: text
+  - name: flow
+    old_name:
+    type: text
+  - name: state
+    old_name:
+    type: text
+    not_null: true
+  - name: state_final
+    old_name:
+    type: smallint
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: cancelled_at
+    old_name:
+    type: timestamp
+  - name: merchant_order_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: warehouse
+    old_name:
+    type: text
+  - name: note_admin
+    old_name:
+    type: text
+  - name: note_cancel
+    old_name:
+    type: text
+  - name: real_weight
+    old_name:
+    type: integer
+  - name: supplier_courier
+    old_name:
+    type: text
+  - name: supplier_price_x
+    old_name:
+    type: integer
+  - name: supplier_tracking_number
+    old_name:
+    type: text
+  - name: forwarding_agent
+    old_name:
+    type: text
+  - name: is_test
+    old_name:
+    type: smallint
+  - name: product_name
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+  - name: customs_broker_agent
+    old_name:
+    type: text
+  - name: last_mile_provider
+    old_name:
+    type: text
+  - name: last_mile_code
+    old_name:
+    type: text
+  - name: sku
+    old_name:
+    type: text
+  - name: last_mile_status
+    old_name:
+    type: text
+  - name: wh_inventory_item_id
+    old_name:
+    type: bigint
+  - name: parcel_id
+    old_name:
+    type: bigint
+  - name: weight
+    old_name:
+    type: integer
+  - name: vnhub_parcel_id
+    old_name:
+    type: bigint
+  - name: product_id
+    old_name:
+    type: bigint
+  - name: sorting_code
+    old_name:
+    type: text
+  - name: tracking_number_id
+    old_name:
+    type: bigint
+  - name: package_info_id
+    old_name:
+    type: bigint
+indexs:
+  - name: order_item_cancelled_at_idx
+    key: cancelled_at
+    using: btree
+  - name: order_item_created_at_idx
+    key: created_at
+    using: btree
+  - name: order_item_f4parcel_id_idx
+    key: vnhub_parcel_id
+    using: btree
+  - name: order_item_gscode_idx
+    key: gscode
+    using: btree
+  - name: order_item_parcel_id_idx
+    key: parcel_id
+    using: btree
+  - name: order_item_rid_idx
+    key: rid
+    using: btree
+  - name: order_item_sku_idx
+    key: sku
+    using: btree
+  - name: order_item_state_final_idx
+    key: state_final
+    using: btree
+  - name: order_item_state_idx
+    key: state
+    using: btree
+  - name: order_item_supplier_tracking_number_idx
+    key: supplier_tracking_number
+    using: btree
+  - name: order_item_updated_at_idx
+    key: updated_at
+    using: btree
+  - name: order_item_warehouse_idx
+    key: warehouse
+    using: btree
+  - name: order_merchant_order_id_idx
+    key: merchant_order_id
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

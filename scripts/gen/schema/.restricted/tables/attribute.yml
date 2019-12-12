@@ -1,0 +1,44 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: name
+    old_name:
+    type: text
+  - name: description
+    old_name:
+    type: text
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+indexs:
+  - name: attribute_created_at_idx
+    key: created_at
+    using: btree
+  - name: attribute_id_idx
+    key: id
+    using: btree
+  - name: attribute_merchant_id_idx
+    key: merchant_id
+    using: btree
+  - name: attribute_name_idx
+    key: name
+    using: btree
+  - name: attribute_updated_at_idx
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

@@ -1,0 +1,86 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: price_per_item_x
+    old_name:
+    type: integer
+  - name: price_per_weight_x
+    old_name:
+    type: integer
+  - name: insurance_fee_percent
+    old_name:
+    type: integer
+  - name: purchasing_fee_percent
+    old_name:
+    type: integer
+  - name: exchange_rate
+    old_name:
+    type: integer
+  - name: plan_id
+    old_name:
+    type: bigint
+  - name: country
+    old_name:
+    type: text
+  - name: currency
+    old_name:
+    type: text
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+  - name: active
+    old_name:
+    type: boolean
+  - name: category
+    old_name:
+    type: text
+  - name: cost_of_sale_percent
+    old_name:
+    type: double precision
+  - name: profit_margin_percent
+    old_name:
+    type: double precision
+indexs:
+  - name: pricing_config_action_admin_id_idx
+    key: action_admin_id
+    using: btree
+  - name: pricing_config_active_idx
+    key: active
+    using: btree
+  - name: pricing_config_category_idx
+    key: category
+    using: btree
+  - name: pricing_config_country_idx
+    key: country
+    using: btree
+  - name: pricing_config_created_at_idx
+    key: created_at
+    using: btree
+  - name: pricing_config_id_idx
+    key: id
+    using: btree
+  - name: pricing_config_plan_id_idx
+    key: plan_id
+    using: btree
+  - name: pricing_config_updated_at_idx
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

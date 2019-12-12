@@ -1,0 +1,82 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+    not_null: true
+    unique: true
+  - name: description
+    old_name:
+    type: text
+  - name: max_use
+    old_name:
+    type: integer
+  - name: max_used_per_user
+    old_name:
+    type: integer
+  - name: started_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: expired_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: coupon_type
+    old_name:
+    type: smallint
+    not_null: true
+  - name: value_x
+    old_name:
+    type: integer
+    not_null: true
+  - name: value_vnd
+    old_name:
+    type: integer
+  - name: max_value_vnd
+    old_name:
+    type: integer
+  - name: discount_on
+    old_name:
+    type: text
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: action_admin_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: rid
+    old_name:
+    type: bigint
+  - name: active
+    old_name:
+    type: boolean
+    not_null: true
+  - name: current_condition_value
+    old_name:
+    type: text
+  - name: title
+    old_name:
+    type: text
+  - name: max_items
+    old_name:
+    type: integer
+  - name: max_items_per_user
+    old_name:
+    type: integer
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

@@ -2,34 +2,28 @@
 version: 1
 version_name: 1 - Init
 fields:
-  - name: code
+  - name: id
     old_name:
-    type: text
+    type: integer
     primary: true
     not_null: true
   - name: name
     old_name:
     type: text
-    not_null: true
-    unique: true
-  - name: description
-    old_name:
-    type: text
-  - name: country_name
-    old_name:
-    type: text
-  - name: carrier_code1
-    old_name:
-    type: text
-  - name: carrier_code2
-    old_name:
-    type: text
   - name: created_at
     old_name:
     type: timestamp
+    not_null: true
   - name: updated_at
     old_name:
     type: timestamp
+indexs:
+  - name: consignee_created_at_idx
+    key: created_at
+    using: btree
+  - name: consignee_updated_at_idx
+    key: updated_at
+    using: btree
 
 drop_fields:
 #  -name: fieldname

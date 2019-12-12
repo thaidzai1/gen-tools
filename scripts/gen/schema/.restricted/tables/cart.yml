@@ -2,26 +2,30 @@
 version: 1
 version_name: 1 - Init
 fields:
-  - name: code
+  - name: id
     old_name:
-    type: text
+    type: bigint
     primary: true
     not_null: true
-  - name: name
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: name_cart
     old_name:
     type: text
-    not_null: true
-    unique: true
-  - name: description
+  - name: link_cart
     old_name:
     type: text
-  - name: country_name
+  - name: image_cart
     old_name:
     type: text
-  - name: carrier_code1
+  - name: site
     old_name:
     type: text
-  - name: carrier_code2
+  - name: price_cart
+    old_name:
+    type: text
+  - name: currency
     old_name:
     type: text
   - name: created_at

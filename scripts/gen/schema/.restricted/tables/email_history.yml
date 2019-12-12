@@ -1,0 +1,38 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: from_address
+    old_name:
+    type: text
+  - name: to_address
+    old_name:
+    type: text
+  - name: subject
+    old_name:
+    type: text
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: status
+    old_name:
+    type: boolean
+  - name: error_message
+    old_name:
+    type: text
+indexs:
+  - name: email_history_created_at
+    key: created_at
+    using: btree
+  - name: email_history_from_address
+    key: from_address
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

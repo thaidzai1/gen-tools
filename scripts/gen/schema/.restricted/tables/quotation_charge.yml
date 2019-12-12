@@ -1,0 +1,22 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: range
+    old_name:
+    type: integer
+  - name: price
+    old_name:
+    type: integer
+  - name: quotation_id
+    old_name:
+    type: bigint
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

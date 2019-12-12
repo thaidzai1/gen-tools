@@ -1,0 +1,49 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+    unique: true
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: deleted_at
+    old_name:
+    type: timestamp
+  - name: disabled_at
+    old_name:
+    type: timestamp
+  - name: roles
+    old_name:
+    type: text[]
+  - name: name
+    old_name:
+    type: text
+    not_null: true
+  - name: email
+    old_name:
+    type: text
+    not_null: true
+    unique: true
+  - name: phone
+    old_name:
+    type: text
+    not_null: true
+    unique: true
+  - name: avatar
+    old_name:
+    type: text
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

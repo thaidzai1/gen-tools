@@ -1,0 +1,88 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+  - name: state
+    old_name:
+    type: text
+  - name: last_mile_status
+    old_name:
+    type: text
+  - name: num_deliver
+    old_name:
+    type: integer
+  - name: num_contact
+    old_name:
+    type: integer
+  - name: warehouse
+    old_name:
+    type: text
+  - name: dest_warehouse
+    old_name:
+    type: text
+  - name: last_mile_shipping_info_id
+    old_name:
+    type: bigint
+  - name: last_mile_booking_id
+    old_name:
+    type: bigint
+  - name: num_of_pack
+    old_name:
+    type: integer
+  - name: cod_amount
+    old_name:
+    type: integer
+  - name: sorting_code
+    old_name:
+    type: text
+  - name: parcel_type
+    old_name:
+    type: text
+  - name: weight
+    old_name:
+    type: integer
+  - name: dimensions
+    old_name:
+    type: text
+  - name: location
+    old_name:
+    type: bigint
+  - name: description
+    old_name:
+    type: text
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: integer
+  - name: demensions
+    old_name:
+    type: text
+  - name: note
+    old_name:
+    type: text
+  - name: vnhub_box_id
+    old_name:
+    type: bigint
+  - name: num_re_attempt
+    old_name:
+    type: integer
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

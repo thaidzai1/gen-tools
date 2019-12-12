@@ -1,0 +1,137 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: merchant
+    old_name:
+    type: text
+  - name: admin_id
+    old_name:
+    type: bigint
+  - name: plan_id
+    old_name:
+    type: bigint
+  - name: plan_name
+    old_name:
+    type: text
+  - name: mark_paid_by_admin_id
+    old_name:
+    type: bigint
+  - name: cancelled_by_admin_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: started_at
+    old_name:
+    type: timestamp
+  - name: expired_at
+    old_name:
+    type: timestamp
+  - name: paid_at
+    old_name:
+    type: timestamp
+  - name: disabled_at
+    old_name:
+    type: timestamp
+  - name: cancelled_at
+    old_name:
+    type: timestamp
+  - name: closed_at
+    old_name:
+    type: timestamp
+  - name: max_weight
+    old_name:
+    type: integer
+  - name: used_weight
+    old_name:
+    type: integer
+  - name: est_used_weight
+    old_name:
+    type: integer
+  - name: note
+    old_name:
+    type: text
+  - name: is_upgraded
+    old_name:
+    type: boolean
+  - name: upgrade_from_plan_id
+    old_name:
+    type: bigint
+  - name: upgrade_from_plan_name
+    old_name:
+    type: text
+  - name: is_renewal
+    old_name:
+    type: boolean
+  - name: is_fallback
+    old_name:
+    type: boolean
+  - name: fallback_from_plan_id
+    old_name:
+    type: bigint
+  - name: fallback_from_plan_name
+    old_name:
+    type: text
+  - name: status
+    old_name:
+    type: boolean
+  - name: state
+    old_name:
+    type: smallint
+indexs:
+  - name: merchant_plan_created_at_idx
+    key: created_at
+    using: btree
+  - name: merchant_plan_expired_at_idx
+    key: expired_at
+    using: btree
+  - name: merchant_plan_fallback_from_plan_id_idx
+    key: fallback_from_plan_id
+    using: btree
+  - name: merchant_plan_fallback_from_plan_name_idx
+    key: fallback_from_plan_name
+    using: btree
+  - name: merchant_plan_is_fallback_idx
+    key: is_fallback
+    using: btree
+  - name: merchant_plan_is_renewal_idx
+    key: is_renewal
+    using: btree
+  - name: merchant_plan_merchant_id_idx
+    key: merchant_id
+    using: btree
+  - name: merchant_plan_merchant_idx
+    key: merchant
+    using: btree
+  - name: merchant_plan_plan_id_idx
+    key: plan_id
+    using: btree
+  - name: merchant_plan_plan_name_idx
+    key: plan_name
+    using: btree
+  - name: merchant_plan_started_at_idx
+    key: started_at
+    using: btree
+  - name: merchant_plan_status_idx
+    key: status
+    using: btree
+  - name: merchant_plan_updated_at_idx
+    key: updated_at
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

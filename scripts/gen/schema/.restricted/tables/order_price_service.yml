@@ -1,0 +1,38 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: order_price_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: value
+    old_name:
+    type: bigint
+    not_null: true
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: service_id
+    old_name:
+    type: bigint
+indexs:
+  - name: order_price_service_order_price_id_idx
+    key: order_price_id
+    using: btree
+  - name: pk_order_price_service
+    key: id
+    using: btree
+    unique: true
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

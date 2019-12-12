@@ -1,0 +1,31 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: order_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: revision
+    old_name:
+    type: bigint
+    not_null: true
+  - name: user_id
+    old_name:
+    type: bigint
+    not_null: true
+  - name: updated_at
+    old_name:
+    type: timestamp
+    not_null: true
+  - name: changes
+    old_name:
+    type: jsonb
+indexs:
+  - name: order_price_history_revision_idx
+    key: revision
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

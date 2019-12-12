@@ -15,13 +15,19 @@ fields:
   - name: description
     old_name:
     type: text
-  - name: country_name
+  - name: short_name
     old_name:
     type: text
-  - name: carrier_code1
+  - name: address
     old_name:
     type: text
-  - name: carrier_code2
+  - name: phone
+    old_name:
+    type: text
+  - name: fax
+    old_name:
+    type: text
+  - name: pic
     old_name:
     type: text
   - name: created_at

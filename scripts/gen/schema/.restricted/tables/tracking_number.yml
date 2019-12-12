@@ -1,0 +1,49 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamp
+  - name: updated_at
+    old_name:
+    type: timestamp
+  - name: deleted_at
+    old_name:
+    type: timestamp
+  - name: merchant_order_id
+    old_name:
+    type: bigint
+  - name: no_packages
+    old_name:
+    type: integer
+  - name: rid
+    old_name:
+    type: bigint
+indexs:
+  - name: tracking_number_code_merchant_order_id
+    key: code, merchant_order_id
+    using: btree
+    unique: true
+  - name: tracking_number_code_merchant_order_id_idx
+    key: code, merchant_order_id
+    using: btree
+    unique: true
+  - name: tracking_number_rid_idx
+    key: rid
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname
