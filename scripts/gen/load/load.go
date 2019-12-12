@@ -111,6 +111,7 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 			// Get Table Fields Changed or New
 			curFields := curTables[changedTableKey].Fields
 			curIndexs := curTables[changedTableKey].Indexs
+			curDropFields := curTables[changedTableKey].DropFields
 			var diffTable models.AlterTable
 			for _, changedField := range changedTable.Fields {
 				isAlreadyExisted := false
@@ -192,16 +193,35 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 				}
 			}
 
+			var dropFields []models.DropFields
+			for _, changedDropField := range changedTable.DropFields {
+				isDropped := true
+				for _, curDropField := range curDropFields {
+					if changedDropField.Name == curDropField.Name {
+						isDropped = false
+					}
+				}
+
+				if isDropped {
+					dropField := models.DropFields{
+						Name: changedDropField.Name,
+					}
+
+					dropFields = append(dropFields, dropField)
+				}
+			}
+
 			if len(diffTable.Fields) > 0 {
 				ll.Info("==> Must create new alter script")
 				diffTable.Name = changedTable.TableName
 				diffTables = append(diffTables, diffTable)
 			}
 
-			if len(arrIndex) > 0 {
+			if len(arrIndex) > 0 || len(dropFields) > 0 {
 				newTables = append(newTables, models.TableDefination{
-					TableName: changedTable.TableName,
-					Indexs:    arrIndex,
+					TableName:  changedTable.TableName,
+					Indexs:     arrIndex,
+					DropFields: dropFields,
 				})
 			}
 		}

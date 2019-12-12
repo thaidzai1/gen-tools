@@ -30,6 +30,7 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
+	ll.Print("genSchemaDef: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -79,7 +80,7 @@ func genPlanNamePrefix(planIndex string) string {
 
 func startNewSqitchPlan() string {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf("Enter migrate plan name: (For example: %v)\n", genPlanNamePrefix(getPlanIndex())+"xxxxxx")
+	fmt.Printf("Enter migrate plan name: (For example: %v)", genPlanNamePrefix(getPlanIndex())+"xxxxxx")
 	planName, _ = reader.ReadString('\n')
 	planName = strings.Replace(planName, "\n", "", -1)
 
@@ -113,6 +114,14 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
 CREATE {{- if eq $index.Unique true}} UNIQUE{{- end}} INDEX IF NOT EXISTS {{$index.Name}} ON "{{$table.TableName}}" USING {{$index.Using}} ({{$index.Key}});
 {{- end}}
 {{- end}}
+
+{{- if $table.DropFields}}
+{{- range $indexDropField, $dropField := $table.DropFields}}
+ALTER TABLE IF EXISTS {{$table.TableName}}
+	DROP COLUMN IF EXISTS {{$dropField.Name}} CASCADE;
+{{- end}}
+{{- end}}
+
 {{- end}}
 
 {{- range $index, $table := $.AlterTables}}

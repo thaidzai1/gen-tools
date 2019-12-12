@@ -9,14 +9,17 @@ type DBSchema struct {
 
 // TableDefination ...
 type TableDefination struct {
-	Version     int    `validate:"required"`
-	VersionName string `yaml:"version_name"`
+	Version     int          `validate:"required"`
+	VersionName string       `yaml:"version_name"`
+	Fields      []Field      `yaml:"fields"`
+	Indexs      []Index      `yaml:"indexs"`
+	DropFields  []DropFields `yaml:"drop_fields"`
 	TableName   string
-	Fields      []Field `yaml:"fields"`
-	Indexs      []Index `yaml:"indexs"`
-	DropFields  []struct {
-		Name string `yaml:"name"`
-	} `yaml:"drop_fields"`
+}
+
+// DropFields ...
+type DropFields struct {
+	Name string `yaml:"name"`
 }
 
 // Field ...
