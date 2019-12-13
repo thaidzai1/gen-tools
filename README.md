@@ -40,3 +40,28 @@ sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/
 
 ## Log
 sqitch log db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_test_squitch
+
+## FLow of Migration
+
+```mermaid
+graph TD
+A[Edit YAML file] 
+B{Have new Funcs or Triggers ?}
+C1[Create & write .sql file in './scripts/gen/schema/fuctions']
+C2{Generate right?}
+D1{Ready to deploy migrate?}
+E1[git push commit & run `./scripts/deploy.sh`]
+E2{Script SQL won't work by mistake?}
+F1[Generate again with old migrate plan again, same old plan index]
+F2[Add new migrate plan]
+A --> B
+B -- Yes --> C1
+B -- No --> C2
+C2 -- Yes --> D1
+C2 -- No --> E2
+D1 -- Yes --> E1
+E2 -- Yes --> F1
+E2 -- No, script works, wrong config --> F2
+F2 --> A
+F1 --> A
+```
