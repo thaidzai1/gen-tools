@@ -196,7 +196,7 @@ COMMIT;
 	var buf bytes.Buffer
 	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap).Parse(script))
 	tpl.Execute(&buf, &migrate)
-	dir := gen.GetAbsPath("gic/sqitch/deploy/")
+	dir := gen.GetAbsPath("gic/databases/sqitch.git/deploy/")
 	absPath := gen.GetAbsPath(dir + "/" + planName + ".sql")
 	err := ioutil.WriteFile(absPath, buf.Bytes(), os.ModePerm)
 	if err != nil {
