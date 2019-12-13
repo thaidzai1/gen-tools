@@ -50,14 +50,17 @@ B{Have new Funcs or Triggers ?}
 C1[Create & write .sql file in './scripts/gen/schema/fuctions']
 C2{Generate right?}
 D1{Ready to deploy migrate?}
+D2[Run ./scripts/gen-migrate.sh]
 E1[git push commit & run `./scripts/deploy.sh`]
 E2{Script SQL won't work by mistake?}
 F1[Generate again with old migrate plan again, same old plan index]
 F2[Add new migrate plan]
 A --> B
 B -- Yes --> C1
-B -- No --> C2
+B -- No --> D2
+C1 --> D2
 C2 -- Yes --> D1
+D2 --> C2
 C2 -- No --> E2
 D1 -- Yes --> E1
 E2 -- Yes --> F1
