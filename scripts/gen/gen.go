@@ -97,6 +97,66 @@ func generateDeploySQLScript(migrate *models.MigrateSchema) {
 	var script string = `
 BEGIN;
 
+{{- range $index, $table := $.AlterTables}}
+{{$primaryKeyExisted := false }}
+{{- range $fieldIndex, $field := $table.Fields}}
+	{{- if not $field.IsNewField}}
+		{{- if ne $field.Field.OldName ""}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			RENAME COLUMN {{$field.Field.OldName}} TO {{$field.Field.Name}};
+		{{- end}}
+
+		{{- if or $field.IsPrimaryChanged}}
+		 	{{- if not $primaryKeyExisted}}
+				ALTER TABLE IF EXISTS {{$table.Name}} DROP CONSTRAINT {{$table.Name}}_pkey;
+				{{- if $field.Field.Primary}}
+				ALTER TABLE IF EXISTS {{$table.Name}} ADD PRIMARY KEY ({{$field.Field.Name}});
+				{{- end}}
+			{{- end}}
+		{{- end}}
+
+		{{- if or $field.IsNotNullChanged}}
+			{{- if not $field.Field.Primary}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET{{else}} DROP{{- end}} NOT NULL;	
+			{{- end}}
+		{{- end}}
+
+		{{- if or $field.IsUniqueChanged}} 
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			{{- if $field.Field.Unique}}
+			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 
+			{{else}}
+			DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Field.Name}}_key CASCADE; 
+			{{- end}}
+		{{- end}}
+
+	{{else}}
+	
+	ALTER TABLE IF EXISTS {{$table.Name}}
+		ADD COLUMN IF NOT EXISTS {{$field.Field.Name}} {{$field.Field.Type}};
+		{{- if $field.Field.Primary}}
+		{{$primaryKeyExisted = true}}
+		ALTER TABLE IF EXISTS {{$table.Name}} DROP CONSTRAINT {{$table.Name}}_pkey;
+		ALTER TABLE IF EXISTS {{$table.Name}} ADD PRIMARY KEY ({{$field.Field.Name}});
+		{{- end}}
+		
+		{{- if not $field.Field.Primary}}
+			{{- if $field.Field.NotNull}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ALTER COLUMN {{$field.Field.Name}} SET NOT NULL;	
+			{{- end}}
+		{{- end}}
+
+		{{- if $field.Field.Unique}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 	
+		{{- end}}
+		
+	{{- end}}
+{{- end}}
+{{- end}}
+
 {{- range $index, $table := $.Tables}}
 {{- if $table.Fields}}
 CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
@@ -122,31 +182,6 @@ ALTER TABLE IF EXISTS {{$table.TableName}}
 {{- end}}
 {{- end}}
 
-{{- end}}
-
-{{- range $index, $table := $.AlterTables}}
-{{- range $fieldIndex, $field := $table.Fields}}
-	{{- if ne $field.Field.OldName ""}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	RENAME COLUMN {{$field.Field.OldName}} TO {{$field.Field.Name}};
-	{{- end}}
-	{{- if $field.IsNewField}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	ADD COLUMN IF NOT EXISTS {{$field.Field.Name}} {{$field.Field.Type}};
-	{{- end}}
-	{{- if or $field.IsNotNullChanged $field.IsNewField}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET{{else}} DROP{{- end}} NOT NULL;
-	{{- end}}
-	{{- if or $field.IsUniqueChanged $field.IsNewField}} 
-ALTER TABLE IF EXISTS {{$table.Name}}
-	{{- if $field.Field.Unique}}
-	ADD CONSTRAINT {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 
-	{{else}}
-	DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Field.Name}}_key CASCADE; 
-	{{- end}}
-	{{- end}}
-{{- end}}
 {{- end}}
 
 /*-- TRIGGER BEGIN --*/

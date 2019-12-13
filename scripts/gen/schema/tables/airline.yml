@@ -32,6 +32,5 @@ fields:
     type: timestamp
 
 drop_fields:
-  - name: test
 #  -name: fieldname
 #  -name: fieldname

@@ -2,10 +2,13 @@
 version: 1
 version_name: 1 - Init
 fields:
-  - name: code
+  - name: id
     old_name:
     type: text
     primary: true
+  - name: code
+    old_name:
+    type: text
     not_null: true
   - name: name
     old_name:
