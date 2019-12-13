@@ -1,3 +1,4 @@
 Gopkg.lock
 vendor
 .DS_Store
+go.sum

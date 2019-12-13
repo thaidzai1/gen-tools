@@ -1,7 +1,7 @@
 package main
 
 import (
-	tableGen "gido.vn/gic/sqitch/scripts/gen"
+	tableGen "gido.vn/gic/databases/sqitch.git/scripts/gen"
 )
 
 const (

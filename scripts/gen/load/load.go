@@ -7,7 +7,7 @@ import (
 
 	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
-	"gido.vn/gic/sqitch/scripts/gen/models"
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gopkg.in/yaml.v2"
 )
 
