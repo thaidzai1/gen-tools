@@ -12,11 +12,11 @@ import (
 	"strings"
 	"text/template"
 
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/load"
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/middlewares"
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
-	"gido.vn/gic/sqitch/scripts/gen/load"
-	"gido.vn/gic/sqitch/scripts/gen/middlewares"
-	"gido.vn/gic/sqitch/scripts/gen/models"
 )
 
 var (
@@ -36,7 +36,7 @@ func Exec(inputPath string) {
 
 func getPlanIndex() string {
 	var planIndex string
-	sqitchPlanPath := gen.GetAbsPath("gic/sqitch/sqitch.plan")
+	sqitchPlanPath := gen.GetAbsPath("gic/databases/sqitch.git/sqitch.plan")
 	file, err := os.Open(sqitchPlanPath)
 	if err != nil {
 		panic(err)
