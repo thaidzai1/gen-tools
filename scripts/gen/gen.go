@@ -119,7 +119,7 @@ BEGIN;
 			RENAME COLUMN {{$field.Field.OldName}} TO {{$field.Field.Name}};
 		{{- end}}
 
-		{{- if or $field.IsPrimaryChanged}}
+		{{- if $field.IsPrimaryChanged}}
 		 	{{- if not $primaryKeyExisted}}
 				ALTER TABLE IF EXISTS {{$table.Name}} DROP CONSTRAINT {{$table.Name}}_pkey;
 				{{- if $field.Field.Primary}}
@@ -128,19 +128,28 @@ BEGIN;
 			{{- end}}
 		{{- end}}
 
-		{{- if or $field.IsNotNullChanged}}
+		{{- if $field.IsNotNullChanged}}
 			{{- if not $field.Field.Primary}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET{{else}} DROP{{- end}} NOT NULL;	
 			{{- end}}
 		{{- end}}
 
-		{{- if or $field.IsUniqueChanged}} 
+		{{- if $field.IsUniqueChanged}} 
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			{{- if $field.Field.Unique}}
 			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 
 			{{else}}
 			DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Field.Name}}_key CASCADE; 
+			{{- end}}
+		{{- end}}
+
+		{{- if $field.IsDefaultChanged}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			{{- if ne $field.Field.Default ""}}
+			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
+			{{else}}
+			ALTER COLUMN {{$field.Field.Name}} DROP DEFAULT;
 			{{- end}}
 		{{- end}}
 
@@ -164,6 +173,11 @@ BEGIN;
 		{{- if $field.Field.Unique}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 	
+		{{- end}}
+
+		{{- if ne $field.Field.Default ""}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
 		{{- end}}
 		
 	{{- end}}

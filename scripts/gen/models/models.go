@@ -30,6 +30,7 @@ type Field struct {
 	Primary bool   `yaml:"primary"`
 	NotNull bool   `yaml:"not_null"`
 	Unique  bool   `yaml:"unique"`
+	Default string `yaml:"default"`
 }
 
 // Index ...
@@ -53,6 +54,7 @@ type FieldChanged struct {
 	IsPrimaryChanged bool
 	IsNotNullChanged bool
 	IsUniqueChanged  bool
+	IsDefaultChanged bool
 }
 
 // MigrateSchema ..

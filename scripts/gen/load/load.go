@@ -141,6 +141,11 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 							field.Field.Unique = changedField.Unique
 							field.IsUniqueChanged = true
 						}
+						if changedField.Default != curField.Default {
+							isFieldUpdated = true
+							field.Field.Default = changedField.Default
+							field.IsDefaultChanged = true
+						}
 						if isFieldUpdated {
 							ll.Info("==> Append table field")
 							diffTable.Fields = append(diffTable.Fields, field)
@@ -163,6 +168,7 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 							Primary: changedField.Primary,
 							NotNull: changedField.NotNull,
 							Unique:  changedField.Unique,
+							Default: changedField.Default,
 						},
 						IsNewField: true,
 					}

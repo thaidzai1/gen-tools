@@ -6,7 +6,7 @@ Run in command:
 
 # Download source
 
-Run in command `'go get -u gido.vn/gic/sqitch'`
+Run in command `'go get -u gido.vn/gic/databases/sqitch.git'`
 
 # Generate Migrate plan
 
@@ -30,6 +30,8 @@ or
 Run in command `'go run ./scripts/deploy/deploy.go'`
 
 # Test Deployment
+
+Change defaultConfig() -> defaultTestConfig() in ./scripts/deploy/deploy.go to use test DB
 
 ## Check status
 sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_stag

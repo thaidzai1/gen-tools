@@ -54,7 +54,7 @@ func main() {
 
 	// Load config
 	if *flConfigFile == "" {
-		cfg = defaultConfig()
+		cfg = defaultTestConfig()
 	} else {
 		err := load(*flConfigFile, &cfg)
 		if err != nil {
@@ -68,6 +68,7 @@ func main() {
 	cmd.Stderr = &stderr
 	cmd.Run()
 	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
+	ll.Print("outStr: ", outStr, errStr)
 
 	if !strings.Contains(outStr, "not ok") {
 		deployNothingKeyword := "Nothing to deploy"
