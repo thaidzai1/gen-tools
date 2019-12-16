@@ -1,2 +1,5 @@
 Gopkg.lock
 vendor
+.DS_Store
+go.sum
+sql2yml/backup.sql

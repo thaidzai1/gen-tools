@@ -1,0 +1,50 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: code
+    old_name:
+    type: text
+  - name: type
+    old_name:
+    type: text
+  - name: vendor_id
+    old_name:
+    type: bigint
+  - name: sender_name
+    old_name:
+    type: text
+  - name: sender_phone
+    old_name:
+    type: text
+  - name: warehouse
+    old_name:
+    type: text
+  - name: status
+    old_name:
+    type: text
+  - name: total_amount
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamptz
+  - name: updated_at
+    old_name:
+    type: timestamptz
+  - name: action_admin_id
+    old_name:
+    type: bigint
+indexs:
+  - name: receipt_code
+    key: code
+    using: btree
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

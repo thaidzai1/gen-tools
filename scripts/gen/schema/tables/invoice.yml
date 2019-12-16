@@ -1,0 +1,29 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: invoice_no
+    old_name:
+    type: text
+    unique: true
+  - name: date
+    old_name:
+    type: date
+  - name: payment_type
+    old_name:
+    type: text
+  - name: payment_term
+    old_name:
+    type: text
+  - name: hawb_id
+    old_name:
+    type: bigint
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname

@@ -1,0 +1,34 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: type
+    old_name:
+    type: text
+  - name: method
+    old_name:
+    type: text
+  - name: merchant_id
+    old_name:
+    type: bigint
+  - name: url
+    old_name:
+    type: text
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamptz
+  - name: updated_at
+    old_name:
+    type: timestamptz
+
+drop_fields:
+#  -name: fieldname
+#  -name: fieldname
