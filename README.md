@@ -1,33 +1,65 @@
 # Go ENV
 Run in command: 
-`'export GOPATH=$HOME/code/go'`
-`'export GOPRIVATE=gido.vn,g.ghn.vn'`
-`'export GOROOT=/usr/local/go'`
+```
+export GOPATH=$HOME/code/go
+export GOPRIVATE=gido.vn,g.ghn.vn
+export GOROOT=/usr/local/go
+```
 
 # Download source
 
-Run in command `'go get -u gido.vn/gic/databases/sqitch.git'`
+Run in command 
+```
+go get -u gido.vn/gic/databases/sqitch.git
+```
+
+# Contribute 
+
+Run in command 
+```
+git clone git@g.ghn.vn:gic/databases/sqitch.git
+```
 
 # Generate Migrate plan
 
 ## Create triggers or functions file
-While having new triggers or functions, create sql file exactly with plan name in ./scripts/gen/schema/functions
+While having new triggers or functions, create sql file exactly with plan name in ./schema/functions
 - For example:
-Plan name is: 001-test => Create file in ./scripts/gen/schema/functions/001-test.sql
+Plan name is: 001-test => Create file in ./schema/functions/001-test.sql
+
+# USAGE
+
+## Build
+Run in command
+```
+go install ./...
+```
 
 ## Run generate command
-Run in command `'./scripts/gen-migrate.sh'`
+Run in command 
+```
+$GOPATH/bin/sqitch.git
+```
 
 or 
 
-Run in command `'go run ./scripts/migrate-gen.go'`
+Run in command 
+```
+go run ./scripts/migrate-gen.go
+```
 
 ## Run deploy command
-Run in command `'./scripts/deploy.sh'`
+Run in command 
+```
+$GOPATH/bin/deploy-sqitch
+```
 
 or 
 
-Run in command `'go run ./scripts/deploy/deploy.go'`
+Run in command 
+```
+go run ./scripts/deploys-sqitch/main.go
+```
 
 # Test Deployment
 
