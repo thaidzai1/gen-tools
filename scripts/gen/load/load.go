@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
-	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gopkg.in/yaml.v2"
 )
 
@@ -40,7 +40,7 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 			mapTableDefs = loadTableDefFromYaml(files, schemaPath)
 		}
 		if schemaKey == schemaFuncText {
-			byteTriggerContent, err := ioutil.ReadFile(gen.GetAbsPath("gic/sqitch/scripts/gen/schema/functions/" + planName + ".sql"))
+			byteTriggerContent, err := ioutil.ReadFile(gen.GetAbsPath("gic/database/sqitch.git/scripts/gen/schema/functions/" + planName + ".sql"))
 			if err != nil {
 				ll.Error("Error read file deploy failed:", l.Error(err))
 			}

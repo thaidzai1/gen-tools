@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	inputPath = "gic/sqitch/scripts/gen/schema/schema.yml"
+	inputPath = "gic/databases/sqitch.git/scripts/gen/schema/schema.yml"
 )
 
 func main() {

@@ -6,11 +6,7 @@ Run in command:
 
 # Download source
 
-Run in command `'go get gido.vn/gic/sqitch'`
-
-# Install
-
-Run in command `'./scripts/install-tool.sh'`
+Run in command `'go get -u gido.vn/gic/sqitch'`
 
 # Generate Migrate plan
 
@@ -36,10 +32,10 @@ Run in command `'go run ./scripts/deploy/deploy.go'`
 # Test Deployment
 
 ## Check status
-sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_test_squitch
+sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_stag
 
 ## Log
-sqitch log db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_test_squitch
+sqitch log db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_stag
 
 ## FLow of Migration
 

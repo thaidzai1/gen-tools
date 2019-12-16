@@ -34,7 +34,18 @@ func defaultConfig() dbConfig {
 		Password: "mhh42mw0IYFQx7w3aENAh",
 		Host:     "35.220.166.103",
 		Port:     "5432",
-		DBName:   "gido_test_squitch",
+		DBName:   "gido_stag",
+	}
+}
+
+func defaultTestConfig() dbConfig {
+	return dbConfig{
+		Type:     "postgres",
+		Username: "gido_stag",
+		Password: "mhh42mw0IYFQx7w3aENAh",
+		Host:     "35.220.166.103",
+		Port:     "5432",
+		DBName:   "gido_test_sqitch_dev",
 	}
 }
 
