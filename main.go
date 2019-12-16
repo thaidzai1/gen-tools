@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 
 	tableGen "gido.vn/gic/databases/sqitch.git/scripts/gen"
 	"gido.vn/gic/libs/common.git/l"
@@ -15,8 +16,9 @@ var (
 func main() {
 	flag.Parse()
 
-	if flConfigFile == nil {
-		ll.Panic("Error schema file not found")
+	if *flConfigFile == "" {
+		ll.Error("Error schema file not found")
+		os.Exit(0)
 	}
 
 	tableGen.Exec(*flConfigFile)

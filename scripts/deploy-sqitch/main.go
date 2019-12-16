@@ -55,8 +55,9 @@ func defaultTestConfig() dbConfig {
 func main() {
 	flag.Parse()
 
-	if flConfigPath == nil {
-		ll.Panic("Error schema folder not found")
+	if *flConfigPath == "" {
+		ll.Error("Error schema folder not found")
+		os.Exit(0)
 	}
 
 	// Load config
