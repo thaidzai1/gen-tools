@@ -39,7 +39,7 @@ var (
 )
 
 func main() {
-	file, err := os.Open(gen.GetAbsPath("gic/sqitch/sql2yml/backup.sql"))
+	file, err := os.Open(gen.GetAbsPath("gic/databases/sqitch.git/sql2yml/backup.sql"))
 	if err != nil {
 		fmt.Printf("Error open file: %v\n", err)
 	}
@@ -238,7 +238,7 @@ fields:
 {{- if eq $field.Primary true}}
     primary: true
 {{- end}}
-{{- if or $field.NotNull $field.Primary}}
+{{- if $field.NotNull}}
     not_null: true
 {{- end}}
 {{- if eq $field.Unique true}}
@@ -267,7 +267,7 @@ drop_fields:
 		var buf bytes.Buffer
 		tpl := template.Must(template.New("scripts").Parse(script))
 		tpl.Execute(&buf, &table)
-		dir := gen.GetAbsPath("gic/sqitch/scripts/gen/schema/tables/")
+		dir := gen.GetAbsPath("gic/databases/sqitch.git/scripts/gen/schema/tables/")
 		absPath := gen.GetAbsPath(dir + "/" + table.Name + ".yml")
 		ll.Print("absPath: ", absPath)
 		err := ioutil.WriteFile(absPath, buf.Bytes(), os.ModePerm)
