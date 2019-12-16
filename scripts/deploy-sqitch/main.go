@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gido.vn/gic/libs/common.git/l"
 	"gopkg.in/yaml.v2"
 )
@@ -23,6 +24,7 @@ type dbConfig struct {
 
 var (
 	ll             = l.New()
+	flConfigPath   = flag.String("schema", "", "-c")
 	flConfigFile   = flag.String("config-file", "", "Path to config file")
 	cfg            dbConfig
 	projectPath, _ = os.Getwd()
@@ -53,6 +55,10 @@ func defaultTestConfig() dbConfig {
 func main() {
 	flag.Parse()
 
+	if flConfigPath == nil {
+		ll.Panic("Error schema folder not found")
+	}
+
 	// Load config
 	if *flConfigFile == "" {
 		cfg = defaultTestConfig()
@@ -76,7 +82,7 @@ func main() {
 		cmdLog.Stdout = os.Stdout
 		cmdLog.Run()
 		if !strings.Contains(outStr, deployNothingKeyword) {
-			copyAllYamlSchema()
+			copyAllYamlSchema(*flConfigPath)
 			cmdLog = exec.Command("echo", "Update Restricted area DONE†...†\n")
 			cmdLog.Stdout = os.Stdout
 			cmdLog.Run()
@@ -104,8 +110,18 @@ func load(configPath string, v interface{}) (err error) {
 	return
 }
 
-func copyAllYamlSchema() {
-	path := projectPath + "/scripts/gen/schema/"
-	cmd := exec.Command("cp", "-a", path+"tables", path+".restricted")
+func copyAllYamlSchema(schemaPath string) {
+	data, err := ioutil.ReadFile(schemaPath)
+	if err != nil {
+		ll.Panic("Error load schema yml failed")
+	}
+
+	var dbSchema models.DBSchema
+	err = yaml.Unmarshal(data, &dbSchema)
+
+	pathTables := dbSchema.Schemas["tables"]
+	pathRestricted := dbSchema.Schemas["restricted"]
+
+	cmd := exec.Command("cp", "-R", pathTables+"/", pathRestricted)
 	cmd.Run()
 }

@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	// inputPath    = "gic/databases/sqitch.git/scripts/gen/schema/schema.yml"
 	flConfigFile = flag.String("schema", "", "-c")
 	ll           = l.New()
 )

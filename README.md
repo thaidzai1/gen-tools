@@ -29,6 +29,44 @@ Plan name is: 001-test => Create file in ./schema/functions/001-test.sql
 
 # USAGE
 
+## Prepare schema folder
+
+### Structure 
+```
+schema
++-- functions
+|   +-- 001-triggers.yml
+|   ...
++-- tables
+|   +-- table_name_1.yml
+|   ...
++-- .restricted
+|   +-- tables
++-- schema.yml
+```
+
+### Schema configuration
+```
+version: 1
+version_name: 1 - Init project
+
+schemas:
+  tables: 'path to table dir'
+  functions: 'path to funcions dir'
+  restricted: 'path to restricted dir'
+```
+
+For ex: 
+```
+version: 1
+version_name: 1 - Init project
+
+schemas:
+  tables: /Users/thaidzai/schema/tables
+  functions: /Users/thaidzai/schema/functions
+  restricted: /Users/thaidzai/schema/.restricted/tables
+```
+
 ## Build
 Run in command
 ```
@@ -38,27 +76,32 @@ go install ./...
 ## Run generate command
 Run in command 
 ```
-$GOPATH/bin/sqitch.git
+$GOPATH/bin/sqitch.git -schema 'schema configuration yaml file path'
 ```
 
 or 
 
 Run in command 
 ```
-go run ./scripts/migrate-gen.go
+go run ./scripts/migrate-gen.go -schema 'schema configuration yaml file path'
+```
+
+Example: 
+```
+$GOPATH/bin/sqitch.git -schema /Users/schema/schema.yml
 ```
 
 ## Run deploy command
 Run in command 
 ```
-$GOPATH/bin/deploy-sqitch
+$GOPATH/bin/deploy-sqitch -schema 'schema configuration yaml file path'
 ```
 
 or 
 
 Run in command 
 ```
-go run ./scripts/deploys-sqitch/main.go
+go run ./scripts/deploys-sqitch/main.go -schema 'schema configuration yaml file path'
 ```
 
 # Test Deployment
