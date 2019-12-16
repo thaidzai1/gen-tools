@@ -30,7 +30,6 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
-	ll.Print("genSchemaDef: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -78,17 +77,31 @@ func genPlanNamePrefix(planIndex string) string {
 	return planIndex + "-"
 }
 
-func startNewSqitchPlan() string {
+func startNewSqitchPlan() (string, string) {
+	var note string
+
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf("Enter migrate plan name: (For example: %v)", genPlanNamePrefix(getPlanIndex())+"xxxxxx")
+	fmt.Printf("Enter migrate plan name : (For example: %v) ", genPlanNamePrefix(getPlanIndex())+"xxxxxx")
 	planName, _ = reader.ReadString('\n')
 	planName = strings.Replace(planName, "\n", "", -1)
+	if len(planName) == 0 {
+		ll.Error("Migration's name is required")
+		os.Exit(0)
+	}
 
-	return planName
+	fmt.Printf("Enter migrate note :")
+	note, _ = reader.ReadString('\n')
+	note = strings.Replace(note, "\n", "", -1)
+	if len(note) == 0 {
+		note = "Add schema " + planName
+	}
+
+	return planName, note
 }
 
-func createNewSqitchPlan(planName string) {
-	cmd := exec.Command("sqitch", "add", planName, "-n", "Add schema "+planName)
+func createNewSqitchPlan(planName string, note string) {
+	ll.Print("createnewsqitch: ", planName, note)
+	cmd := exec.Command("sqitch", "add", planName, "-n", note)
 	ll.Info("Run sqitch add plan... Done†")
 	cmd.Run()
 }
@@ -203,45 +216,6 @@ COMMIT;
 		ll.Error("Error write file failed, %v\n", l.Error(err))
 	}
 	ll.Info("==> Generate migrate deploy DONE†")
-}
-
-func generateRevertSQLScript(migrate *models.MigrateSchema) {
-	var script string = `
-{{- range $tableIndex, $table := $.Tables}}
-DROP TABLE IF EXISTS {{$table.TableName}} CASCADE
-{{- range $i, $index := $table.Indexs}}
-DROP INDEX CONCURRENTLY IF EXISTS {{$index.Name}} CASCADE
-{{- end}}
-{{- end}}
-
-{{- range $index, $table := $.AlterTables}}
-{{- range $fieldIndex, $field := $table.Fields}}
-	{{- if ne $field.Field.OldName ""}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	RENAME COLUMN {{$field.Field.Name}} TO {{$field.Field.OldName}};
-	{{- end}}
-	{{- if $field.IsNewField}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	DROP COLUMN IF EXISTS {{$field.Field.Name}};
-	{{- end}}
-	{{- if or $field.IsNotNullChanged $field.IsNewField}}
-ALTER TABLE IF EXISTS {{$table.Name}}
-	ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET{{else}} DROP{{- end}} NOT NULL;
-	{{- end}}
-	{{- if or $field.IsUniqueChanged $field.IsNewField}} 
-ALTER TABLE IF EXISTS {{$table.Name}}
-	{{- if $field.Field.Unique}}
-	DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Field.Name}}_key CASCADE;
-	ADD CONSTRAINT {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 
-	{{else}} 
-	{{- end}}
-	{{- end}}
-{{- end}}
-{{- end}}
-`
-
-	tpl := template.Must(template.New("scripts").Parse(script))
-	tpl.Execute(os.Stdout, &migrate)
 }
 
 func lengthMinusOne(input interface{}) int {
