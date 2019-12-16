@@ -27,11 +27,11 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
 
 drop_fields:

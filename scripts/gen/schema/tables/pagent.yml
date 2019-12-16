@@ -13,16 +13,16 @@ fields:
     unique: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: deleted_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: disabled_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: name
     old_name:
     type: text

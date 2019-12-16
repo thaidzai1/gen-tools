@@ -33,13 +33,13 @@ fields:
     type: text
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: record_updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: extra_data
     old_name:
     type: text

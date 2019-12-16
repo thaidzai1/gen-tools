@@ -39,16 +39,16 @@ fields:
     type: boolean
   - name: transaction_date
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: rid
     old_name:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: cod_session_code_idx
     key: code

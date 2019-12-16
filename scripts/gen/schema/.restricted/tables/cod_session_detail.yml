@@ -24,10 +24,10 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: cod_session_detail_cod_in_session_id_idx
     key: cod_in_session_id

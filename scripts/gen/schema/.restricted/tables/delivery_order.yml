@@ -27,17 +27,17 @@ fields:
     type: bigint
   - name: pickup_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: est_pickup_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: state
     old_name:
     type: text

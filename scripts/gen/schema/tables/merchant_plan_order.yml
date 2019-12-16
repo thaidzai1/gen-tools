@@ -13,7 +13,7 @@ fields:
     type: bigint
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: merchant_plan_order_merchant_order_id
     key: merchant_order_id

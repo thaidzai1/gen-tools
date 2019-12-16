@@ -18,10 +18,10 @@ fields:
     type: text
   - name: estimated_delivery_date
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: actual_delivery_date
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: stock_location
     old_name:
     type: text
@@ -63,13 +63,13 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: cancelled_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: tracking_number
     old_name:
     type: text

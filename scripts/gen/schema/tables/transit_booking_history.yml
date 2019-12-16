@@ -15,7 +15,7 @@ fields:
     type: jsonb
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 
 drop_fields:
 #  -name: fieldname

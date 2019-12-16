@@ -21,10 +21,10 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: booking_id_idx
     key: booking_id

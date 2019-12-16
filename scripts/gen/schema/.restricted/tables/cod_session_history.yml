@@ -30,7 +30,7 @@ fields:
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
 indexs:
   - name: cod_session_history_changes_idx

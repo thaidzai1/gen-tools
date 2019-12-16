@@ -25,7 +25,7 @@ fields:
     type: bigint
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
 indexs:
   - name: pagent_order_history_curr_state_idx

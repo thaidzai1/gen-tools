@@ -17,7 +17,7 @@ fields:
     type: text
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: fc_parcel_tracking_id_idx
     key: id

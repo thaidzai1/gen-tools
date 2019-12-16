@@ -16,10 +16,10 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: "PK_order_service"
     key: id

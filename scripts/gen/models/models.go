@@ -50,6 +50,7 @@ type AlterTable struct {
 // FieldChanged ...
 type FieldChanged struct {
 	Field            Field
+	IsTypeChanged    bool
 	IsNewField       bool
 	IsPrimaryChanged bool
 	IsNotNullChanged bool

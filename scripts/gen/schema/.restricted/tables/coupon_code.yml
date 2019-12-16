@@ -23,11 +23,11 @@ fields:
     type: integer
   - name: started_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: expired_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: coupon_type
     old_name:
@@ -49,10 +49,10 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: action_admin_id
     old_name:
     type: bigint

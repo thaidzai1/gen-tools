@@ -12,16 +12,16 @@ fields:
     type: bigint
   - name: date_of_customs_gate_in
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: date_of_customs_gate_out
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: date_of_customs_clearance
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: date_of_customs_declare
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: customs_declare_no
     old_name:
     type: text

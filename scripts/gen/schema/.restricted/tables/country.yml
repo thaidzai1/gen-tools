@@ -13,10 +13,10 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: country_code_idx
     key: code

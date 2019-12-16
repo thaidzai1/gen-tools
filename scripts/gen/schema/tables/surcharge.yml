@@ -37,10 +37,10 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: surcharge_category_idx
     key: category

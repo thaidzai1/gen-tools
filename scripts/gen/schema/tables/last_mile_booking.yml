@@ -18,10 +18,10 @@ fields:
     type: bigint
   - name: est_delivery_time
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: actual_delivery_time
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: actual_weight
     old_name:
     type: integer
@@ -42,10 +42,10 @@ fields:
     type: text
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: action_admin_id
     old_name:
     type: bigint

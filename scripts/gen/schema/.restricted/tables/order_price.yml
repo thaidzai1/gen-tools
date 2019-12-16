@@ -2,59 +2,111 @@
 version: 1
 version_name: 1 - Init
 fields:
-  - name: type
-    old_name:
-    type: text
-    not_null: true
   - name: order_id
     old_name:
     type: bigint
     not_null: true
+  - name: pricing_version
+    old_name:
+    type: bigint
+  - name: est_basket_value_x
+    old_name:
+    type: integer
+  - name: basket_value_x
+    old_name:
+    type: integer
+  - name: us_tax_x
+    old_name:
+    type: integer
+  - name: us_shipping_fee_x
+    old_name:
+    type: integer
+  - name: purchasing_fee_x
+    old_name:
+    type: integer
+  - name: surcharge_x
+    old_name:
+    type: integer
+  - name: insurance_fee_x
+    old_name:
+    type: integer
+  - name: last_mile_fee_vnd
+    old_name:
+    type: integer
+  - name: gido_fee_x
+    old_name:
+    type: integer
+  - name: total_fee_x
+    old_name:
+    type: integer
+  - name: total_amount_x
+    old_name:
+    type: integer
+  - name: discount_vnd
+    old_name:
+    type: integer
+  - name: total_amount_before_discount_vnd
+    old_name:
+    type: integer
+  - name: total_amount_after_discount_vnd
+    old_name:
+    type: integer
+  - name: exchange_rate
+    old_name:
+    type: integer
   - name: chargeable_weight
     old_name:
-    type: bigint
-    not_null: true
-  - name: prev_total_price
+    type: integer
+  - name: extra_amount_vnd
     old_name:
-    type: bigint
-    not_null: true
-    default: 0
-  - name: curr_total_price
+    type: integer
+  - name: extra_chargeable_weight
     old_name:
-    type: bigint
-    not_null: true
-    default: 0
-  - name: additional_price
-    old_name:
-    type: bigint
-    not_null: true
-    default: 0
-  - name: prev_total_price_vat
-    old_name:
-    type: bigint
-    not_null: true
-    default: 0
-  - name: curr_total_price_vat
-    old_name: total_amount_after_discount_vnd
-    type: bigint
-    default: 0
-  - name: additional_price_vat
-    old_name:
-    type: bigint
-    not_null: true
-    default: 0
-  - name: wallet_transactoin_id
-    old_name:
-    type: text
-  - name: wallet_transaction_state
-    old_name: 
-    type: text
+    type: integer
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
+  - name: action_admin_id
+    old_name:
+    type: bigint
+  - name: rid
+    old_name:
+    type: bigint
+  - name: total_gifts_fee_x
+    old_name:
+    type: integer
+  - name: transport_fee
+    old_name:
+    type: bigint
+  - name: customs_fee
+    old_name:
+    type: bigint
+  - name: pricing_config_id
+    old_name:
+    type: bigint
+  - name: transportation_fee_value
+    old_name:
+    type: bigint
+  - name: id
+    old_name:
+    type: bigint
+    primary: true
+    not_null: true
+  - name: type
+    old_name:
+    type: text
+  - name: profit_margin
+    old_name:
+    type: bigint
+  - name: cost_of_sale
+    old_name:
+    type: bigint
+  - name: chargeable_distance
+    old_name:
+    type: integer
 indexs:
   - name: order_price_created_at_idx
     key: created_at

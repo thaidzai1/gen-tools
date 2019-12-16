@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
-	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
 	"gopkg.in/yaml.v2"
 )
@@ -17,7 +16,7 @@ var (
 
 // LoadSchemaDefination ...
 func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSchema {
-	data, err := ioutil.ReadFile(gen.GetAbsPath(inputPath))
+	data, err := ioutil.ReadFile(inputPath)
 	NoError(err)
 
 	var dbSchema models.DBSchema
@@ -30,8 +29,7 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 
 	for schemaKey, schemaPath := range dbSchema.Schemas {
 
-		absPath := gen.GetAbsPath(schemaPath)
-		files, err := ioutil.ReadDir(absPath)
+		files, err := ioutil.ReadDir(schemaPath)
 		NoError(err)
 		schemaTableText := "tables"
 		schemaFuncText := "functions"
@@ -40,7 +38,7 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 			mapTableDefs = loadTableDefFromYaml(files, schemaPath)
 		}
 		if schemaKey == schemaFuncText {
-			byteTriggerContent, err := ioutil.ReadFile(gen.GetAbsPath("gic/database/sqitch.git/scripts/gen/schema/functions/" + planName + ".sql"))
+			byteTriggerContent, err := ioutil.ReadFile(schemaPath + "/" + planName + ".sql")
 			if err != nil {
 				ll.Error("Error read file deploy failed:", l.Error(err))
 			}
@@ -69,7 +67,7 @@ func loadTableDefFromYaml(files []os.FileInfo, schemaPath string) map[string]mod
 			continue
 		}
 
-		data, err := ioutil.ReadFile(gen.GetAbsPath(schemaPath + "/" + file.Name()))
+		data, err := ioutil.ReadFile(schemaPath + "/" + file.Name())
 		NoError(err)
 		var tableDef models.TableDefination
 		err = yaml.Unmarshal(data, &tableDef)
@@ -146,15 +144,17 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 							field.Field.Default = changedField.Default
 							field.IsDefaultChanged = true
 						}
+
+						if changedField.Type != curField.Type {
+							isFieldUpdated = true
+							field.Field.Type = changedField.Type
+							field.IsTypeChanged = true
+						}
+
 						if isFieldUpdated {
 							ll.Info("==> Append table field")
 							diffTable.Fields = append(diffTable.Fields, field)
 						}
-						// Not support change type yet.
-						// if changedField.Type != curField.Type {
-						// 	isFieldUpdated = true
-						// 	field.Type = changedField.Type
-						// }
 						break
 					}
 				}

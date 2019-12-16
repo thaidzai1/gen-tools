@@ -64,10 +64,10 @@ fields:
     type: integer
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: action_admin_id
     old_name:
     type: bigint

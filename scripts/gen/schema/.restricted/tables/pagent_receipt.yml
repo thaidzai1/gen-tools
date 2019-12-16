@@ -15,10 +15,10 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: receipt_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: pagent_purchasing_amount_x
     old_name:
     type: integer

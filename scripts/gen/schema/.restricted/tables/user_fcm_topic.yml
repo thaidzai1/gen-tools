@@ -10,13 +10,13 @@ fields:
     type: text
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: disabled_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: user_fcm_topic_created_at_idx
     key: created_at

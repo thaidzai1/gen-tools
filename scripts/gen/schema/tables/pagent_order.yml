@@ -57,7 +57,7 @@ fields:
     type: text
   - name: est_delivery_xx_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: state
     old_name:
     type: text
@@ -66,13 +66,13 @@ fields:
     type: smallint
   - name: purchased_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: action_admin_id
     old_name:
     type: bigint

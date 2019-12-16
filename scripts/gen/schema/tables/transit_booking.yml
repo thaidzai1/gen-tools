@@ -24,16 +24,16 @@ fields:
     type: text
   - name: etd
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: eta
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: ata
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: atd
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: sequence
     old_name:
     type: integer

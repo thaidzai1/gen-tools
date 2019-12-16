@@ -30,28 +30,28 @@ fields:
     type: bigint
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: started_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: expired_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: paid_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: disabled_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: cancelled_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: closed_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: max_weight
     old_name:
     type: integer

@@ -42,13 +42,13 @@ fields:
     type: text
   - name: ic_birthday_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: ic_place_of_permanent
     old_name:
     type: text
   - name: ic_issuance_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: ic_issuance_place
     old_name:
     type: text
@@ -64,11 +64,11 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
 indexs:
   - name: merchant_contract_created_at

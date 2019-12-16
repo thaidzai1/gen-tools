@@ -15,7 +15,7 @@ fields:
     type: text
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: rid
     old_name:
     type: bigint

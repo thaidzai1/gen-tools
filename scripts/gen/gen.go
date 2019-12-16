@@ -15,15 +15,14 @@ import (
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/load"
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/middlewares"
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
-	"gido.vn/gic/libs/common.git/gen"
 	"gido.vn/gic/libs/common.git/l"
 )
 
 var (
-	projectPath string
-	gopath      string
-	planName    string
-	ll          = l.New()
+	projectPath, _ = os.Getwd()
+	gopath         string
+	planName       string
+	ll             = l.New()
 )
 
 // Exec ...
@@ -35,7 +34,7 @@ func Exec(inputPath string) {
 
 func getPlanIndex() string {
 	var planIndex string
-	sqitchPlanPath := gen.GetAbsPath("gic/databases/sqitch.git/sqitch.plan")
+	sqitchPlanPath := projectPath + "/sqitch.plan"
 	file, err := os.Open(sqitchPlanPath)
 	if err != nil {
 		panic(err)
@@ -126,6 +125,11 @@ BEGIN;
 				ALTER TABLE IF EXISTS {{$table.Name}} ADD PRIMARY KEY ({{$field.Field.Name}});
 				{{- end}}
 			{{- end}}
+		{{- end}}
+
+		{{- if $field.IsTypeChanged}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ALTER COLUMN {{$field.Field.Name}} TYPE {{$field.Field.Type}} USING {{$field.Field.Name}}::{{$field.Field.Type}};
 		{{- end}}
 
 		{{- if $field.IsNotNullChanged}}
@@ -223,9 +227,8 @@ COMMIT;
 	var buf bytes.Buffer
 	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap).Parse(script))
 	tpl.Execute(&buf, &migrate)
-	dir := gen.GetAbsPath("gic/databases/sqitch.git/deploy/")
-	absPath := gen.GetAbsPath(dir + "/" + planName + ".sql")
-	err := ioutil.WriteFile(absPath, buf.Bytes(), os.ModePerm)
+	sqlPath := projectPath + "/deploy/" + planName + ".sql"
+	err := ioutil.WriteFile(sqlPath, buf.Bytes(), os.ModePerm)
 	if err != nil {
 		ll.Error("Error write file failed, %v\n", l.Error(err))
 	}

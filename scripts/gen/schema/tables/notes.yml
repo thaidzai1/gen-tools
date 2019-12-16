@@ -18,7 +18,7 @@ fields:
     type: text
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
 indexs:
   - name: note_code
     key: code

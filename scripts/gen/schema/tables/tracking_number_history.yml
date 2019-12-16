@@ -16,7 +16,7 @@ fields:
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: prev_code
     old_name:

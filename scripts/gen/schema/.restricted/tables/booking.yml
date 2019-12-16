@@ -18,16 +18,16 @@ fields:
     type: bigint
   - name: etd
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: eta
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: doc_cut_off
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: goods_cut_off
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: state
     old_name:
     type: text

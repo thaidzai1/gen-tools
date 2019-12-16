@@ -37,14 +37,14 @@ fields:
     type: integer
   - name: read_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
     not_null: true
   - name: merchant_id
     old_name:

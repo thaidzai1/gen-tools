@@ -27,13 +27,13 @@ fields:
     not_null: true
   - name: created_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: updated_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: cancelled_at
     old_name:
-    type: timestamp
+    type: timestamptz
   - name: merchant_order_id
     old_name:
     type: bigint
