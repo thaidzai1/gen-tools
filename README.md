@@ -67,6 +67,12 @@ schemas:
   restricted: /Users/thaidzai/schema/.restricted/tables
 ```
 
+# Test configuration
+
+Change defaultConfig() -> defaultTestConfig() in ./scripts/deploy-sqitch/main.go to use test DB
+
+or You can apply your own configuration yaml file.
+
 ## Build
 Run in command
 ```
@@ -94,19 +100,18 @@ $GOPATH/bin/sqitch.git -schema /Users/schema/schema.yml
 ## Run deploy command
 Run in command 
 ```
-$GOPATH/bin/deploy-sqitch -schema 'schema configuration yaml file path'
+$GOPATH/bin/deploy-sqitch -schema 'schema configuration yaml file path' -config-file 'db config path'
 ```
 
 or 
 
 Run in command 
 ```
-go run ./scripts/deploys-sqitch/main.go -schema 'schema configuration yaml file path'
+go run ./scripts/deploys-sqitch/main.go -schema 'schema configuration yaml file path' -config-file 'db config path'
 ```
+Note: If you don't use -config-file, system loads default configuration
 
 # Test Deployment
-
-Change defaultConfig() -> defaultTestConfig() in ./scripts/deploy/deploy.go to use test DB
 
 ## Check status
 sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_stag

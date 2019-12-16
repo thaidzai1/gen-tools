@@ -62,7 +62,7 @@ func main() {
 
 	// Load config
 	if *flConfigFile == "" {
-		cfg = defaultTestConfig()
+		cfg = defaultConfig()
 	} else {
 		err := load(*flConfigFile, &cfg)
 		if err != nil {
