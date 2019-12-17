@@ -1,3 +1,8 @@
+# Requirement
+
+1. Sqitch: https://sqitch.org/download/
+2. Go
+
 # Go ENV
 Run in command: 
 ```
@@ -51,10 +56,15 @@ version: 1
 version_name: 1 - Init project
 
 schemas:
-  tables: 'path to table dir'
-  functions: 'path to funcions dir'
-  restricted: 'path to restricted dir'
+  tables: 'path-to-table-dir'
+  functions: 'path-to-funcions-dir'
+  restricted: 'path-to-restricted-dir'
 ```
+
+<mark>Notice</mark>
+1. Folder 'tables' contains all table configuration by yaml file. Table's name is file's name. For ex: ahoy.yml => table name is ahoy.
+2. Folder 'functions' contains all funtions or triggers written in .sql file. File .sql must be same name as schema when you create.
+3. Folder .restricted contains folder 'tables' which is copied of folder 'tables' in note number 1. Folder .restricted is used to watching changes of tables & fields. (Must not edit).
 
 For ex: 
 ```
@@ -67,11 +77,48 @@ schemas:
   restricted: /Users/thaidzai/schema/.restricted/tables
 ```
 
+### Schema table configuration
+
+```
+version: 'version'
+version_name: 'name of version'
+fields:
+  - name: 'field name'
+    old_name:
+    type: 'sql type'
+    primary: 'bool'
+    not_null: 'bool'
+    unique: 'bool'
+indexs:
+  - name: 'indexs name'
+    key: 'field that apply index'
+    using: 'using type of index'
+histories:
+  - name: 'name of field required in history table'
+
+drop_fields:
+  -name: 'name of field need to be dropped'
+```
+
+<mark>NOTICE</mark>
+1. When field has primary is true, field will auto be not null. 
+2. When you change name of field, you need rewrite old field's name in old_name section.
+3. System only drops field when it's declared in 'drop_fields' section.
+4. 'histories' section will auto create history table follow the main table name with all fields are declared in this section. For ex: mainTableName_history.
+
 # Test configuration
 
 Change defaultConfig() -> defaultTestConfig() in ./scripts/deploy-sqitch/main.go to use test DB
 
-or You can apply your own configuration yaml file.
+or You can apply your own configuration yaml file follow these configuration:
+```
+type: 'db-type;
+username: 'db-username'
+passowrd: 'db-password'
+host: 'db-host'
+port: 'db-port'
+db_name: 'db_name'
+```
 
 ## Build
 Run in command

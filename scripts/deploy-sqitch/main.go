@@ -24,8 +24,8 @@ type dbConfig struct {
 
 var (
 	ll             = l.New()
-	flConfigPath   = flag.String("schema", "", "-c")
-	flConfigFile   = flag.String("config-file", "", "Path to config file")
+	flConfigPath   = flag.String("schema", "", "Path to schema config file")
+	flConfigFile   = flag.String("config-file", "", "Path to database config file")
 	cfg            dbConfig
 	projectPath, _ = os.Getwd()
 )
