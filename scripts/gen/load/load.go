@@ -286,8 +286,6 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 					break
 				}
 			}
-
-			ll.Print("==> result: ", histories)
 		}
 	}
 
@@ -300,8 +298,6 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 		DropFields:  changedTable.DropFields,
 		Histories:   histories,
 	}
-
-	ll.Print("mapping: ", mappedTable)
 
 	return mappedTable
 }

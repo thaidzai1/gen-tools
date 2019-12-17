@@ -198,7 +198,6 @@ func main() {
 			if fieldNamePos > -1 && shouldUpdate {
 				fieldName := line[fieldNamePos+1 : len(line)-2]
 				for index, field := range table[tableKeyword].Fields {
-					ll.Print("checkfield: ", field.Name, fieldName)
 					if field.Name == fieldName {
 						switch updatedProperty {
 						case "PRIMARY":
@@ -211,11 +210,8 @@ func main() {
 							break
 						}
 					}
-					ll.Print("Field update: ", field)
 				}
 			}
-
-			ll.Print("Table update: ", table[tableKeyword])
 			isUpdatingField = false
 		}
 	}
@@ -269,7 +265,6 @@ drop_fields:
 		tpl.Execute(&buf, &table)
 		dir := gen.GetAbsPath("gic/databases/sqitch.git/scripts/gen/schema/tables/")
 		absPath := gen.GetAbsPath(dir + "/" + table.Name + ".yml")
-		ll.Print("absPath: ", absPath)
 		err := ioutil.WriteFile(absPath, buf.Bytes(), os.ModePerm)
 		if err != nil {
 			fmt.Printf("Error write file failed, %v\n", err)

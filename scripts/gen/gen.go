@@ -29,7 +29,6 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
-	ll.Print("genSchema: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -100,7 +99,6 @@ func startNewSqitchPlan() (string, string) {
 }
 
 func createNewSqitchPlan(planName string, note string) {
-	ll.Print("createnewsqitch: ", planName, note)
 	cmd := exec.Command("sqitch", "add", planName, "-n", note)
 	ll.Info("Run sqitch add plan... Done†")
 	cmd.Run()
