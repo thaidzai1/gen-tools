@@ -24,7 +24,9 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 	NoError(err)
 
 	var mapTableDefs map[string]models.TableDefination
-	var restrictedTableDefs map[string]models.TableDefination
+	var currTablesDefs map[string]models.TableDefination
+	var droppedTablesDef models.DropTables
+	var currDroppedTableDef models.DropTables
 	var triggers string
 
 	for schemaKey, schemaPath := range dbSchema.Schemas {
@@ -33,27 +35,56 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 		NoError(err)
 		schemaTableText := "tables"
 		schemaFuncText := "functions"
-		schemaRestrictedText := "restricted"
-		if schemaKey == schemaTableText {
+		currTablesText := "curr_tables"
+		droppedTablesText := "dropped_tables"
+		droppedTableConfigText := "dropped_tables_config"
+
+		switch schemaKey {
+		case schemaTableText:
 			mapTableDefs = loadTableDefFromYaml(files, schemaPath)
-		}
-		if schemaKey == schemaFuncText {
+			break
+		case schemaFuncText:
 			byteTriggerContent, err := ioutil.ReadFile(schemaPath + "/" + planName + ".sql")
 			if err != nil {
 				ll.Error("Error read file deploy failed:", l.Error(err))
 			}
 			triggers = string(byteTriggerContent)
-		}
-		if schemaKey == schemaRestrictedText {
-			restrictedTableDefs = loadTableDefFromYaml(files, schemaPath)
+			break
+		case currTablesText:
+			currTablesDefs = loadTableDefFromYaml(files, schemaPath)
+			break
+		case droppedTableConfigText:
+			dropConfigFileName := "dropped-tables.yml"
+			ll.Print("path: ", schemaPath+"/"+dropConfigFileName)
+			data, err := ioutil.ReadFile(schemaPath + "/" + dropConfigFileName)
+			NoError(err)
+			err = yaml.Unmarshal(data, &droppedTablesDef)
+			break
+		case droppedTablesText:
+			var droppedTables []string
+			for _, file := range files {
+				var fileNameWithoutSuffix string
+				if strings.Contains(file.Name(), ".yaml") {
+					fileNameWithoutSuffix = strings.ReplaceAll(file.Name(), ".yaml", "")
+				} else if strings.Contains(file.Name(), ".yml") {
+					fileNameWithoutSuffix = strings.ReplaceAll(file.Name(), ".yml", "")
+				} else {
+					continue
+				}
+				droppedTables = append(droppedTables, fileNameWithoutSuffix)
+			}
+			currDroppedTableDef.Tables = droppedTables
+			break
 		}
 	}
 
-	diffTables, newTables := compareDiffYaml(restrictedTableDefs, mapTableDefs)
+	diffTables, newTables := compareDiffYaml(currTablesDefs, mapTableDefs)
+	diffDroppedTables := compareDiffDropTables(droppedTablesDef, currDroppedTableDef)
 
 	migrateSchema := models.MigrateSchema{
 		Tables:      *newTables,
 		AlterTables: *diffTables,
+		DropTables:  diffDroppedTables,
 		Triggers:    triggers,
 	}
 	return &migrateSchema
@@ -264,6 +295,25 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 	}
 
 	return &diffTables, &newTables
+}
+
+func compareDiffDropTables(changedTables, curTables models.DropTables) models.DropTables {
+	var unDroppedTables models.DropTables
+
+	for _, changeTable := range changedTables.Tables {
+		isDropped := false
+		for _, curTable := range curTables.Tables {
+			if changeTable == curTable {
+				isDropped = true
+			}
+		}
+
+		if !isDropped {
+			unDroppedTables.Tables = append(unDroppedTables.Tables, changeTable)
+		}
+	}
+
+	return unDroppedTables
 }
 
 func mappingWithHistoryFields(changedTable models.TableDefination) models.TableDefination {

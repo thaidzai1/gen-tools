@@ -4,4 +4,6 @@ version_name: 1 - Init project
 schemas:
   tables: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/tables
   functions: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/functions
-  restricted: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/.restricted/tables
+  curr_tables: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/.restricted/tables
+  dropped_tables: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/.restricted/dropped-tables
+  dropped_tables_config: /Users/thaidzai/code/go/src/gido.vn/gic/databases/sqitch.git/scripts/gen/schema/dropped-tables

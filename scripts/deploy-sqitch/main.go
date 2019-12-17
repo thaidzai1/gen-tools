@@ -62,7 +62,7 @@ func main() {
 
 	// Load config
 	if *flConfigFile == "" {
-		cfg = defaultConfig()
+		cfg = defaultTestConfig()
 	} else {
 		err := load(*flConfigFile, &cfg)
 		if err != nil {
@@ -83,6 +83,7 @@ func main() {
 		cmdLog.Stdout = os.Stdout
 		cmdLog.Run()
 		if !strings.Contains(outStr, deployNothingKeyword) {
+			moveDroppedYamlSchema(*flConfigPath)
 			copyAllYamlSchema(*flConfigPath)
 			cmdLog = exec.Command("echo", "Update Restricted area DONE†...†\n")
 			cmdLog.Stdout = os.Stdout
@@ -121,8 +122,53 @@ func copyAllYamlSchema(schemaPath string) {
 	err = yaml.Unmarshal(data, &dbSchema)
 
 	pathTables := dbSchema.Schemas["tables"]
-	pathRestricted := dbSchema.Schemas["restricted"]
+	pathRestricted := dbSchema.Schemas["curr_tables"]
 
 	cmd := exec.Command("cp", "-R", pathTables+"/", pathRestricted)
 	cmd.Run()
+}
+
+func moveDroppedYamlSchema(schemaPath string) {
+	data, err := ioutil.ReadFile(schemaPath)
+	if err != nil {
+		ll.Panic("Error load schema yml failed")
+	}
+
+	var dbSchema models.DBSchema
+	err = yaml.Unmarshal(data, &dbSchema)
+
+	pathTables := dbSchema.Schemas["tables"]
+	pathRestricted := dbSchema.Schemas["dropped_tables"]
+	pathDropTableConfigFile := dbSchema.Schemas["dropped_tables_config"]
+
+	var droppedTablesDef models.DropTables
+	dropConfigFileName := "dropped-tables.yml"
+	dropTableData, err := ioutil.ReadFile(pathDropTableConfigFile + "/" + dropConfigFileName)
+	if err != nil {
+		ll.Panic("Error when read file config drop tables")
+	}
+	err = yaml.Unmarshal(dropTableData, &droppedTablesDef)
+
+	tableFiles, err := ioutil.ReadDir(pathTables)
+	if err != nil {
+		ll.Panic("Error when read dir tables")
+	}
+
+	for _, table := range droppedTablesDef.Tables {
+		for _, file := range tableFiles {
+			var fileNameWithoutSuffix string
+			if strings.Contains(file.Name(), ".yaml") {
+				fileNameWithoutSuffix = strings.ReplaceAll(file.Name(), ".yaml", "")
+			} else if strings.Contains(file.Name(), ".yml") {
+				fileNameWithoutSuffix = strings.ReplaceAll(file.Name(), ".yml", "")
+			} else {
+				continue
+			}
+
+			if fileNameWithoutSuffix == table {
+				cmd := exec.Command("mv", pathTables+"/"+file.Name(), pathRestricted+"/"+file.Name())
+				cmd.Run()
+			}
+		}
+	}
 }
