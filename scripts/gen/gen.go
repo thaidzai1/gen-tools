@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
 	{{$field.Name}} {{$field.Type}} 
 {{- if eq $field.Primary true}} PRIMARY KEY {{- end}}
 {{- if eq $field.NotNull true}} NOT NULL {{- end}}
-{{- if ne $field.Default ""}} '{{$field.Default}}' {{- end}}
+{{- if ne $field.Default ""}} DEFAULT '{{$field.Default}}' {{- end}}
 {{- if eq $field.Unique true}} Unique {{- end}}{{$lengthMinusOne := lengthMinusOne $table.Fields}}{{- if lt $index $lengthMinusOne}},{{- end}}
 {{- end}}
 );
