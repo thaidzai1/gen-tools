@@ -143,6 +143,8 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 			curDropFields := curTables[changedTableKey].DropFields
 			curHistories := curTables[changedTableKey].Histories
 
+			isHistoryNoneField := false
+
 			// Get Table Fields Changed or New
 			var diffTable models.AlterTable
 			for _, changedField := range changedTable.Fields {
@@ -254,15 +256,20 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 			}
 
 			// Get Table Histories Changed or New
-			var histories []models.Field
+			var histories []models.HistoryField
+			ll.Print("Ahoyy: ", changedTable.Histories)
 			if len(curHistories) == 0 && len(changedTable.Histories) > 0 {
 				for _, changedField := range changedTable.Fields {
-					var field models.Field
+					var field models.HistoryField
 					for _, changedHistory := range changedTable.Histories {
 
 						if changedHistory.Name == changedField.Name {
 							field.Name = changedHistory.Name
 							field.Type = changedField.Type
+						}
+
+						if changedHistory.IsNoneFields {
+							isHistoryNoneField = true
 						}
 					}
 
@@ -271,7 +278,7 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 						field.Type = changedField.Type
 					}
 
-					if (models.Field{}) != field {
+					if (models.HistoryField{}) != field {
 						histories = append(histories, field)
 					}
 				}
@@ -283,12 +290,13 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 				diffTables = append(diffTables, diffTable)
 			}
 
-			if len(arrIndex) > 0 || len(dropFields) > 0 || len(histories) > 0 {
+			if len(arrIndex) > 0 || len(dropFields) > 0 || len(histories) > 0 || isHistoryNoneField {
 				newTables = append(newTables, models.TableDefination{
-					TableName:  changedTable.TableName,
-					Indexs:     arrIndex,
-					DropFields: dropFields,
-					Histories:  histories,
+					TableName:          changedTable.TableName,
+					Indexs:             arrIndex,
+					DropFields:         dropFields,
+					Histories:          histories,
+					IsHistoryNoneField: isHistoryNoneField,
 				})
 			}
 		}
@@ -317,12 +325,13 @@ func compareDiffDropTables(changedTables, curTables models.DropTables) models.Dr
 }
 
 func mappingWithHistoryFields(changedTable models.TableDefination) models.TableDefination {
-	var histories []models.Field
+	var histories []models.HistoryField
+	isHistoryNoneField := false
 	if len(changedTable.Histories) > 0 {
 		for _, field := range changedTable.Fields {
 
 			if field.Name == "action_admin_id" || field.Name == "user_id" {
-				histories = append(histories, models.Field{
+				histories = append(histories, models.HistoryField{
 					Name: field.Name,
 					Type: field.Type,
 				})
@@ -335,18 +344,23 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 					histories = append(histories, history)
 					break
 				}
+
+				if history.IsNoneFields {
+					isHistoryNoneField = true
+				}
 			}
 		}
 	}
 
 	mappedTable := models.TableDefination{
-		VersionName: changedTable.VersionName,
-		Version:     changedTable.Version,
-		TableName:   changedTable.TableName,
-		Fields:      changedTable.Fields,
-		Indexs:      changedTable.Indexs,
-		DropFields:  changedTable.DropFields,
-		Histories:   histories,
+		VersionName:        changedTable.VersionName,
+		Version:            changedTable.Version,
+		TableName:          changedTable.TableName,
+		Fields:             changedTable.Fields,
+		Indexs:             changedTable.Indexs,
+		DropFields:         changedTable.DropFields,
+		Histories:          histories,
+		IsHistoryNoneField: isHistoryNoneField,
 	}
 
 	return mappedTable

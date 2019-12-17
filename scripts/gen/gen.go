@@ -29,7 +29,6 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
-	ll.Print("Schema: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -218,7 +217,7 @@ ALTER TABLE IF EXISTS {{$table.TableName}}
 {{- end}}
 {{- end}}
 
-{{- if $table.Histories}}
+{{- if or $table.Histories $table.IsHistoryNoneField}}
 CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
 CREATE TABLE IF NOT EXISTS {{$table.TableName}}_history (

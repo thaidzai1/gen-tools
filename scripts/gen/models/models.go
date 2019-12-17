@@ -9,13 +9,14 @@ type DBSchema struct {
 
 // TableDefination ...
 type TableDefination struct {
-	Version     int          `validate:"required"`
-	VersionName string       `yaml:"version_name"`
-	Fields      []Field      `yaml:"fields"`
-	Indexs      []Index      `yaml:"indexs"`
-	DropFields  []DropFields `yaml:"drop_fields"`
-	TableName   string
-	Histories   []Field `yaml:"histories"`
+	Version            int          `validate:"required"`
+	VersionName        string       `yaml:"version_name"`
+	Fields             []Field      `yaml:"fields"`
+	Indexs             []Index      `yaml:"indexs"`
+	DropFields         []DropFields `yaml:"drop_fields"`
+	TableName          string
+	Histories          []HistoryField `yaml:"histories"`
+	IsHistoryNoneField bool
 }
 
 // DropTables ...
@@ -26,6 +27,12 @@ type DropTables struct {
 // DropFields ...
 type DropFields struct {
 	Name string `yaml:"name"`
+}
+
+type HistoryField struct {
+	Name         string `yaml:"name"`
+	Type         string
+	IsNoneFields bool `yaml:"none_field"`
 }
 
 // Field ...
