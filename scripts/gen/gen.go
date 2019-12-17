@@ -324,7 +324,7 @@ CREATE TRIGGER {{$table.TableName}}_history AFTER INSERT OR UPDATE ON public.{{$
 {{- end}}
 {{- end}}
 
-{{- if $.DropTables}}
+{{- if $.DropTables.Tables}}
 DROP TABLE IF EXISTS {{- range $dropIndex, $dropTable := $.DropTables.Tables}} {{$dropTable}}{{$lengthMinusOne := lengthMinusOne $.DropTables.Tables}}{{- if lt $dropIndex $lengthMinusOne}},{{- end}}{{- end}} CASCADE;
 {{- end}}
 
