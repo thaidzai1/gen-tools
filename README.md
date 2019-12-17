@@ -79,6 +79,19 @@ Run in command
 go install ./...
 ```
 
+## Init Sqitch for project
+
+if project doesn't have sqitch.plan or sqitch.conf you need to init sqitch project
+
+```
+sqitch init 'project-name' --uri 'project-uri' --engine 'database engine'
+```
+
+For ex: 
+```
+sqitch init test-project --uri https://github.com/sqitchers/sqitch-intro/  --engine pg
+```
+
 ## Run generate command
 Run in command 
 ```

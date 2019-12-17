@@ -15,6 +15,7 @@ type TableDefination struct {
 	Indexs      []Index      `yaml:"indexs"`
 	DropFields  []DropFields `yaml:"drop_fields"`
 	TableName   string
+	Histories   []Field `yaml:"histories"`
 }
 
 // DropFields ...

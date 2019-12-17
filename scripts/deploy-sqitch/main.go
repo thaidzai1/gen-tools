@@ -77,7 +77,7 @@ func main() {
 	cmd.Run()
 	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
 
-	if !strings.Contains(outStr, "not ok") {
+	if len(outStr) > 0 && !strings.Contains(outStr, "not ok") {
 		deployNothingKeyword := "Nothing to deploy"
 		cmdLog := exec.Command("echo", outStr)
 		cmdLog.Stdout = os.Stdout

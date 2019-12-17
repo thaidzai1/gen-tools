@@ -56,7 +56,8 @@ indexs:
   - name: wallet_updated_at_idx
     key: updated_at
     using: btree
-
+histories: 
+  - name: balance_vnd
 drop_fields:
 #  -name: fieldname
 #  -name: fieldname

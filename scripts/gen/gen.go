@@ -29,6 +29,7 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
+	ll.Print("genSchema: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -108,6 +109,10 @@ func createNewSqitchPlan(planName string, note string) {
 func generateDeploySQLScript(migrate *models.MigrateSchema) {
 	var script string = `
 BEGIN;
+
+/*-- TRIGGER BEGIN --*/
+{{$.Triggers}}
+/*-- TRIGGER END --*/
 
 {{- range $index, $table := $.AlterTables}}
 {{$primaryKeyExisted := false }}
@@ -195,6 +200,7 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}} (
 	{{$field.Name}} {{$field.Type}} 
 {{- if eq $field.Primary true}} PRIMARY KEY {{- end}}
 {{- if eq $field.NotNull true}} NOT NULL {{- end}}
+{{- if ne $field.Default ""}} '{{$field.Default}}' {{- end}}
 {{- if eq $field.Unique true}} Unique {{- end}}{{$lengthMinusOne := lengthMinusOne $table.Fields}}{{- if lt $index $lengthMinusOne}},{{- end}}
 {{- end}}
 );
@@ -213,11 +219,112 @@ ALTER TABLE IF EXISTS {{$table.TableName}}
 {{- end}}
 {{- end}}
 
+{{- if $table.Histories}}
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+CREATE TABLE IF NOT EXISTS {{$table.TableName}}_history (
+	id bigserial primary key,
+	revision bigint,
+	changes jsonb,
+	{{$table.TableName}}_id bigint,
+	{{- range $indexHistory, $history := $table.Histories}}
+		{{- if eq $history.Name  "user_id"}}
+	user_id {{$history.Type}},
+		{{else if eq $history.Name "action_admin_id"}}
+	action_admin_id {{$history.Type}},
+		{{else}}
+	prev_{{$history.Name}} {{$history.Type}},
+	curr_{{$history.Name}} {{$history.Type}},		
+		{{- end}}
+	{{- end}}
+	updated_at timestamptz DEFAULT 'now()'
+);
+
+ALTER TABLE {{$table.TableName}}_history ADD COLUMN rid bigint;
+
+CREATE FUNCTION public.{{$table.TableName}}_history() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE changes JSONB;
+BEGIN
+    IF (TG_OP = 'INSERT') THEN
+		INSERT INTO {{$table.TableName}}_history(
+			revision, 
+			{{$table.TableName}}_id, 
+			{{- range $historyIndex, $history := $table.Histories}}
+				{{- if eq $history.Name "action_admin_id"}}
+			action_admin_id,
+				{{else if eq $history.Name "user_id"}}
+			user_id,
+				{{else}}
+			curr_{{$history.Name}}, 
+				{{- end}}
+			{{- end}}
+			changes
+		)
+        VALUES (
+			NEW.rid, 
+			NEW.id, 
+			{{- range $historyIndex, $history := $table.Histories}}
+				{{- if eq $history.Name "action_admin_id"}}
+			NEW.action_admin_id,
+				{{else if eq $history.Name "user_id"}}
+			NEW.user_id,
+				{{else}}
+			NEW.{{$history.Name}},
+				{{- end}}
+			{{- end}}
+			to_json(NEW)
+		);
+    ELSE
+        -- calculate only changed columns then encode as jsonb
+        -- also ignore uninteresting fields like "updated_at", "rid"
+		changes := to_jsonb((hstore(NEW.*)-hstore(OLD.*)) - '{updated_at,rid,{{- range $hisIndex, $history := $table.Histories}}{{- if eq $history.Name "action_admin_id"}}	action_admin_id{{else if eq $history.Name "user_id"}}user_id{{- end}}{{- end}}}'::TEXT[]);
+
+        -- ignore trivial changes
+        IF (changes = '{}'::JSONB) THEN RETURN NULL; END IF;
+
+        INSERT INTO wallet_history(
+			revision,
+			{{$table.TableName}}_id,
+			{{- range $hisIndex, $history := $table.Histories}}
+				{{- if eq $history.Name "action_admin_id"}}
+			action_admin_id,
+				{{else if eq $history.Name "user_id"}}
+			user_id,
+				{{else}}
+			prev_{{$history.Name}},
+			curr_{{$history.Name}},
+				{{- end}}
+			{{- end}} 
+			changes
+		)
+        VALUES (
+			NEW.rid, 
+			NEW.id, 
+			{{- range $hisIndex, $history := $table.Histories}}
+				{{- if eq $history.Name "action_admin_id"}}
+			NEW.action_admin_id,
+				{{else if eq $history.Name "user_id"}}
+			NEW.user_id,
+				{{else}}
+			OLD.{{$history.Name}},
+			NEW.{{$history.Name}},
+				{{- end}}
+			{{- end}}
+			changes
+		);
+    END IF;
+    RETURN NULL;
+END
+$$;
+
+CREATE SEQUENCE IF NOT EXISTS {{$table.TableName}}_history_seq;
+CREATE TRIGGER update_rid BEFORE INSERT OR UPDATE ON public.{{$table.TableName}} FOR EACH ROW EXECUTE PROCEDURE public.update_rid('{{$table.TableName}}_history_seq');
+CREATE TRIGGER {{$table.TableName}}_history AFTER INSERT OR UPDATE ON public.{{$table.TableName}} FOR EACH ROW EXECUTE PROCEDURE public.{{$table.TableName}}_history();
 {{- end}}
 
-/*-- TRIGGER BEGIN --*/
-{{$.Triggers}}
-/*-- TRIGGER END --*/
+{{- end}}
 
 COMMIT;
 `
