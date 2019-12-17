@@ -18,6 +18,11 @@ type TableDefination struct {
 	Histories   []Field `yaml:"histories"`
 }
 
+// DropTables ...
+type DropTables struct {
+	Tables []string `yaml:"dropped_tables"`
+}
+
 // DropFields ...
 type DropFields struct {
 	Name string `yaml:"name"`
@@ -63,5 +68,6 @@ type FieldChanged struct {
 type MigrateSchema struct {
 	Tables      []TableDefination
 	AlterTables []AlterTable
+	DropTables  DropTables
 	Triggers    string
 }

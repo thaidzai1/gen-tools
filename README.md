@@ -45,8 +45,11 @@ schema
 +-- tables
 |   +-- table_name_1.yml
 |   ...
++-- dropped-tables
+|   +-- dropped-tables.yml
 +-- .restricted
 |   +-- tables
+|   +-- dropped-tables
 +-- schema.yml
 ```
 
@@ -58,7 +61,9 @@ version_name: 1 - Init project
 schemas:
   tables: 'path-to-table-dir'
   functions: 'path-to-funcions-dir'
-  restricted: 'path-to-restricted-dir'
+  curr_tables: 'path-to-tables-in-restricted-dir'
+  dropped_tables: 'path-to-dropped-tables-in-restricted-dir'
+  dropped_tables_config: 'path-to-dropped-tables-dir'
 ```
 
 <mark>Notice</mark>
@@ -74,7 +79,9 @@ version_name: 1 - Init project
 schemas:
   tables: /Users/thaidzai/schema/tables
   functions: /Users/thaidzai/schema/functions
-  restricted: /Users/thaidzai/schema/.restricted/tables
+  curr_tables: /Users/thaidzai/schema/.restricted/tables
+  dropped_tables: /Users/thaidzai/schema/.restricted/dropped-tables
+  dropped_tables_config: /Users/thaidzai/schema/dropped-tables
 ```
 
 ### Schema table configuration

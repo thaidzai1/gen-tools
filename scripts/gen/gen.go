@@ -29,6 +29,7 @@ var (
 func Exec(inputPath string) {
 	createNewSqitchPlan(startNewSqitchPlan())
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
+	ll.Print("Schema: ", genSchemaDefinations)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
 
@@ -321,7 +322,10 @@ CREATE SEQUENCE IF NOT EXISTS {{$table.TableName}}_history_seq;
 CREATE TRIGGER update_rid BEFORE INSERT OR UPDATE ON public.{{$table.TableName}} FOR EACH ROW EXECUTE PROCEDURE public.update_rid('{{$table.TableName}}_history_seq');
 CREATE TRIGGER {{$table.TableName}}_history AFTER INSERT OR UPDATE ON public.{{$table.TableName}} FOR EACH ROW EXECUTE PROCEDURE public.{{$table.TableName}}_history();
 {{- end}}
+{{- end}}
 
+{{- if $.DropTables}}
+DROP TABLE IF EXISTS {{- range $dropIndex, $dropTable := $.DropTables.Tables}} {{$dropTable}}{{$lengthMinusOne := lengthMinusOne $.DropTables.Tables}}{{- if lt $dropIndex $lengthMinusOne}},{{- end}}{{- end}} CASCADE;
 {{- end}}
 
 COMMIT;

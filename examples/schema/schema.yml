@@ -1,0 +1,9 @@
+version: 1
+version_name: 1 - Init project
+
+schemas:
+  tables: /Users/thaidzai/schema/tables
+  functions: /Users/thaidzai/schema/functions
+  curr_tables: /Users/thaidzai/schema/.restricted/tables
+  dropped_tables: /Users/thaidzai/schema/.restricted/dropped-tables
+  dropped_tables_config: /Users/thaidzai/schema/dropped-tables
