@@ -1,0 +1,40 @@
+
+version: 1
+version_name: 1 - Init
+fields:
+  - name: id
+    old_name:
+    type: bigserial
+    primary: true
+    not_null: true
+  - name: full_name
+    old_name: short_name
+    type: text
+    unique: true
+  - name: status
+    old_name:
+    default: 1
+    type: integer
+  - name: money
+    old_name:
+    type: bigint
+  - name: created_at
+    old_name:
+    type: timestamptz
+  - name: updated_at
+    old_name:
+    type: timestamptz
+indexs:
+  - name: cod_session_code_idx
+    key: code
+    using: btree
+    unique: true
+  - name: cod_session_created_at_idx
+    key: created_at
+    using: btree
+histories:
+  - name: status
+  - name: money
+
+drop_fields:
+  - name: middle_name
