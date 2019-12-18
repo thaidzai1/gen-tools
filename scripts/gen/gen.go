@@ -111,8 +111,14 @@ func startNewSqitchPlan() (string, string) {
 
 func createNewSqitchPlan(planName string, note string) {
 	cmd := exec.Command("sqitch", "add", planName, "-n", note)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
 	err := cmd.Run()
+	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
 	if err != nil {
+		ll.Print("Output: ", outStr)
+		ll.Print("Error: ", errStr)
 		ll.Panic("Error when genenrate migration: ", l.Error(err))
 	}
 	ll.Info("Run sqitch add plan... Done†")
