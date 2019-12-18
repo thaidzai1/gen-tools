@@ -228,8 +228,6 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}}_history (
 	{{- range $indexHistory, $history := $table.Histories}}
 		{{- if eq $history.Name  "user_id"}}
 	user_id {{$history.Type}},
-		{{else if eq $history.Name "action_admin_id"}}
-	action_admin_id {{$history.Type}},
 		{{else}}
 	prev_{{$history.Name}} {{$history.Type}},
 	curr_{{$history.Name}} {{$history.Type}},		
@@ -238,7 +236,7 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}}_history (
 	updated_at timestamptz DEFAULT 'now()'
 );
 
-ALTER TABLE {{$table.TableName}}_history ADD COLUMN rid bigint;
+ALTER TABLE {{$table.TableName}} ADD COLUMN rid bigint;
 
 CREATE FUNCTION public.{{$table.TableName}}_history() RETURNS trigger
     LANGUAGE plpgsql
@@ -250,9 +248,7 @@ BEGIN
 			revision, 
 			{{$table.TableName}}_id, 
 			{{- range $historyIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "action_admin_id"}}
-			action_admin_id,
-				{{else if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "user_id"}}
 			user_id,
 				{{else}}
 			curr_{{$history.Name}}, 
@@ -264,9 +260,7 @@ BEGIN
 			NEW.rid, 
 			NEW.id, 
 			{{- range $historyIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "action_admin_id"}}
-			NEW.action_admin_id,
-				{{else if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "user_id"}}
 			NEW.user_id,
 				{{else}}
 			NEW.{{$history.Name}},
@@ -286,9 +280,7 @@ BEGIN
 			revision,
 			{{$table.TableName}}_id,
 			{{- range $hisIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "action_admin_id"}}
-			action_admin_id,
-				{{else if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "user_id"}}
 			user_id,
 				{{else}}
 			prev_{{$history.Name}},
@@ -301,9 +293,7 @@ BEGIN
 			NEW.rid, 
 			NEW.id, 
 			{{- range $hisIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "action_admin_id"}}
-			NEW.action_admin_id,
-				{{else if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "user_id"}}
 			NEW.user_id,
 				{{else}}
 			OLD.{{$history.Name}},
