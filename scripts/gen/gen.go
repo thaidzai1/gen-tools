@@ -112,7 +112,10 @@ func startNewSqitchPlan() (string, string) {
 func createNewSqitchPlan(planName string, note string) {
 	cmd := exec.Command("sqitch", "add", planName, "-n", note)
 	ll.Info("Run sqitch add plan... Done†")
-	cmd.Run()
+	err := cmd.Run()
+	if err != nil {
+		ll.Error("Error when genenrate migration: ", l.Error(err))
+	}
 }
 
 func generateDeploySQLScript(migrate *models.MigrateSchema) {
