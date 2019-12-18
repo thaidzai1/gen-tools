@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	flConfigFile = flag.String("schema", "", "-c")
+	flConfigFile = flag.String("schema", "", "Path to schema configuration")
 	ll           = l.New()
 )
 

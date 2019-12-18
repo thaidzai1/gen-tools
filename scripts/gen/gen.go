@@ -3,6 +3,7 @@ package gen
 import (
 	"bufio"
 	"bytes"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -19,15 +20,25 @@ import (
 )
 
 var (
-	projectPath, _ = os.Getwd()
-	gopath         string
-	planName       string
-	ll             = l.New()
+	projectPath, _            = os.Getwd()
+	gopath                    string
+	planName                  string
+	ll                        = l.New()
+	inputMigrationName        = flag.String("name", "", "Migration's name")
+	inputMigrationDescription = flag.String("d", "Add schema", "Migration's description")
 )
 
 // Exec ...
 func Exec(inputPath string) {
-	createNewSqitchPlan(startNewSqitchPlan())
+	flag.Parse()
+
+	if *inputMigrationName == "" {
+		createNewSqitchPlan(startNewSqitchPlan())
+	} else {
+		planName = *inputMigrationName
+		createNewSqitchPlan(planName, *inputMigrationDescription)
+	}
+
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
 }
