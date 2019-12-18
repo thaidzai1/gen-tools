@@ -114,7 +114,7 @@ func createNewSqitchPlan(planName string, note string) {
 	ll.Info("Run sqitch add plan... Done†")
 	err := cmd.Run()
 	if err != nil {
-		ll.Error("Error when genenrate migration: ", l.Error(err))
+		ll.Panic("Error when genenrate migration: ", l.Error(err))
 	}
 }
 
