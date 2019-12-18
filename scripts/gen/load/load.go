@@ -257,7 +257,6 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 
 			// Get Table Histories Changed or New
 			var histories []models.HistoryField
-			ll.Print("Ahoyy: ", changedTable.Histories)
 			if len(curHistories) == 0 && len(changedTable.Histories) > 0 {
 				for _, changedField := range changedTable.Fields {
 					var field models.HistoryField
@@ -274,7 +273,7 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 					}
 
 					if changedField.Name == "user_id" || changedField.Name == "action_admin_id" {
-						field.Name = "user_id"
+						field.Name = changedField.Name
 						field.Type = changedField.Type
 					}
 
@@ -332,7 +331,7 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 
 			if field.Name == "action_admin_id" || field.Name == "user_id" {
 				histories = append(histories, models.HistoryField{
-					Name: "user_id",
+					Name: field.Name,
 					Type: field.Type,
 				})
 				continue

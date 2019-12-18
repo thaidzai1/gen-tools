@@ -226,11 +226,11 @@ CREATE TABLE IF NOT EXISTS {{$table.TableName}}_history (
 	changes jsonb,
 	{{$table.TableName}}_id bigint,
 	{{- range $indexHistory, $history := $table.Histories}}
-		{{- if eq $history.Name  "user_id"}}
-	user_id {{$history.Type}},
-		{{else}}
+		{{- if checkNotUserIDOrActionAdminID $history.Name}}
 	prev_{{$history.Name}} {{$history.Type}},
-	curr_{{$history.Name}} {{$history.Type}},		
+	curr_{{$history.Name}} {{$history.Type}},	
+		{{else}}
+	user_id bigint,	
 		{{- end}}
 	{{- end}}
 	updated_at timestamptz DEFAULT 'now()'
@@ -248,10 +248,10 @@ BEGIN
 			revision, 
 			{{$table.TableName}}_id, 
 			{{- range $historyIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "user_id"}}
-			user_id,
-				{{else}}
+				{{- if checkNotUserIDOrActionAdminID $history.Name}}
 			curr_{{$history.Name}}, 
+				{{else}}
+			user_id,
 				{{- end}}
 			{{- end}}
 			changes
@@ -260,7 +260,9 @@ BEGIN
 			NEW.rid, 
 			NEW.id, 
 			{{- range $historyIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "admin_action_id"}}
+			NEW.action_admin_id,
+				{{else if eq $history.Name "user_id"}}
 			NEW.user_id,
 				{{else}}
 			NEW.{{$history.Name}},
@@ -276,15 +278,15 @@ BEGIN
         -- ignore trivial changes
         IF (changes = '{}'::JSONB) THEN RETURN NULL; END IF;
 
-        INSERT INTO wallet_history(
+        INSERT INTO {{$table.TableName}}_history(
 			revision,
 			{{$table.TableName}}_id,
 			{{- range $hisIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "user_id"}}
-			user_id,
-				{{else}}
+				{{- if checkNotUserIDOrActionAdminID $history.Name}}
 			prev_{{$history.Name}},
 			curr_{{$history.Name}},
+				{{else}}
+			user_id,
 				{{- end}}
 			{{- end}} 
 			changes
@@ -293,7 +295,9 @@ BEGIN
 			NEW.rid, 
 			NEW.id, 
 			{{- range $hisIndex, $history := $table.Histories}}
-				{{- if eq $history.Name "user_id"}}
+				{{- if eq $history.Name "action_admin_id"}}
+			NEW.action_admin_id,
+				{{else if eq $history.Name "user_id"}}
 			NEW.user_id,
 				{{else}}
 			OLD.{{$history.Name}},
@@ -320,7 +324,8 @@ DROP TABLE IF EXISTS {{- range $dropIndex, $dropTable := $.DropTables.Tables}} {
 COMMIT;
 `
 	templateFuncMap := template.FuncMap{
-		"lengthMinusOne": lengthMinusOne,
+		"lengthMinusOne":                lengthMinusOne,
+		"checkNotUserIDOrActionAdminID": checkNotUserIDOrActionAdminID,
 	}
 	var buf bytes.Buffer
 	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap).Parse(script))
@@ -335,4 +340,12 @@ COMMIT;
 
 func lengthMinusOne(input interface{}) int {
 	return reflect.ValueOf(input).Len() - 1
+}
+
+func checkNotUserIDOrActionAdminID(field string) bool {
+	if field == "user_id" || field == "action_admin_id" {
+		return false
+	}
+
+	return true
 }
