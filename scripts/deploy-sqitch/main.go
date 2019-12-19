@@ -124,7 +124,7 @@ func copyAllYamlSchema(schemaPath string) {
 	pathTables := dbSchema.Schemas["tables"]
 	pathRestricted := dbSchema.Schemas["curr_tables"]
 
-	cmd := exec.Command("cp", "-r", pathTables+"/*", pathRestricted)
+	cmd := exec.Command("cp", "-r", projectPath+pathTables+"/*", projectPath+pathRestricted)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
