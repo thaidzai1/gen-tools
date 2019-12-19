@@ -124,8 +124,18 @@ func copyAllYamlSchema(schemaPath string) {
 	pathTables := dbSchema.Schemas["tables"]
 	pathRestricted := dbSchema.Schemas["curr_tables"]
 
-	cmd := exec.Command("cp", "-R", pathTables+"/*", pathRestricted)
-	cmd.Run()
+	cmd := exec.Command("cp", "-r", pathTables+"/*", pathRestricted)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
+
+	if err != nil {
+		ll.Print("Output: ", outStr)
+		ll.Print("Error: ", errStr)
+		ll.Panic("Error when copy tables to .restricted: ", l.Error(err))
+	}
 }
 
 func moveDroppedYamlSchema(schemaPath string) {
