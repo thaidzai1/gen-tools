@@ -189,6 +189,11 @@ BEGIN;
 		ALTER TABLE IF EXISTS {{$table.Name}} DROP CONSTRAINT {{$table.Name}}_pkey;
 		ALTER TABLE IF EXISTS {{$table.Name}} ADD PRIMARY KEY ({{$field.Field.Name}});
 		{{- end}}
+
+		{{- if ne $field.Field.Default ""}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
+		{{- end}}
 		
 		{{- if not $field.Field.Primary}}
 			{{- if $field.Field.NotNull}}
@@ -200,11 +205,6 @@ BEGIN;
 		{{- if $field.Field.Unique}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 	
-		{{- end}}
-
-		{{- if ne $field.Field.Default ""}}
-		ALTER TABLE IF EXISTS {{$table.Name}}
-			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
 		{{- end}}
 		
 	{{- end}}
