@@ -159,6 +159,7 @@ BEGIN;
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			{{- if ne $field.Field.Default ""}}
 			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
+		UPDATE {{$table.Name}} SET {{$field.Field.Name}} = '{{$field.Field.Default}}' WHERE {{$field.Field.Name}} = NULL;
 			{{else}}
 			ALTER COLUMN {{$field.Field.Name}} DROP DEFAULT;
 			{{- end}}
@@ -193,6 +194,7 @@ BEGIN;
 		{{- if ne $field.Field.Default ""}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
+		UPDATE {{$table.Name}} SET {{$field.Field.Name}} = '{{$field.Field.Default}}' WHERE {{$field.Field.Name}} = NULL;
 		{{- end}}
 		
 		{{- if not $field.Field.Primary}}
