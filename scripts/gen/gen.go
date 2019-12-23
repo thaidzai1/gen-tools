@@ -167,7 +167,7 @@ BEGIN;
 		{{- if $field.IsNotNullChanged}}
 			{{- if not $field.Field.Primary}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
-			ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET NOT NULL DEFAULT '{{$field.Field.Default}}' {{else}} DROP NOT NULL{{- end}};	
+			ALTER COLUMN {{$field.Field.Name}} {{- if $field.Field.NotNull}} SET NOT NULL{{else}} DROP NOT NULL{{- end}};	
 			{{- end}}
 		{{- end}}
 
@@ -198,7 +198,7 @@ BEGIN;
 		{{- if not $field.Field.Primary}}
 			{{- if $field.Field.NotNull}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
-			ALTER COLUMN {{$field.Field.Name}} SET NOT NULL DEFAULT '{{$field.Field.Default}}';	
+			ALTER COLUMN {{$field.Field.Name}} SET NOT NULL;	
 			{{- end}}
 		{{- end}}
 
