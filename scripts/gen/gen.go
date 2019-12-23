@@ -155,6 +155,15 @@ BEGIN;
 			ALTER COLUMN {{$field.Field.Name}} TYPE {{$field.Field.Type}} USING {{$field.Field.Name}}::{{$field.Field.Type}};
 		{{- end}}
 
+		{{- if $field.IsDefaultChanged}}
+		ALTER TABLE IF EXISTS {{$table.Name}}
+			{{- if ne $field.Field.Default ""}}
+			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
+			{{else}}
+			ALTER COLUMN {{$field.Field.Name}} DROP DEFAULT;
+			{{- end}}
+		{{- end}}
+
 		{{- if $field.IsNotNullChanged}}
 			{{- if not $field.Field.Primary}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
@@ -168,15 +177,6 @@ BEGIN;
 			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Field.Name}}_key UNIQUE ({{$field.Field.Name}}); 
 			{{else}}
 			DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Field.Name}}_key CASCADE; 
-			{{- end}}
-		{{- end}}
-
-		{{- if $field.IsDefaultChanged}}
-		ALTER TABLE IF EXISTS {{$table.Name}}
-			{{- if ne $field.Field.Default ""}}
-			ALTER COLUMN {{$field.Field.Name}} SET DEFAULT '{{$field.Field.Default}}';
-			{{else}}
-			ALTER COLUMN {{$field.Field.Name}} DROP DEFAULT;
 			{{- end}}
 		{{- end}}
 
