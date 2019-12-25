@@ -128,10 +128,15 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 	var newTables []models.TableDefination
 
 	if len(curTables) == 0 {
-		newTables = mapToSlice(changedTables)
+		tmpNewTables := mapToSlice(changedTables)
+		for _, newTable := range tmpNewTables {
+			newTable = mappingWithHistoryFields(newTable)
+			newTables = append(newTables, newTable)
+		}
 	} else {
 		for changedTableKey, changedTable := range changedTables {
 			// Get New Table
+			ll.Print("curTable: ", curTables[changedTableKey])
 			if curTables[changedTableKey].TableName == "" {
 				newTables = append(newTables, mappingWithHistoryFields(changedTable))
 				continue
@@ -301,6 +306,8 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 		}
 	}
 
+	ll.Print("New tables: ", newTables)
+
 	return &diffTables, &newTables
 }
 
@@ -350,6 +357,8 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 			}
 		}
 	}
+
+	ll.Print("history: ", histories)
 
 	mappedTable := models.TableDefination{
 		VersionName:        changedTable.VersionName,
