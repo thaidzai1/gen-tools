@@ -63,7 +63,6 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 					if err != nil {
 						ll.Panic("Error unmarshal triggers defination: ", l.Error(err))
 					}
-					ll.Print(generatedTriggersDef)
 					if len(generatedTriggersDef.FileName) < len(allTriggerFiles) {
 						for _, triggerFile := range allTriggerFiles {
 							isGenerated := false
@@ -91,7 +90,6 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 			break
 		case droppedTableConfigText:
 			dropConfigFileName := "dropped-tables.yml"
-			ll.Print("path: ", schemaPath+"/"+dropConfigFileName)
 			data, err := ioutil.ReadFile(schemaPath + "/" + dropConfigFileName)
 			NoError(err)
 			err = yaml.Unmarshal(data, &droppedTablesDef)
@@ -129,7 +127,6 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 func loadTableDefFromYaml(files []os.FileInfo, schemaPath string) map[string]models.TableDefination {
 	tableDefs := make(map[string]models.TableDefination)
 	for _, file := range files {
-		ll.Print("file: ", file.Name())
 		if !(strings.HasSuffix(file.Name(), ".yml") || strings.HasSuffix(file.Name(), ".yaml")) {
 			continue
 		}
@@ -172,7 +169,6 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 	} else {
 		for changedTableKey, changedTable := range changedTables {
 			// Get New Table
-			ll.Print("curTable: ", curTables[changedTableKey])
 			if curTables[changedTableKey].TableName == "" {
 				newTables = append(newTables, mappingWithHistoryFields(changedTable))
 				continue
@@ -342,8 +338,6 @@ func compareDiffYaml(curTables, changedTables map[string]models.TableDefination)
 		}
 	}
 
-	ll.Print("New tables: ", newTables)
-
 	return &diffTables, &newTables
 }
 
@@ -393,8 +387,6 @@ func mappingWithHistoryFields(changedTable models.TableDefination) models.TableD
 			}
 		}
 	}
-
-	ll.Print("history: ", histories)
 
 	mappedTable := models.TableDefination{
 		VersionName:        changedTable.VersionName,
