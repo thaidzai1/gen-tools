@@ -375,7 +375,6 @@ func checkNotUserIDOrActionAdminID(field string) bool {
 }
 
 func markGeneratedTriggerFiles(schemaPath string) {
-	ll.Print("schemaPath: ", schemaPath)
 	data, err := ioutil.ReadFile(schemaPath)
 	if err != nil {
 		ll.Panic("Error load schema.yml failed", l.Error(err))

@@ -52,13 +52,11 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 					if err != nil {
 						ll.Panic("Error read dir triggers failed: ", l.Error(err))
 					}
-					ll.Print(allTriggerFiles)
 
 					generatedTriggers, err := ioutil.ReadFile(dbSchema.Schemas[deployedFuncsText] + "/" + "functions.yml")
 					if err != nil {
 						ll.Panic("Error read file generated functions yml failed: ", l.Error(err))
 					}
-					ll.Print("generatedTriggers", string(generatedTriggers))
 
 					var generatedTriggersDef models.GeneratedFunctions
 					err = yaml.Unmarshal(generatedTriggers, &generatedTriggersDef)
@@ -67,7 +65,6 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 					}
 					ll.Print(generatedTriggersDef)
 					if len(generatedTriggersDef.FileName) < len(allTriggerFiles) {
-						ll.Info("Ahoy!!!")
 						for _, triggerFile := range allTriggerFiles {
 							isGenerated := false
 							for _, generatedFile := range generatedTriggersDef.FileName {
