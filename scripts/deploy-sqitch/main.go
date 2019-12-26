@@ -93,6 +93,7 @@ func main() {
 		cmdLog := exec.Command("echo", "Deploy failed...\n", "Status: "+outStr, "\n Error: ", errStr)
 		cmdLog.Stdout = os.Stdout
 		cmdLog.Run()
+		os.Exit(0)
 	}
 }
 
