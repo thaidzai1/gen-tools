@@ -17,6 +17,7 @@ import (
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/middlewares"
 	"gido.vn/gic/databases/sqitch.git/scripts/gen/models"
 	"gido.vn/gic/libs/common.git/l"
+	"gopkg.in/yaml.v2"
 )
 
 var (
@@ -41,6 +42,7 @@ func Exec(inputPath string) {
 
 	genSchemaDefinations := load.LoadSchemaDefination(inputPath, planName)
 	middlewares.GenerateSQL(genSchemaDefinations, generateDeploySQLScript, genSchemaDefinations)
+	markGeneratedTriggerFiles(inputPath)
 }
 
 func getPlanIndex() string {
@@ -355,7 +357,7 @@ COMMIT;
 	sqlPath := projectPath + "/deploy/" + planName + ".sql"
 	err := ioutil.WriteFile(sqlPath, buf.Bytes(), os.ModePerm)
 	if err != nil {
-		ll.Error("Error write file failed, %v\n", l.Error(err))
+		ll.Panic("Error write file failed, %v\n", l.Error(err))
 	}
 	ll.Info("==> Generate migrate deploy DONE†")
 }
@@ -370,4 +372,70 @@ func checkNotUserIDOrActionAdminID(field string) bool {
 	}
 
 	return true
+}
+
+func markGeneratedTriggerFiles(schemaPath string) {
+	ll.Print("schemaPath: ", schemaPath)
+	data, err := ioutil.ReadFile(schemaPath)
+	if err != nil {
+		ll.Panic("Error load schema.yml failed", l.Error(err))
+	}
+
+	var dbSchema models.DBSchema
+	err = yaml.Unmarshal(data, &dbSchema)
+	if err != nil {
+		ll.Panic("Error unmarshal schema.yml to Defination", l.Error(err))
+	}
+
+	pathFunctions := dbSchema.Schemas["functions"]
+	pathGeneratedFunctions := dbSchema.Schemas["generated_functions"]
+
+	functionFiles, err := ioutil.ReadDir(pathFunctions)
+	if err != nil {
+		ll.Panic("Error read dir functions", l.Error(err))
+	}
+
+	generatedFuncsLog, err := ioutil.ReadFile(pathGeneratedFunctions + "/" + "functions.yml")
+	if err != nil {
+		ll.Panic("Error read generated functions log: ", l.Error(err))
+	}
+
+	var generatedFuncsDef models.GeneratedFunctions
+	err = yaml.Unmarshal(generatedFuncsLog, &generatedFuncsDef)
+	if err != nil {
+		ll.Panic("Error umarshal from yaml to generatedFuncDef failed: ", l.Error(err))
+	}
+
+	newGeneratedFilenames := generatedFuncsDef.FileName
+
+	if len(functionFiles) > len(generatedFuncsDef.FileName) {
+		for _, functionFile := range functionFiles {
+			isGenerated := false
+			for _, genereatedFunc := range generatedFuncsDef.FileName {
+				if functionFile.Name() == genereatedFunc {
+					isGenerated = true
+				}
+			}
+
+			if !isGenerated {
+				newGeneratedFilenames = append(newGeneratedFilenames, functionFile.Name())
+			}
+		}
+	}
+
+	var scripts string = `
+functions:
+{{- range $index, $fileName := $}}	
+  - {{$fileName}}
+{{- end}}
+`
+
+	var buf bytes.Buffer
+	tpl := template.Must(template.New("scripts").Parse(scripts))
+	tpl.Execute(&buf, &newGeneratedFilenames)
+	err = ioutil.WriteFile(pathGeneratedFunctions+"/"+"functions.yml", buf.Bytes(), os.ModePerm)
+	if err != nil {
+		ll.Panic("Error write file failed, %v\n", l.Error(err))
+	}
+	ll.Info("==> Update generated functions DONE †")
 }

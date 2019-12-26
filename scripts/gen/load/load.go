@@ -35,6 +35,7 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 		NoError(err)
 		schemaTableText := "tables"
 		schemaFuncText := "functions"
+		deployedFuncsText := "generated_functions"
 		currTablesText := "curr_tables"
 		droppedTablesText := "dropped_tables"
 		droppedTableConfigText := "dropped_tables_config"
@@ -46,7 +47,45 @@ func LoadSchemaDefination(inputPath string, planName string) *models.MigrateSche
 		case schemaFuncText:
 			byteTriggerContent, err := ioutil.ReadFile(schemaPath + "/" + planName + ".sql")
 			if err != nil {
-				ll.Error("Error read file deploy failed:", l.Error(err))
+				if triggers == "" {
+					allTriggerFiles, err := ioutil.ReadDir(schemaPath)
+					if err != nil {
+						ll.Panic("Error read dir triggers failed: ", l.Error(err))
+					}
+					ll.Print(allTriggerFiles)
+
+					generatedTriggers, err := ioutil.ReadFile(dbSchema.Schemas[deployedFuncsText] + "/" + "functions.yml")
+					if err != nil {
+						ll.Panic("Error read file generated functions yml failed: ", l.Error(err))
+					}
+					ll.Print("generatedTriggers", string(generatedTriggers))
+
+					var generatedTriggersDef models.GeneratedFunctions
+					err = yaml.Unmarshal(generatedTriggers, &generatedTriggersDef)
+					if err != nil {
+						ll.Panic("Error unmarshal triggers defination: ", l.Error(err))
+					}
+					ll.Print(generatedTriggersDef)
+					if len(generatedTriggersDef.FileName) < len(allTriggerFiles) {
+						ll.Info("Ahoy!!!")
+						for _, triggerFile := range allTriggerFiles {
+							isGenerated := false
+							for _, generatedFile := range generatedTriggersDef.FileName {
+								if generatedFile == triggerFile.Name() {
+									isGenerated = true
+									break
+								}
+							}
+							if !isGenerated {
+								content, err := ioutil.ReadFile(schemaPath + "/" + triggerFile.Name())
+								if err != nil {
+									ll.Panic("Error read file triggers failed", l.Error(err))
+								}
+								byteTriggerContent = append(byteTriggerContent, content...)
+							}
+						}
+					}
+				}
 			}
 			triggers = string(byteTriggerContent)
 			break

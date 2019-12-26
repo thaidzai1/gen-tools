@@ -19,6 +19,11 @@ type TableDefination struct {
 	IsHistoryNoneField bool
 }
 
+// GeneratedFunctions ...
+type GeneratedFunctions struct {
+	FileName []string `yaml:"functions"`
+}
+
 // DropTables ...
 type DropTables struct {
 	Tables []string `yaml:"dropped_tables"`
@@ -29,6 +34,7 @@ type DropFields struct {
 	Name string `yaml:"name"`
 }
 
+// HistoryField ...
 type HistoryField struct {
 	Name         string `yaml:"name"`
 	Type         string
