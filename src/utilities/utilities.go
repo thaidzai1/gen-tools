@@ -1,6 +1,11 @@
 package utilities
 
-import "gido.vn/gic/libs/common.git/l"
+import (
+	"regexp"
+	"strings"
+
+	"gido.vn/gic/libs/common.git/l"
+)
 
 var (
 	ll = l.New()
@@ -18,4 +23,12 @@ func HandlePanic(err error, msg string) {
 	if err != nil {
 		ll.Panic("Error: "+msg, l.Error(err))
 	}
+}
+
+// ToCamel ...
+func ToCamel(str string) string {
+	var link = regexp.MustCompile("(^[A-Za-z])|_([A-Za-z])")
+	return link.ReplaceAllStringFunc(str, func(s string) string {
+		return strings.ToUpper(strings.Replace(s, "_", "", -1))
+	})
 }
