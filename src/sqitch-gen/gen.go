@@ -51,7 +51,7 @@ func main() {
 	migrationSchema := load.GetMigrateSchema(*flConfigFile)
 
 	middlewares.GenerateSQL(migrationSchema, generateDeploySQLScript, migrationSchema)
-	// markGeneratedTriggerFiles(*flConfigFile)
+	markGeneratedTriggerFiles(*flConfigFile)
 }
 
 func getPlanIndex() string {
@@ -177,7 +177,7 @@ func markGeneratedTriggerFiles(schemaPath string) {
 	functionFiles, err := ioutil.ReadDir(pathFunctions)
 	utilities.HandlePanic(err, "Read function dir failed")
 
-	generatedFuncsLog, err := ioutil.ReadFile(pathGeneratedFunctions + "/" + "functions.yml")
+	generatedFuncsLog, err := ioutil.ReadFile(pathGeneratedFunctions)
 	utilities.HandlePanic(err, "Read file generated functions config file failed")
 
 	var generatedFuncsDef models.GeneratedFunctions
@@ -211,7 +211,7 @@ functions:
 	var buf bytes.Buffer
 	tpl := template.Must(template.New("scripts").Parse(scripts))
 	tpl.Execute(&buf, &newGeneratedFilenames)
-	err = ioutil.WriteFile(pathGeneratedFunctions+"/"+"functions.yml", buf.Bytes(), os.ModePerm)
+	err = ioutil.WriteFile(pathGeneratedFunctions, buf.Bytes(), os.ModePerm)
 	if err != nil {
 		ll.Panic("Error write file failed, %v\n", l.Error(err))
 	}

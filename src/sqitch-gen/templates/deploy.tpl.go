@@ -51,7 +51,7 @@ BEGIN;
 		{{- if $field.IsUniqueChanged}} 
 		ALTER TABLE IF EXISTS {{$table.Name}}
 			{{- if $field.Unique}}
-			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Name}}_key UNIQUE ({{$field.Name}}); 
+			ADD CONSTRAINT {{$table.Name}}_{{$field.Name}}_key UNIQUE ({{$field.Name}}); 
 			{{else}}
 			DROP CONSTRAINT IF EXISTS {{$table.Name}}_{{$field.Name}}_key CASCADE; 
 			{{- end}}
@@ -82,7 +82,7 @@ BEGIN;
 
 		{{- if $field.Unique}}
 		ALTER TABLE IF EXISTS {{$table.Name}}
-			ADD CONSTRAINT IF NOT EXISTS {{$table.Name}}_{{$field.Name}}_key UNIQUE ({{$field.Name}}); 	
+			ADD CONSTRAINT {{$table.Name}}_{{$field.Name}}_key UNIQUE ({{$field.Name}}); 	
 		{{- end}}
 		
 	{{- end}}

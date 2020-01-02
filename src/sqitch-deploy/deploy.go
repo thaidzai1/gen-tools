@@ -153,8 +153,7 @@ func moveDroppedYamlSchema(schemaPath string) {
 	pathDropTableConfigFile := dbSchema.Schemas["dropped_tables_config"]
 
 	var droppedTablesDef models.DropTables
-	dropConfigFileName := "dropped-tables.yml"
-	dropTableData, err := ioutil.ReadFile(pathDropTableConfigFile + "/" + dropConfigFileName)
+	dropTableData, err := ioutil.ReadFile(pathDropTableConfigFile)
 	if err != nil {
 		ll.Panic("Error when read file config drop tables")
 	}
