@@ -59,11 +59,3 @@ func loadSchemaConfig(path string) *models.SchemaConfig {
 
 	return schemaConfig
 }
-
-func loadNewTable() {
-
-}
-
-func loadChangedTable() {
-
-}

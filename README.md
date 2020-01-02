@@ -120,7 +120,7 @@ drop_fields:
 
 # Test configuration
 
-Change defaultConfig() -> defaultTestConfig() in ./scripts/deploy-sqitch/main.go to use test DB
+Change defaultConfig() -> defaultTestConfig() in ./src/sqitch-deploy/deploy.go to use test DB
 
 or You can apply your own configuration yaml file follow these configuration:
 ```
