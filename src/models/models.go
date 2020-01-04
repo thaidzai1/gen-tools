@@ -8,11 +8,16 @@ type ModelDefination struct {
 
 // Model ...
 type Model struct {
-	Name string `yaml:"name"`
+	Name     string `yaml:"name"`
+	KeyField string `yaml:"key_field"`
+	KeyType  string
 }
 
 // ModelField ...
 type ModelField struct {
-	Name string `yaml:"name"`
-	Type string `yaml:"type"`
+	Name        string `yaml:"name"`
+	Type        string `yaml:"type"`
+	GoType      string `yaml:"go_type"`
+	SkipInProto bool   `yaml:"skip_in_proto"`
+	Ref         string `yaml:"ref"`
 }

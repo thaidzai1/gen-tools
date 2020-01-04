@@ -3,6 +3,7 @@ package load
 import (
 	"io/ioutil"
 
+	"gido.vn/gic/databases/sqitch.git/src/gen-model/gen"
 	"gido.vn/gic/databases/sqitch.git/src/utilities"
 	"gido.vn/gic/libs/common.git/l"
 
@@ -18,37 +19,29 @@ var (
 )
 
 // Defination ...
-func Defination(path string, modelDefChan chan *models.ModelDefination, quit chan bool) {
+func Defination(path string) {
 	schemaDef := loadSchemaConfig(path)
 
 	modelFileDir := schemaDef.Schemas["models"]
+	genDestPath := schemaDef.Schemas["gen_models_destinations"]
 	modelFiles, err := ioutil.ReadDir(modelFileDir)
 	utilities.HandlePanic(err, "Read dir models failed")
 
+	notifyGenChan := make(chan int)
+	numGeneratedFile := 0
 	for _, modelFile := range modelFiles {
-		go loadModelDefination(modelFileDir+"/"+modelFile.Name(), modelDefChan)
-	}
-	ll.Info("After loop")
-	// quit <- 0
-	// quit <- 0
-	countDown := len(modelFiles)
-	for {
-		select {
-		case data := <-modelDefChan:
-			countDown--
-			ll.Print("data: ", countDown)
-			if countDown == 0 {
-				ll.Info("hello ---")
-				quit <- true
-				// ll.Print("datax: ", <-quit)
-				ll.Info("hello")
-				return
-			}
-			quit <- true
-			modelDefChan <- data
-		}
+		go loadModelDefination(modelFileDir+"/"+modelFile.Name(), genDestPath, modelFile.Name(), notifyGenChan)
 	}
 
+	for {
+		select {
+		case <-notifyGenChan:
+			numGeneratedFile++
+			if numGeneratedFile == len(modelFiles) {
+				return
+			}
+		}
+	}
 }
 
 func loadSchemaConfig(path string) *models.SchemaConfig {
@@ -61,10 +54,15 @@ func loadSchemaConfig(path string) *models.SchemaConfig {
 	return schemaDefination
 }
 
-func loadModelDefination(path string, modelDefChan chan *models.ModelDefination) {
+func loadModelDefination(path string, genDesPath string, modelFileName string, notify chan int) {
 	ll.Print("File name: ", path)
 
-	if !(strings.Contains(path, ".yml") || strings.Contains(path, ".yaml")) {
+	var fileNameWithoutSuffix string
+	if strings.Contains(modelFileName, ".yaml") {
+		fileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
+	} else if strings.Contains(modelFileName, ".yml") {
+		fileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
+	} else {
 		return
 	}
 
@@ -75,5 +73,20 @@ func loadModelDefination(path string, modelDefChan chan *models.ModelDefination)
 	err = yaml.Unmarshal(byteModelFileContent, modelDefination)
 	utilities.HandlePanic(err, "Decoding model config file failed")
 
-	modelDefChan <- modelDefination
+	modelDefHasFieldType := mappingTypeOfKeyField(modelDefination)
+
+	gen.Model(modelDefHasFieldType, genDesPath, fileNameWithoutSuffix)
+	notify <- 1
+}
+
+func mappingTypeOfKeyField(modelDef *models.ModelDefination) *models.ModelDefination {
+	newModelDefination := *modelDef
+	for _, field := range modelDef.Fields {
+		if field.Name == modelDef.Model.KeyField {
+			newModelDefination.Model.KeyType = field.GoType
+			break
+		}
+	}
+
+	return &newModelDefination
 }

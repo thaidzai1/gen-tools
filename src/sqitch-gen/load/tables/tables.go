@@ -21,9 +21,6 @@ func Load(tablesDirPath string, currTablesDirPath string, tablesChan chan []*mod
 
 	tables, alterTables := compareDiffTables(tableDefs, currTableDefs)
 
-	ll.Print("tables: ", tables)
-	ll.Print("alterTables: ", alterTables)
-
 	tablesChan <- tables
 	alterTablesChan <- alterTables
 
