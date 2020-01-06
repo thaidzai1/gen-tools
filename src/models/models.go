@@ -2,8 +2,9 @@ package models
 
 // ModelDefination ...
 type ModelDefination struct {
-	Model  Model        `yaml:"model"`
-	Fields []ModelField `yaml:"fields"`
+	Model   Model               `yaml:"model"`
+	Fields  []*ModelField       `yaml:"fields"`
+	Filters []*FilterDefinition `yaml:"filters"`
 }
 
 // Model ...
@@ -20,4 +21,10 @@ type ModelField struct {
 	GoType      string `yaml:"go_type"`
 	SkipInProto bool   `yaml:"skip_in_proto"`
 	Ref         string `yaml:"ref"`
+}
+
+// FilterDefinition ...
+type FilterDefinition struct {
+	Name   string
+	Fields []string `yaml:"fields"`
 }

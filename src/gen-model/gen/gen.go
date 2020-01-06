@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"text/template"
 
-	tplmodel "gido.vn/gic/databases/sqitch.git/src/gen-model/templates"
+	tpl "gido.vn/gic/databases/sqitch.git/src/gen-model/templates"
 	"gido.vn/gic/databases/sqitch.git/src/models"
 	"gido.vn/gic/databases/sqitch.git/src/utilities"
 
@@ -20,24 +20,46 @@ var (
 
 // Model ...
 func Model(modelDef *models.ModelDefination, desPath string, modelFileName string) {
-	ll.Print("modelDef: ", modelDef)
 	var buf bytes.Buffer
-	genHeader(&buf, modelDef)
-	genBody(&buf, modelDef)
+	genModelHeader(&buf, modelDef)
+	genModelBody(&buf, modelDef)
 
-	modelPath := desPath + "/" + modelFileName + ".go"
+	modelPath := desPath + "/" + modelFileName + ".gen.go"
 	createFileAndWrite(modelPath, &buf)
 
-	ll.Info("==> Generate model deploy DONE†")
+	ll.Info("==> Generate model DONE†")
 }
 
-func genHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Parse(tplmodel.Header))
+// Store ...
+func Store(modelDef *models.ModelDefination, desPath string, storeFileName string) {
+	ll.Print("modelDef: ", modelDef)
+	var buf bytes.Buffer
+	genStoreHeader(&buf, modelDef)
+	genStoreBody(&buf, modelDef)
+
+	storePath := desPath + "/" + storeFileName + ".gen.go"
+	createFileAndWrite(storePath, &buf)
+
+	ll.Info("==> Generate store DONE †")
+}
+
+func genStoreHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
+	tpl := template.Must(template.New("scripts").Parse(tpl.StoreHeader))
 	tpl.Execute(buf, modelDef)
 }
 
-func genBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap()).Parse(tplmodel.Model))
+func genStoreBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap()).Parse(tpl.StoreBody))
+	tpl.Execute(buf, modelDef)
+}
+
+func genModelHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
+	tpl := template.Must(template.New("scripts").Parse(tpl.ModelHeader))
+	tpl.Execute(buf, modelDef)
+}
+
+func genModelBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap()).Parse(tpl.ModelBody))
 	tpl.Execute(buf, modelDef)
 }
 
@@ -67,5 +89,6 @@ func templateFuncMap() template.FuncMap {
 		"ConvertGoTypeToDbType": utilities.ConvertGoTypeToDbType,
 		"ToTitleNorm":           utilities.ToTitleNorm,
 		"ToProtoField":          utilities.ToProtoField,
+		"countQueryParams":      models.CountFilterQueryParams,
 	}
 }

@@ -23,14 +23,17 @@ func Defination(path string) {
 	schemaDef := loadSchemaConfig(path)
 
 	modelFileDir := schemaDef.Schemas["models"]
-	genDestPath := schemaDef.Schemas["gen_models_destinations"]
+	genModelDestPath := schemaDef.Schemas["gen_models_destinations"]
+	storeFileDir := schemaDef.Schemas["stores"]
+	genStoreDesPath := schemaDef.Schemas["gen_stores_destinations"]
 	modelFiles, err := ioutil.ReadDir(modelFileDir)
 	utilities.HandlePanic(err, "Read dir models failed")
 
 	notifyGenChan := make(chan int)
 	numGeneratedFile := 0
 	for _, modelFile := range modelFiles {
-		go loadModelDefination(modelFileDir+"/"+modelFile.Name(), genDestPath, modelFile.Name(), notifyGenChan)
+		fileName := modelFile.Name()
+		go loadAndGen(modelFileDir+"/"+fileName, genModelDestPath, fileName, storeFileDir+"/"+fileName, genStoreDesPath, fileName, notifyGenChan)
 	}
 
 	for {
@@ -54,17 +57,36 @@ func loadSchemaConfig(path string) *models.SchemaConfig {
 	return schemaDefination
 }
 
-func loadModelDefination(path string, genDesPath string, modelFileName string, notify chan int) {
-	ll.Print("File name: ", path)
-
-	var fileNameWithoutSuffix string
+func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, storePath string, genStoreDesPath string, storeFileName string, notify chan int) {
+	var modelFileNameWithoutSuffix string
 	if strings.Contains(modelFileName, ".yaml") {
-		fileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
+		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
 	} else if strings.Contains(modelFileName, ".yml") {
-		fileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
+		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
 	} else {
 		return
 	}
+
+	modelDef := loadModelDefination(modelPath, genModelDesPath, modelFileName)
+	gen.Model(modelDef, genModelDesPath, modelFileNameWithoutSuffix)
+
+	var storeFileNameWithoutSuffix string
+	if strings.Contains(modelFileName, ".yaml") {
+		storeFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
+	} else if strings.Contains(modelFileName, ".yml") {
+		storeFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
+	} else {
+		return
+	}
+
+	storeDef := loadModelDefination(modelPath, genStoreDesPath, storeFileName)
+	gen.Store(storeDef, genStoreDesPath, storeFileNameWithoutSuffix)
+
+	notify <- 1
+}
+
+func loadModelDefination(path string, genDesPath string, modelFileName string) *models.ModelDefination {
+	ll.Print("File name: ", path)
 
 	byteModelFileContent, err := ioutil.ReadFile(path)
 	utilities.HandlePanic(err, "Read model config file failed")
@@ -73,10 +95,9 @@ func loadModelDefination(path string, genDesPath string, modelFileName string, n
 	err = yaml.Unmarshal(byteModelFileContent, modelDefination)
 	utilities.HandlePanic(err, "Decoding model config file failed")
 
-	modelDefHasFieldType := mappingTypeOfKeyField(modelDefination)
+	modelDefHasKeyFieldType := mappingTypeOfKeyField(modelDefination)
 
-	gen.Model(modelDefHasFieldType, genDesPath, fileNameWithoutSuffix)
-	notify <- 1
+	return modelDefHasKeyFieldType
 }
 
 func mappingTypeOfKeyField(modelDef *models.ModelDefination) *models.ModelDefination {
