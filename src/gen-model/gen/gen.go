@@ -49,7 +49,7 @@ func genStoreHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
 }
 
 func genStoreBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap()).Parse(tpl.StoreBody))
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap(modelDef)).Parse(tpl.StoreBody))
 	tpl.Execute(buf, modelDef)
 }
 
@@ -59,20 +59,18 @@ func genModelHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
 }
 
 func genModelBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap()).Parse(tpl.ModelBody))
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap(modelDef)).Parse(tpl.ModelBody))
 	tpl.Execute(buf, modelDef)
 }
 
 func createFileAndWrite(filePath string, buf *bytes.Buffer) {
 	cmd := exec.Command("touch", filePath)
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
+	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	err := cmd.Run()
-	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
-	ll.Print("outStr: ", outStr)
+	errStr := string(stderr.Bytes())
 	if err != nil {
-		ll.Error("Error: create file model failed: " + filePath + "Error :::: " + errStr)
+		ll.Error("Error: create file model failed: " + filePath + " Error :::: " + errStr)
 		ll.Panic("Error: create file model failed: ", l.Error(err))
 	}
 
@@ -80,7 +78,7 @@ func createFileAndWrite(filePath string, buf *bytes.Buffer) {
 	utilities.HandlePanic(err, "Write file gen model failed")
 }
 
-func templateFuncMap() template.FuncMap {
+func templateFuncMap(modelDef *models.ModelDefination) template.FuncMap {
 	return template.FuncMap{
 		"ToCamel":               utilities.ToCamel,
 		"GenFieldTag":           utilities.GenFieldTag,
@@ -89,6 +87,7 @@ func templateFuncMap() template.FuncMap {
 		"ConvertGoTypeToDbType": utilities.ConvertGoTypeToDbType,
 		"ToTitleNorm":           utilities.ToTitleNorm,
 		"ToProtoField":          utilities.ToProtoField,
-		"countQueryParams":      models.CountFilterQueryParams,
+		"countQueryParams":      modelDef.CountFilterQueryParams,
+		"inc":                   modelDef.Inc,
 	}
 }

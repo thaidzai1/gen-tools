@@ -12,7 +12,7 @@ func New{{ToCamel .Model.Name}}Store(db postgres.DB) *{{ToCamel .Model.Name}}Sto
 	}
 }
 
-{{- if eq .Model.KeyField "ID"}}
+{{- if eq .Model.KeyField "id"}}
 func (s *{{ToCamel .Model.Name}}Store) GetByID(ID {{.Model.KeyType}}) (*model.{{ToCamel .Model.Name}}, error) {
 	var data model.{{ToCamel .Model.Name}}
 	err := s.db.First(&data, "id = ?", ID).Error
@@ -25,7 +25,7 @@ func (s *{{ToCamel .Model.Name}}Store) GetByIDs(IDs []{{.Model.KeyType}}) (data 
 }
 {{- end}}
 
-{{- if eq .Model.KeyField "Code"}}
+{{- if eq .Model.KeyField "code"}}
 func (s *{{ToCamel .Model.Name}}Store) GetByCode(code string) (*model.{{ToCamel .Model.Name}}, error) {
 	var data model.{{ToCamel .Model.Name}}
 	err := s.db.First(&data, "code = ?", code).Error
@@ -64,9 +64,9 @@ func (s *{{ToCamel .Model.Name}}Store) GetAll(f common.Filter, p common.Paging{{
 {{- range $filter := .Filters -}}{{- if eq $filter.Name "q" -}}
 {{- range $index, $field := $filter.Fields -}}
 {{- if eq $index 0 -}}
- UPPER(CAST({{snake $field}} AS TEXT)) LIKE ANY (array[%s]) 
+ UPPER(CAST({{ToSnakeCase $field}} AS TEXT)) LIKE ANY (array[%s]) 
 {{- else -}}
- OR UPPER(CAST({{snake $field}} AS TEXT)) LIKE ANY (array[%s]) 
+ OR UPPER(CAST({{ToSnakeCase $field}} AS TEXT)) LIKE ANY (array[%s]) 
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -88,9 +88,9 @@ func (s *{{ToCamel .Model.Name}}Store) GetAll(f common.Filter, p common.Paging{{
 {{- range $filter := .Filters -}}{{- if eq $filter.Name "q" -}}
 {{- range $index, $field := $filter.Fields -}}
 {{- if eq $index 0 -}}
- UPPER(CAST({{snake $field}} AS TEXT)) LIKE ANY (array[%s]) 
+ UPPER(CAST({{ToSnakeCase $field}} AS TEXT)) LIKE ANY (array[%s]) 
 {{- else -}}
- OR UPPER(CAST({{snake $field}} AS TEXT)) LIKE ANY (array[%s])
+ OR UPPER(CAST({{ToSnakeCase $field}} AS TEXT)) LIKE ANY (array[%s])
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -148,32 +148,32 @@ func (s *{{ToCamel .Model.Name}}Store) GetAll(f common.Filter, p common.Paging{{
 	}
 	{{ if .Model.UserFilterField }}
 	if userID == 0 {
-		{{- if eq .Model.KeyField "ID" -}}
+		{{- if eq .Model.KeyField "id" -}}
 		err = s.db.FindWithPaging(p, &pi).Find(&data, append([]interface{}{strFilter}, args...)...).Error
 		{{- else -}}
 		err = s.db.FindWithPagingCustom(p, &pi, "created_at").Find(&data, append([]interface{}{strFilter}, args...)...).Error
 		{{- end }}
 	} else {
 		if strFilter != "" {
-			{{- if eq .Model.KeyField "ID" -}}
+			{{- if eq .Model.KeyField "id" -}}
 			err = s.db.FindWithPaging(p, &pi).
-				Find(&data, append([]interface{}{"{{snake .Model.UserFilterField.Name}} = ? AND " + strFilter, userID}, args...)...).Error
+				Find(&data, append([]interface{}{"{{ToSnakeCase .Model.UserFilterField.Name}} = ? AND " + strFilter, userID}, args...)...).Error
 			{{- else -}}
 			err = s.db.FindWithPagingCustom(p, &pi, "created_at").
-				Find(&data, append([]interface{}{"{{snake .Model.UserFilterField.Name}} = ? AND " + strFilter, userID}, args...)...).Error
+				Find(&data, append([]interface{}{"{{ToSnakeCase .Model.UserFilterField.Name}} = ? AND " + strFilter, userID}, args...)...).Error
 			{{- end -}}
 		} else {
-			{{- if eq .Model.KeyField "ID" -}}
+			{{- if eq .Model.KeyField "id" -}}
 			err = s.db.FindWithPaging(p, &pi).
-				Find(&data, "{{snake .Model.UserFilterField.Name}} = ? ", userID).Error
+				Find(&data, "{{ToSnakeCase .Model.UserFilterField.Name}} = ? ", userID).Error
 			{{- else -}}
 			err = s.db.FindWithPagingCustom(p, &pi, "created_at").
-				Find(&data, "{{snake .Model.UserFilterField.Name}} = ? ", userID).Error
+				Find(&data, "{{ToSnakeCase .Model.UserFilterField.Name}} = ? ", userID).Error
 			{{- end -}}
 		}
 	}
 {{ else }}
-	{{- if eq .Model.KeyField "ID" -}}
+	{{- if eq .Model.KeyField "id" -}}
 	err = s.db.FindWithPaging(p, &pi).Find(&data, append([]interface{}{strFilter}, args...)...).Error
 	{{- else -}}
 	err = s.db.FindWithPagingCustom(p, &pi, "created_at").Find(&data, append([]interface{}{strFilter}, args...)...).Error

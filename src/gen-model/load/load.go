@@ -1,7 +1,10 @@
 package load
 
 import (
+	"bytes"
 	"io/ioutil"
+	"os"
+	"os/exec"
 
 	"gido.vn/gic/databases/sqitch.git/src/gen-model/gen"
 	"gido.vn/gic/databases/sqitch.git/src/utilities"
@@ -28,6 +31,14 @@ func Defination(path string) {
 	genStoreDesPath := schemaDef.Schemas["gen_stores_destinations"]
 	modelFiles, err := ioutil.ReadDir(modelFileDir)
 	utilities.HandlePanic(err, "Read dir models failed")
+
+	if _, err := os.Stat(genModelDestPath); os.IsNotExist(err) {
+		makeDirectory(genModelDestPath)
+	}
+
+	if _, err := os.Stat(genStoreDesPath); os.IsNotExist(err) {
+		makeDirectory(genStoreDesPath)
+	}
 
 	notifyGenChan := make(chan int)
 	numGeneratedFile := 0
@@ -95,7 +106,7 @@ func loadModelDefination(path string, genDesPath string, modelFileName string) *
 	err = yaml.Unmarshal(byteModelFileContent, modelDefination)
 	utilities.HandlePanic(err, "Decoding model config file failed")
 
-	modelDefHasKeyFieldType := mappingTypeOfKeyField(modelDefination)
+	modelDefHasKeyFieldType := mappingTypeOfKeyField(mappingIsUserFilterField(modelDefination))
 
 	return modelDefHasKeyFieldType
 }
@@ -110,4 +121,29 @@ func mappingTypeOfKeyField(modelDef *models.ModelDefination) *models.ModelDefina
 	}
 
 	return &newModelDefination
+}
+
+func mappingIsUserFilterField(modelDef *models.ModelDefination) *models.ModelDefination {
+	newModelDef := *modelDef
+	for _, field := range modelDef.Fields {
+		if field.Filter {
+			newModelDef.Model.UserFilterField = field
+			break
+		}
+	}
+
+	return &newModelDef
+}
+
+func makeDirectory(path string) {
+	cmd := exec.Command("mkdir", path)
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	errStr := string(stderr.Bytes())
+
+	if err != nil {
+		ll.Error("Error: make directory failed: " + path + " Error :::: " + errStr)
+		ll.Panic("make directory failed", l.Error(err))
+	}
 }
