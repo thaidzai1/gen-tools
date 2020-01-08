@@ -110,7 +110,7 @@ func load(configPath string, v interface{}) (err error) {
 		return err
 	}
 	ll.Info("Service started with config", l.Object("\nconfig", v))
-	return
+	return nil
 }
 
 func copyAllYamlSchema(schemaPath string) {
@@ -121,6 +121,9 @@ func copyAllYamlSchema(schemaPath string) {
 
 	var dbSchema models.SchemaConfig
 	err = yaml.Unmarshal(data, &dbSchema)
+	if err != nil {
+		ll.Panic("Decoding schema config failed", l.Error(err))
+	}
 
 	pathTables := dbSchema.Schemas["tables"]
 	pathRestricted := dbSchema.Schemas["curr_tables"]
@@ -147,6 +150,9 @@ func moveDroppedYamlSchema(schemaPath string) {
 
 	var dbSchema models.SchemaConfig
 	err = yaml.Unmarshal(data, &dbSchema)
+	if err != nil {
+		ll.Panic("Decoding schema config failed", l.Error(err))
+	}
 
 	pathTables := dbSchema.Schemas["tables"]
 	pathRestricted := dbSchema.Schemas["dropped_tables"]
@@ -155,9 +161,12 @@ func moveDroppedYamlSchema(schemaPath string) {
 	var droppedTablesDef models.DropTables
 	dropTableData, err := ioutil.ReadFile(pathDropTableConfigFile)
 	if err != nil {
-		ll.Panic("Error when read file config drop tables")
+		ll.Panic("Error when read file config drop tables", l.Error(err))
 	}
 	err = yaml.Unmarshal(dropTableData, &droppedTablesDef)
+	if err != nil {
+		ll.Panic("Decoding drop table config file", l.Error(err))
+	}
 
 	tableFiles, err := ioutil.ReadDir(pathTables)
 	if err != nil {
