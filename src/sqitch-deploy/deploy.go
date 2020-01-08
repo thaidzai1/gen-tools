@@ -6,9 +6,11 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 
 	"gido.vn/gic/databases/sqitch.git/src/models"
+	"gido.vn/gic/databases/sqitch.git/src/utilities"
 	"gido.vn/gic/libs/common.git/l"
 	"gopkg.in/yaml.v2"
 )
@@ -90,7 +92,12 @@ func main() {
 			cmdLog.Run()
 		}
 	} else {
-		cmdLog := exec.Command("echo", "Deploy failed...\n", "Status: "+outStr, "\n Error: ", errStr)
+		failedIndex := strings.Index(outStr, "+")
+		if failedIndex > 0 {
+			arrKeywords := strings.Split(outStr[failedIndex:], " ")
+			removeMigrateHasFailedScript(arrKeywords[1])
+		}
+		cmdLog := exec.Command("echo", "Deploy failed...\n", "Status: "+outStr, "Error: ", errStr)
 		cmdLog.Stdout = os.Stdout
 		cmdLog.Run()
 		os.Exit(0)
@@ -190,4 +197,18 @@ func moveDroppedYamlSchema(schemaPath string) {
 			}
 		}
 	}
+}
+
+func removeMigrateHasFailedScript(migrationName string) {
+	ll.Print("failed script: ", migrationName)
+	re := regexp.MustCompile("(?m)[\r\n]+^.*" + migrationName + ".*$")
+	sqitchPlanPath := projectPath + "/sqitch.plan"
+	fileContent, err := ioutil.ReadFile(sqitchPlanPath)
+	utilities.HandlePanic(err, "Read file sqitch.plan failed")
+	ll.Print("regexp: ", re)
+
+	removedContent := re.ReplaceAllString(string(fileContent), "")
+	ll.Print("removedContent: ", removedContent)
+	err = ioutil.WriteFile(sqitchPlanPath, []byte(removedContent), 0644)
+	utilities.HandlePanic(err, "Write file to remove failed migration script")
 }
