@@ -147,42 +147,44 @@ func compareDiffFields(fields, currFields []*models.Field) []*models.Field {
 		diffField := field
 		diffField.IsNewField = true
 		isFieldUpdated := false
-		for _, currField := range currFields {
-			if field.Name == currField.Name || field.OldName == currField.Name {
-				diffField.IsNewField = false
+		if !field.SkipInDB {
+			for _, currField := range currFields {
+				if field.Name == currField.Name || field.OldName == currField.Name {
+					diffField.IsNewField = false
 
-				if field.Name != currField.Name && field.OldName == currField.Name {
-					isFieldUpdated = true
-				}
+					if field.Name != currField.Name && field.OldName == currField.Name {
+						isFieldUpdated = true
+					}
 
-				if field.Type != currField.Type {
-					isFieldUpdated = true
-					diffField.IsTypeChanged = true
-				}
+					if field.Type != currField.Type {
+						isFieldUpdated = true
+						diffField.IsTypeChanged = true
+					}
 
-				if field.NotNull != currField.NotNull {
-					isFieldUpdated = true
-					diffField.IsNotNullChanged = true
-				}
+					if field.NotNull != currField.NotNull {
+						isFieldUpdated = true
+						diffField.IsNotNullChanged = true
+					}
 
-				if field.Unique != currField.Unique {
-					isFieldUpdated = true
-					diffField.IsUniqueChanged = true
-				}
+					if field.Unique != currField.Unique {
+						isFieldUpdated = true
+						diffField.IsUniqueChanged = true
+					}
 
-				if field.Primary != currField.Primary {
-					isFieldUpdated = true
-					diffField.IsPrimaryChanged = true
-				}
+					if field.Primary != currField.Primary {
+						isFieldUpdated = true
+						diffField.IsPrimaryChanged = true
+					}
 
-				if field.Default != currField.Default {
-					isFieldUpdated = true
-					diffField.IsDefaultChanged = true
+					if field.Default != currField.Default {
+						isFieldUpdated = true
+						diffField.IsDefaultChanged = true
+					}
 				}
 			}
-		}
-		if isFieldUpdated || diffField.IsNewField {
-			diffFields = append(diffFields, diffField)
+			if isFieldUpdated || diffField.IsNewField {
+				diffFields = append(diffFields, diffField)
+			}
 		}
 	}
 	return diffFields

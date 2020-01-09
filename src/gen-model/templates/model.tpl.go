@@ -3,8 +3,9 @@ package tpl
 // ModelBody ...
 const ModelBody = `
 type {{$.Model.Name}} struct {
-{{- range $index, $field := $.Fields}}
+{{- range $index, $field := $.Fields}}{{- if not .SkipInDB}}
 	{{ToCamel $field.Name}} {{ConvertGoTypeToDbType $field.GoType}} {{GenFieldTag $field}}
+{{- end}}
 {{- end}}
 }
 
@@ -63,19 +64,19 @@ func ToPb{{TitleMany $.Model.Name}}(datas []*{{$.Model.Name}}) []*pb.{{$.Model.N
 
 func ToPb{{$.Model.Name}}(data *{{$.Model.Name}}) *pb.{{$.Model.Name}} {
 	pbData := &pb.{{$.Model.Name}}{
-	{{- range .Fields}}{{- if and (ne .Name "RID") (ne .Name "ActionAdminID") (not .SkipInProto)}}
-	{{- if eq .Name "Active"}}
+	{{- range .Fields}}{{- if not .SkipInDB}}{{- if and (ne .Name "rid") (ne .Name "action_admin_id") (not .SkipInProto)}}
+	{{- if eq .Name "active"}}
 		Active: data.IsActive(),
 	{{- else }}
 	{{- if eq .Ref ""}}
-		{{- if eq .Type "jsonb"}}
+		{{- if eq .GoType "jsonb"}}
 		{{ToTitleNorm .Name}}: {{ToProtoField . "data"}}.RawMessage,
 		{{else}}
 		{{ToTitleNorm .Name}}: {{ToProtoField . "data"}},
 		{{- end}}
 	{{- end}}
 	{{- end}}
-	{{- end}}
+	{{- end}}{{- end}}
 	{{- end}}
 	}
 	return pbData

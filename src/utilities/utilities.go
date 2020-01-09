@@ -41,10 +41,10 @@ func ToCamel(str string) string {
 // GenFieldTag ...
 func GenFieldTag(d *models.ModelField) string {
 	if d.Type == "timestamptz" || d.Type == "timestamp" {
-		return "`json:\"" + d.Name + ",omitempty\" gorm:\"" + "column:" + d.Name + ";type:" + d.Type + "\"`"
+		return "`json:\"" + d.Name + ",omitempty\" gorm:\"" + d.Gorm + "column:" + d.Name + ";type:" + d.Type + "\"`"
 	}
 
-	return "`json:\"" + d.Name + ",omitempty\" gorm:\"" + "column:" + d.Name + "\"`"
+	return "`json:\"" + d.Name + ",omitempty\" gorm:\"" + d.Gorm + "column:" + d.Name + "\"`"
 }
 
 // ConvertGoTypeToDbType ...

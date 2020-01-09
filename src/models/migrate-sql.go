@@ -30,8 +30,8 @@ type DropFields struct {
 // HistoryField ...
 type HistoryField struct {
 	Name         string `yaml:"name"`
+	IsNoneFields bool   `yaml:"none_field"`
 	Type         string
-	IsNoneFields bool `yaml:"none_field"`
 }
 
 // Field ...
@@ -43,6 +43,7 @@ type Field struct {
 	NotNull          bool   `yaml:"not_null"`
 	Unique           bool   `yaml:"unique"`
 	Default          string `yaml:"default"`
+	SkipInDB         bool   `yaml:"skip_in_db"`
 	IsTypeChanged    bool
 	IsNewField       bool
 	IsPrimaryChanged bool
