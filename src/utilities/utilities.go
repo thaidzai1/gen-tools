@@ -82,19 +82,20 @@ func TitleMany(str string) string {
 
 // ToProtoField ...
 func ToProtoField(d *models.ModelField, varName string) string {
+	upperCamelCaseName := ToCamelGolangCase(d.Name)
 	switch d.GoType {
 	case "string", "text", "bool", "stringArray", "jsonb":
-		return varName + "." + d.Name
+		return varName + "." + upperCamelCaseName
 	case "int", "enum":
-		return "int32(" + varName + "." + d.Name + ")"
+		return "int32(" + varName + "." + upperCamelCaseName + ")"
 	case "int64":
-		return "int64(" + varName + "." + d.Name + ")"
+		return "int64(" + varName + "." + upperCamelCaseName + ")"
 	case "float":
-		return "float32(" + varName + "." + d.Name + ")"
+		return "float32(" + varName + "." + upperCamelCaseName + ")"
 	case "float64":
-		return "float64(" + varName + "." + d.Name + ")"
+		return "float64(" + varName + "." + upperCamelCaseName + ")"
 	case "time":
-		return "common.MillisP((*time.Time)(" + varName + "." + d.Name + "))"
+		return "common.MillisP((*time.Time)(" + varName + "." + upperCamelCaseName + "))"
 	}
 
 	ll.Panic("Unexpected type", l.Object("field", d))
@@ -136,4 +137,29 @@ func ToTitleNorm(input string) string {
 
 func nextIsLower(input string, i int) bool {
 	return i+1 < len(input) && input[i+1] >= 'a' && input[i+1] <= 'z'
+}
+
+// ToCamelGolangCase ...
+func ToCamelGolangCase(str string) string {
+	frontAcronym := map[string]string{"wh": "WH", "us": "US", "rid": "RID"}
+	backAcronym := map[string]string{"id": "ID", "vnd": "VND", "vat": "VAT"}
+
+	arrStr := strings.Split(str, "_")
+
+	var convertedStr string
+	for index, s := range arrStr {
+		word := s
+		if index == 0 && frontAcronym[s] != "" {
+			word = frontAcronym[s]
+		}
+		if index == len(arrStr)-1 && backAcronym[s] != "" {
+			word = backAcronym[s]
+
+		}
+
+		word = ToCamel(word)
+		convertedStr += word
+	}
+
+	return convertedStr
 }

@@ -24,7 +24,7 @@ func Model(modelDef *models.ModelDefination, desPath string, modelFileName strin
 	genModelHeader(&buf, modelDef)
 	genModelBody(&buf, modelDef)
 
-	modelPath := desPath + "/" + modelFileName + ".gen.go"
+	modelPath := desPath + "/" + modelFileName + ".model.gen.go"
 	createFileAndWrite(modelPath, &buf)
 
 	ll.Info("==> Generate model DONE†")
@@ -32,12 +32,11 @@ func Model(modelDef *models.ModelDefination, desPath string, modelFileName strin
 
 // Store ...
 func Store(modelDef *models.ModelDefination, desPath string, storeFileName string) {
-	ll.Print("modelDef: ", modelDef)
 	var buf bytes.Buffer
 	genStoreHeader(&buf, modelDef)
 	genStoreBody(&buf, modelDef)
 
-	storePath := desPath + "/" + storeFileName + ".gen.go"
+	storePath := desPath + "/" + storeFileName + ".store.gen.go"
 	createFileAndWrite(storePath, &buf)
 
 	ll.Info("==> Generate store DONE †")
@@ -81,6 +80,7 @@ func createFileAndWrite(filePath string, buf *bytes.Buffer) {
 func templateFuncMap(modelDef *models.ModelDefination) template.FuncMap {
 	return template.FuncMap{
 		"ToCamel":               utilities.ToCamel,
+		"ToCamelGolangCase":     utilities.ToCamelGolangCase,
 		"GenFieldTag":           utilities.GenFieldTag,
 		"ToSnakeCase":           utilities.ToSnakeCase,
 		"TitleMany":             utilities.TitleMany,

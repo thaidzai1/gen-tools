@@ -4,7 +4,7 @@ package tpl
 const ModelBody = `
 type {{$.Model.Name}} struct {
 {{- range $index, $field := $.Fields}}{{- if not .SkipInDB}}
-	{{ToCamel $field.Name}} {{ConvertGoTypeToDbType $field.GoType}} {{GenFieldTag $field}}
+	{{ToCamelGolangCase $field.Name}} {{ConvertGoTypeToDbType $field.GoType}} {{GenFieldTag $field}}
 {{- end}}
 {{- end}}
 }
@@ -70,9 +70,9 @@ func ToPb{{$.Model.Name}}(data *{{$.Model.Name}}) *pb.{{$.Model.Name}} {
 	{{- else }}
 	{{- if eq .Ref ""}}
 		{{- if eq .GoType "jsonb"}}
-		{{ToTitleNorm .Name}}: {{ToProtoField . "data"}}.RawMessage,
+		{{ToCamel .Name}}: {{ToProtoField . "data"}}.RawMessage,
 		{{else}}
-		{{ToTitleNorm .Name}}: {{ToProtoField . "data"}},
+		{{ToCamel .Name}}: {{ToProtoField . "data"}},
 		{{- end}}
 	{{- end}}
 	{{- end}}

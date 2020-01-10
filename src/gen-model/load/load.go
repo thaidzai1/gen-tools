@@ -75,6 +75,7 @@ func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, 
 	} else if strings.Contains(modelFileName, ".yml") {
 		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
 	} else {
+		notify <- 1
 		return
 	}
 
@@ -87,6 +88,7 @@ func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, 
 	} else if strings.Contains(modelFileName, ".yml") {
 		storeFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
 	} else {
+		notify <- 1
 		return
 	}
 
