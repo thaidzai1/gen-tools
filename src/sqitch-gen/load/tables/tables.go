@@ -53,7 +53,6 @@ func LoadDrop(dropTablesPath string, droppedTablesDirPath string, dropTablesChan
 	}
 
 	willDropTables := compareDiffDropTables(dropTablesDef, currDroppedTableDef)
-	ll.Print("willDropTables: ", willDropTables)
 	dropTablesChan <- willDropTables
 }
 
@@ -79,7 +78,9 @@ func loadTablesDef(dirPath string) map[string]*models.TableDefination {
 		err = yaml.Unmarshal(byteTableFileContent, tableDef)
 		utilities.HandlePanic(err, "Decoding table config file content failed")
 
-		tableDefs[nameWithoutSuffix] = tableDef
+		if tableDef.IsTable {
+			tableDefs[nameWithoutSuffix] = tableDef
+		}
 	}
 
 	return tableDefs
@@ -91,7 +92,6 @@ func compareDiffTables(tableDefs, currTableDefs map[string]*models.TableDefinati
 	for tableKey, tableDef := range tableDefs {
 		ll.Print("tableKey: ", tableKey)
 		currTableDef := currTableDefs[tableKey]
-		ll.Print("==> curTable: ", currTableDef)
 
 		// New tables
 		if currTableDef == nil {

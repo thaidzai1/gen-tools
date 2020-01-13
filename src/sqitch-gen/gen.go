@@ -41,17 +41,18 @@ func main() {
 		os.Exit(0)
 	}
 
-	if *inputMigrationName == "" {
-		createNewSqitchPlan(startNewSqitchPlan())
-	} else {
-		planName = *inputMigrationName
-		createNewSqitchPlan(planName, *inputMigrationDescription)
-	}
-
 	migrationSchema := load.GetMigrateSchema(*flConfigFile)
 
-	middlewares.GenerateSQL(migrationSchema, generateDeploySQLScript, migrationSchema)
-	markGeneratedTriggerFiles(*flConfigFile)
+	if len(migrationSchema.Tables) != 0 || len(migrationSchema.AlterTables) != 0 || migrationSchema.Triggers != "" || len(migrationSchema.DropTables.Tables) != 0 {
+		if *inputMigrationName == "" {
+			createNewSqitchPlan(startNewSqitchPlan())
+		} else {
+			planName = *inputMigrationName
+			createNewSqitchPlan(planName, *inputMigrationDescription)
+		}
+		middlewares.GenerateSQL(migrationSchema, generateDeploySQLScript, migrationSchema)
+		markGeneratedTriggerFiles(*flConfigFile)
+	}
 }
 
 func getPlanIndex() string {

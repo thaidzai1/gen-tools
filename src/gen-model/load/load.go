@@ -44,7 +44,7 @@ func Defination(path string) {
 	numGeneratedFile := 0
 	for _, modelFile := range modelFiles {
 		fileName := modelFile.Name()
-		go loadAndGen(modelFileDir+"/"+fileName, genModelDestPath, fileName, storeFileDir+"/"+fileName, genStoreDesPath, fileName, notifyGenChan)
+		go loadAndGen(modelFileDir+"/"+fileName, genModelDestPath, fileName, storeFileDir+"/"+fileName, genStoreDesPath, notifyGenChan)
 	}
 
 	for {
@@ -68,12 +68,12 @@ func loadSchemaConfig(path string) *models.SchemaConfig {
 	return schemaDefination
 }
 
-func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, storePath string, genStoreDesPath string, storeFileName string, notify chan int) {
+func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, storePath string, genStoreDesPath string, notify chan int) {
 	var modelFileNameWithoutSuffix string
-	if strings.Contains(modelFileName, ".yaml") {
-		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
-	} else if strings.Contains(modelFileName, ".yml") {
-		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
+	if strings.Contains(modelFileName, ".model.yaml") {
+		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".model.yaml", "")
+	} else if strings.Contains(modelFileName, ".model.yml") {
+		modelFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".model.yml", "")
 	} else {
 		notify <- 1
 		return
@@ -82,18 +82,8 @@ func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, 
 	modelDef := loadModelDefination(modelPath, genModelDesPath, modelFileName)
 	gen.Model(modelDef, genModelDesPath, modelFileNameWithoutSuffix)
 
-	var storeFileNameWithoutSuffix string
-	if strings.Contains(modelFileName, ".yaml") {
-		storeFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yaml", "")
-	} else if strings.Contains(modelFileName, ".yml") {
-		storeFileNameWithoutSuffix = strings.ReplaceAll(modelFileName, ".yml", "")
-	} else {
-		notify <- 1
-		return
-	}
-
-	storeDef := loadModelDefination(modelPath, genStoreDesPath, storeFileName)
-	gen.Store(storeDef, genStoreDesPath, storeFileNameWithoutSuffix)
+	storeDef := loadModelDefination(modelPath, genStoreDesPath, modelFileName)
+	gen.Store(storeDef, genStoreDesPath, modelFileNameWithoutSuffix)
 
 	notify <- 1
 }
@@ -106,7 +96,7 @@ func loadModelDefination(path string, genDesPath string, modelFileName string) *
 
 	modelDefination := &models.ModelDefination{}
 	err = yaml.Unmarshal(byteModelFileContent, modelDefination)
-	utilities.HandlePanic(err, "Decoding model config file failed")
+	utilities.HandlePanic(err, "Decoding model config file failed "+path)
 
 	modelDefHasKeyFieldType := mappingTypeOfKeyField(mappingIsUserFilterField(modelDefination))
 

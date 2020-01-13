@@ -8,8 +8,9 @@ type TableDefination struct {
 	Indexs             []*Index        `yaml:"indexs"`
 	DropFields         []*DropFields   `yaml:"drop_fields"`
 	Histories          []*HistoryField `yaml:"histories"`
-	TableName          string
-	IsHistoryNoneField bool
+	IsTable            bool            `yaml:"is_table"`
+	TableName          string          `yaml:"-"`
+	IsHistoryNoneField bool            `yaml:"-"`
 }
 
 // GeneratedFunctions ...
