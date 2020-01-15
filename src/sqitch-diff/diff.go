@@ -26,7 +26,6 @@ func main() {
 	}
 
 	migrateSchema := load.GetMigrateSchema(*flConfigFile)
-	ll.Print(migrateSchema)
 
 	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap(migrateSchema)).Parse(tpldiff.Diff))
 	tpl.Execute(os.Stdout, migrateSchema)

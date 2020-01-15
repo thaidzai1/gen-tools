@@ -92,12 +92,10 @@ func compareDiffTables(tableDefs, currTableDefs map[string]*models.TableDefinati
 	tables := []*models.TableDefination{}
 	alterTables := []*models.AlterTable{}
 	for tableKey, tableDef := range tableDefs {
-		ll.Print("tableKey: ", tableKey)
 		currTableDef := currTableDefs[tableKey]
 
 		// New tables
 		if currTableDef == nil {
-			ll.Info("New tables")
 			histories, isHistoryNoneField := mappingHistoryFieldWithType(*tableDef)
 			tableDef.Histories = histories
 			tableDef.IsHistoryNoneField = isHistoryNoneField
@@ -110,7 +108,6 @@ func compareDiffTables(tableDefs, currTableDefs map[string]*models.TableDefinati
 		alterTable := &models.AlterTable{}
 		diffFields := compareDiffFields(tableDef.Fields, currTableDef.Fields)
 		if len(diffFields) > 0 {
-			ll.Info("==> Must create alter script")
 			alterTable.Name = tableDef.TableName
 			alterTable.Fields = diffFields
 			alterTables = append(alterTables, alterTable)
