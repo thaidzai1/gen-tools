@@ -14,3 +14,43 @@ func (model *ModelDefination) CountFilterQueryParams() int {
 func (model *ModelDefination) Inc(i int) int {
 	return i + 1
 }
+
+// GetMaxTableColLength ...
+func (migrate *MigrateSchema) GetMaxTableColLength() int {
+	maxTableLength := len("Tables")
+	for _, table := range migrate.Tables {
+		if len(table.TableName) > maxTableLength {
+			maxTableLength = len(table.TableName)
+		}
+	}
+
+	for _, table := range migrate.AlterTables {
+		if len(table.Name) > maxTableLength {
+			maxTableLength = len(table.Name)
+		}
+	}
+
+	return maxTableLength
+}
+
+// GetMaxFieldColLength ...
+func (migrate *MigrateSchema) GetMaxFieldColLength() int {
+	maxFieldLength := len("Fields")
+	for _, table := range migrate.Tables {
+		for _, field := range table.Fields {
+			if len(field.Name) > maxFieldLength {
+				maxFieldLength = len(field.Name)
+			}
+		}
+	}
+
+	for _, table := range migrate.AlterTables {
+		for _, field := range table.Fields {
+			if len(field.Name) > maxFieldLength {
+				maxFieldLength = len(field.Name)
+			}
+		}
+	}
+
+	return maxFieldLength
+}

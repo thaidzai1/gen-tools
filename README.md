@@ -64,10 +64,14 @@ version_name: 1 - Init project
 schemas:
   tables: 'path-to-table-dir'
   functions: 'path-to-funcions-dir'
-  generated_functions: 'path-to-functions-in-restricted-dir'
+  generated_functions: 'path-to-file-functions.yml-in-restricted-dir'
   curr_tables: 'path-to-tables-in-restricted-dir'
-  dropped_tables: 'path-to-dropped-tables-in-restricted-dir'
+  dropped_tables: 'path-to-file-dropped-tables.yaml-in-restricted-dir'
   dropped_tables_config: 'path-to-dropped-tables-dir'
+  models 'path-to-models-dir'
+  gen_models_destinations: 'path-to-gen-models-dir'
+  stores: 'path-to-stores-dir'
+  gen_stores_destinations: 'path-to-gen-stores-dir'
 ```
 
 <mark>Notice</mark>
@@ -87,6 +91,10 @@ schemas:
   curr_tables: schema/.restricted/tables
   dropped_tables: schema/.restricted/dropped-tables
   dropped_tables_config: schema/dropped-tables/dropped-tables.yml
+  models: schema/tables
+  gen_models_destinations: schema/models
+  stores: schema/tables
+  gen_stores_destinations: schema/stores
 ```
 
 ### Schema table configuration
@@ -95,18 +103,26 @@ schemas:
 version: 'version'
 version_name: 'name of version'
 fields:
+  # migration properties
   - name: 'field name'
     old_name:
     type: 'sql type'
     primary: 'bool'
     not_null: 'bool'
     unique: 'bool'
+    # model properties
+    go_type: 'go type'
+    skip_in_db: 'bool'
+    skip_in_proto: 'bool'
+    gorm: '"-;" or none'
+    ref: 'reference to other table'
 indexs:
   - name: 'indexs name'
     key: 'field that apply index'
     using: 'using type of index'
 histories:
-  - name: 'name of field required in history table'
+  - name: 'name of field required in history table' (or none_field)
+  - none_field: true
 
 drop_fields:
   - name: 'name of field need to be dropped'
@@ -116,7 +132,7 @@ drop_fields:
 1. When field has primary is true, field will auto be not null. 
 2. When you change name of field, you need rewrite old field's name in old_name section.
 3. System only drops field when it's declared in 'drop_fields' section.
-4. 'histories' section will auto create history table follow the main table name with all fields are declared in this section. For ex: mainTableName_history.
+4. 'histories' section will auto create history table follow the main table name with all fields are declared in this section or you can use "none_field" for not creating any field. For ex: mainTableName_history.
 
 # Test configuration
 
@@ -154,14 +170,7 @@ sqitch init test-project --uri https://github.com/sqitchers/sqitch-intro/  --eng
 ## Run generate command
 Run in command 
 ```
-$GOPATH/bin/sqitch.git -schema 'schema configuration yaml file path'
-```
-
-or 
-
-Run in command 
-```
-go run ./scripts/migrate-gen.go -schema 'schema configuration yaml file path'
+$GOPATH/bin/sqitch.git -schema 'path to schema configuration yaml file'
 ```
 
 Example: 
@@ -172,16 +181,16 @@ $GOPATH/bin/sqitch.git -schema /Users/schema/schema.yml
 ## Run deploy command
 Run in command 
 ```
-$GOPATH/bin/deploy-sqitch -schema 'schema configuration yaml file path' -config-file 'db config path'
+$GOPATH/bin/deploy-sqitch -schema 'path to schema configuration yaml file' -config-file 'db config path'
 ```
 
-or 
-
-Run in command 
-```
-go run ./scripts/deploys-sqitch/main.go -schema 'schema configuration yaml file path' -config-file 'db config path'
-```
 Note: If you don't use -config-file, system loads default configuration
+
+# Gen models and stores
+Run command
+```
+$GOPATH/bin/gen-model -schema 'path to schema configuration yaml file'
+```
 
 # Test Deployment
 
@@ -190,31 +199,3 @@ sqitch status db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/
 
 ## Log
 sqitch log db:postgres://gido_stag:mhh42mw0IYFQx7w3aENAh@35.220.166.103:5432/gido_stag
-
-## FLow of Migration
-
-```mermaid
-graph TD
-A[Edit YAML file] 
-B{Have new Funcs or Triggers ?}
-C1[Create & write .sql file in './scripts/gen/schema/fuctions']
-C2{Generate right?}
-D1{Ready to deploy migrate?}
-D2[Run ./scripts/gen-migrate.sh]
-E1[git push commit & run `./scripts/deploy.sh`]
-E2{Script SQL won't work by mistake?}
-F1[Generate again with old migrate plan again, same old plan index]
-F2[Add new migrate plan]
-A --> B
-B -- Yes --> C1
-B -- No --> D2
-C1 --> D2
-C2 -- Yes --> D1
-D2 --> C2
-C2 -- No --> E2
-D1 -- Yes --> E1
-E2 -- Yes --> F1
-E2 -- No, script works, wrong config --> F2
-F2 --> A
-F1 --> A
-```

@@ -68,19 +68,21 @@ func loadTablesDef(dirPath string) map[string]*models.TableDefination {
 			continue
 		}
 
-		lengthWithouSuffix := strings.Index(file.Name(), ".")
-		nameWithoutSuffix := file.Name()[:lengthWithouSuffix]
-		tableDef.TableName = nameWithoutSuffix
-
 		byteTableFileContent, err := ioutil.ReadFile(dirPath + "/" + file.Name())
 		utilities.HandlePanic(err, "Read table file config failed")
 
 		err = yaml.Unmarshal(byteTableFileContent, tableDef)
 		utilities.HandlePanic(err, "Decoding table config file content failed")
 
-		if tableDef.IsTable {
-			tableDefs[nameWithoutSuffix] = tableDef
+		if !tableDef.IsTable {
+			continue
 		}
+
+		lengthWithouSuffix := strings.Index(file.Name(), ".")
+		nameWithoutSuffix := file.Name()[:lengthWithouSuffix]
+		tableDef.TableName = nameWithoutSuffix
+
+		tableDefs[nameWithoutSuffix] = tableDef
 	}
 
 	return tableDefs

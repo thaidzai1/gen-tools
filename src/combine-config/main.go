@@ -17,6 +17,7 @@ var (
 	ll = l.New()
 )
 
+// Combination ...
 type Combination struct {
 	Fields  []Field
 	Model   models.Model
@@ -24,6 +25,7 @@ type Combination struct {
 	IsTable bool `yaml:"-"`
 }
 
+// Field ...
 type Field struct {
 	Name        string `yaml:"name"`
 	Type        string `yaml:"type"`

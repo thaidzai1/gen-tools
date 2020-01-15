@@ -1,6 +1,7 @@
 package utilities
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -162,4 +163,49 @@ func ToCamelGolangCase(str string) string {
 	}
 
 	return convertedStr
+}
+
+// DetectChanges ...
+func DetectChanges(field models.Field) []string {
+	var changes []string
+
+	if field.IsNewField {
+		changes = append(changes, fmt.Sprintf("new field"))
+	}
+	if field.OldName != "" {
+		changes = append(changes, fmt.Sprintf("name: %v to %v\n", field.OldName, field.Name))
+	}
+	if field.IsTypeChanged {
+		changes = append(changes, fmt.Sprintf("type: to %v\n", field.Type))
+	}
+	if field.IsPrimaryChanged {
+		changes = append(changes, fmt.Sprintf("primary: %v to %v\n", !field.Primary, field.Primary))
+	}
+	if field.IsNotNullChanged {
+		changes = append(changes, fmt.Sprintf("not_null: %v to %v\n", !field.NotNull, field.NotNull))
+	}
+	if field.IsUniqueChanged {
+		changes = append(changes, fmt.Sprintf("unique: %v to %v\n", !field.Unique, field.Unique))
+	}
+	if field.IsDefaultChanged {
+		changes = append(changes, fmt.Sprintf("default: to %v\n", field.Default))
+	}
+
+	return changes
+}
+
+// GenSymbols ...
+func GenSymbols(num int, symbol string) string {
+	var genedSym string
+
+	for i := 1; i <= num; i++ {
+		genedSym += symbol
+	}
+
+	return genedSym
+}
+
+// Sum ...
+func Sum(x, y int) int {
+	return x + y
 }
