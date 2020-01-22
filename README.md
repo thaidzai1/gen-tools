@@ -170,18 +170,24 @@ sqitch init test-project --uri https://github.com/sqitchers/sqitch-intro/  --eng
 ## Run generate command
 Run in command 
 ```
-$GOPATH/bin/sqitch.git -schema 'path to schema configuration yaml file'
+$GOPATH/bin/sqitch-gen -schema 'path to schema configuration yaml file'
 ```
 
 Example: 
 ```
-$GOPATH/bin/sqitch.git -schema /Users/schema/schema.yml
+$GOPATH/bin/sqitch-gen -schema /Users/schema/schema.yml
 ```
 
 ## Run deploy command
 Run in command 
 ```
-$GOPATH/bin/deploy-sqitch -schema 'path to schema configuration yaml file' -config-file 'db config path'
+$GOPATH/bin/sqitch-deploy -schema 'path to schema configuration yaml file' -config-file 'db config path'
+```
+
+## Get Diff
+Run in command
+```
+$GOPATH/bin/sqitch-diff -schema 'path to schema configuration yaml file'
 ```
 
 Note: If you don't use -config-file, system loads default configuration
