@@ -142,20 +142,14 @@ func nextIsLower(input string, i int) bool {
 
 // ToCamelGolangCase ...
 func ToCamelGolangCase(str string) string {
-	frontAcronym := map[string]string{"wh": "WH", "us": "US", "rid": "RID"}
-	backAcronym := map[string]string{"id": "ID", "vnd": "VND", "vat": "VAT"}
-
 	arrStr := strings.Split(str, "_")
 
 	var convertedStr string
 	for index, s := range arrStr {
 		word := s
-		if index == 0 && frontAcronym[s] != "" {
-			word = frontAcronym[s]
-		}
-		if index == len(arrStr)-1 && backAcronym[s] != "" {
-			word = backAcronym[s]
-
+		ll.Print("len word: ", len(word))
+		if (index == 0 || index == len(arrStr)-1) && len(word) == 2 {
+			word = strings.ToUpper(word)
 		}
 
 		word = ToCamel(word)
