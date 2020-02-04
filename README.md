@@ -116,7 +116,7 @@ fields:
     skip_in_proto: 'bool'
     gorm: '"-;" or none'
     ref: 'reference to other table'
-indexs:
+indexes:
   - name: 'indexs name'
     key: 'field that apply index'
     using: 'using type of index'
@@ -126,6 +126,17 @@ histories:
 
 drop_fields:
   - name: 'name of field need to be dropped'
+
+filters:
+  filters:
+  - name: q
+    fields:
+    - 'filter field'
+    - 'filter field'
+  - name: filters
+    fields:
+    - 'filter field'
+    - 'filter field'
 ```
 
 <mark>NOTICE</mark>

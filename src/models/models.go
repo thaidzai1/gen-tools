@@ -2,9 +2,10 @@ package models
 
 // ModelDefination ...
 type ModelDefination struct {
-	Model   Model               `yaml:"model"`
-	Fields  []*ModelField       `yaml:"fields"`
-	Filters []*FilterDefinition `yaml:"filters"`
+	Model   	Model               `yaml:"model"`
+	PackageName string 				`yaml:"package_name"`
+	Fields  	[]*ModelField       `yaml:"fields"`
+	Filters 	[]*FilterDefinition `yaml:"filters"`
 }
 
 // Model ...

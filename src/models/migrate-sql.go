@@ -5,7 +5,7 @@ type TableDefination struct {
 	Version            int             `validate:"required"`
 	VersionName        string          `yaml:"version_name"`
 	Fields             []*Field        `yaml:"fields"`
-	Indexs             []*Index        `yaml:"indexs"`
+	Indexs             []*Index        `yaml:"indexes"`
 	DropFields         []*DropFields   `yaml:"drop_fields"`
 	Histories          []*HistoryField `yaml:"histories"`
 	IsTable            bool            `yaml:"is_table"`
