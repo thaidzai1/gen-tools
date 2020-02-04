@@ -147,7 +147,6 @@ func ToCamelGolangCase(str string) string {
 	var convertedStr string
 	for index, s := range arrStr {
 		word := s
-		ll.Print("len word: ", len(word))
 		if (index == 0 || index == len(arrStr)-1) && len(word) == 2 {
 			word = strings.ToUpper(word)
 		}
