@@ -4,7 +4,7 @@ package models
 type ModelDefination struct {
 	Model       Model               `yaml:"model"`
 	PackageName string              `yaml:"package_name"`
-	GoPackage   string              `yaml:"go_package"`
+	GoRepo      string              `yaml:"go_repo"`
 	Fields      []*ModelField       `yaml:"fields"`
 	Filters     []*FilterDefinition `yaml:"filters"`
 }

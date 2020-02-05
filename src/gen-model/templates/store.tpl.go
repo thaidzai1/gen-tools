@@ -195,6 +195,6 @@ import (
 
 	"gido.vn/gic/libs/common.git"
 	"gido.vn/gic/libs/database.git/postgres"
-	{{$.GoPackage}}/internal/model"
+	{{$.GoRepo}}/internal/model"
 )
 `
