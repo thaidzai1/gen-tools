@@ -1,5 +1,7 @@
 package models
 
+import "strings"
+
 // CountFilterQueryParams ...
 func (model *ModelDefination) CountFilterQueryParams() int {
 	for _, fd := range model.Filters {
@@ -13,6 +15,13 @@ func (model *ModelDefination) CountFilterQueryParams() int {
 // Inc ...
 func (model *ModelDefination) Inc(i int) int {
 	return i + 1
+}
+
+// GetPackageName ...
+func (model *ModelDefination) GetPackageName() string {
+	arrPackageName := strings.Split(model.PackageName, ".")
+
+	return arrPackageName[0] + "pb"
 }
 
 // GetMaxTableColLength ...

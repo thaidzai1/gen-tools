@@ -193,9 +193,8 @@ import (
 	"strconv"
 	"strings"
 
-	"golang.org/x/net/context"
-	"google.golang.org/grpc/codes"
 	"gido.vn/gic/libs/common.git"
 	"gido.vn/gic/libs/database.git/postgres"
+	{{$.GoPackage}}/internal/model"
 )
 `

@@ -43,7 +43,7 @@ func Store(modelDef *models.ModelDefination, desPath string, storeFileName strin
 }
 
 func genStoreHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Parse(tpl.StoreHeader))
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap(modelDef)).Parse(tpl.StoreHeader))
 	tpl.Execute(buf, modelDef)
 }
 
@@ -53,7 +53,7 @@ func genStoreBody(buf *bytes.Buffer, modelDef *models.ModelDefination) {
 }
 
 func genModelHeader(buf *bytes.Buffer, modelDef *models.ModelDefination) {
-	tpl := template.Must(template.New("scripts").Parse(tpl.ModelHeader))
+	tpl := template.Must(template.New("scripts").Funcs(templateFuncMap(modelDef)).Parse(tpl.ModelHeader))
 	tpl.Execute(buf, modelDef)
 }
 
@@ -89,5 +89,6 @@ func templateFuncMap(modelDef *models.ModelDefination) template.FuncMap {
 		"ToProtoField":          utilities.ToProtoField,
 		"countQueryParams":      modelDef.CountFilterQueryParams,
 		"inc":                   modelDef.Inc,
+		"GetPackageName": 		 modelDef.GetPackageName,
 	}
 }

@@ -48,7 +48,7 @@ func defaultTestConfig() dbConfig {
 		Type:     "postgres",
 		Username: "gido_stag",
 		Password: "mhh42mw0IYFQx7w3aENAh",
-		Host:     "35.220.166.103",
+		Host:     "34.92.64.94",
 		Port:     "5432",
 		DBName:   "gido_test_sqitch_dev",
 	}
@@ -205,7 +205,6 @@ func removeMigrateHasFailedScript(migrationName string) {
 	sqitchPlanPath := projectPath + "/sqitch.plan"
 	fileContent, err := ioutil.ReadFile(sqitchPlanPath)
 	utilities.HandlePanic(err, "Read file sqitch.plan failed")
-	ll.Print("regexp: ", re)
 
 	removedContent := re.ReplaceAllString(string(fileContent), "")
 	ll.Print("removedContent: ", removedContent)
