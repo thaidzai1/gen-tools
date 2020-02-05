@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"flag"
 	"io/ioutil"
 	"os"
@@ -100,7 +101,7 @@ func main() {
 		cmdLog := exec.Command("echo", "Deploy failed...\n", "Status: "+outStr, "Error: ", errStr)
 		cmdLog.Stdout = os.Stdout
 		cmdLog.Run()
-		os.Exit(0)
+		ll.Panic("Error deploy failed", l.Error(errors.New(errStr)))
 	}
 }
 
