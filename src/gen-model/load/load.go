@@ -82,8 +82,10 @@ func loadAndGen(modelPath string, genModelDesPath string, modelFileName string, 
 	modelDef := loadModelDefination(modelPath, genModelDesPath, modelFileName)
 	gen.Model(modelDef, genModelDesPath, modelFileNameWithoutSuffix)
 
-	storeDef := loadModelDefination(modelPath, genStoreDesPath, modelFileName)
-	gen.Store(storeDef, genStoreDesPath, modelFileNameWithoutSuffix)
+	if modelDef.RequiredStore {
+		storeDef := loadModelDefination(modelPath, genStoreDesPath, modelFileName)
+		gen.Store(storeDef, genStoreDesPath, modelFileNameWithoutSuffix)
+	}
 
 	notify <- 1
 }

@@ -2,11 +2,12 @@ package models
 
 // ModelDefination ...
 type ModelDefination struct {
-	Model       Model               `yaml:"model"`
-	PackageName string              `yaml:"package_name"`
-	GoRepo      string              `yaml:"go_repo"`
-	Fields      []*ModelField       `yaml:"fields"`
-	Filters     []*FilterDefinition `yaml:"filters"`
+	Model         Model               `yaml:"model"`
+	PackageName   string              `yaml:"package_name"`
+	GoRepo        string              `yaml:"go_repo"`
+	RequiredStore bool                `yaml:"required_store"`
+	Fields        []*ModelField       `yaml:"fields"`
+	Filters       []*FilterDefinition `yaml:"filters"`
 }
 
 // Model ...
