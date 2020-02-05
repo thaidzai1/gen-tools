@@ -97,10 +97,9 @@ func ToProtoField(d *models.ModelField, varName string) string {
 		return "float64(" + varName + "." + upperCamelCaseName + ")"
 	case "time":
 		return "common.MillisP((*time.Time)(" + varName + "." + upperCamelCaseName + "))"
+	default:
+		return varName + "." + upperCamelCaseName
 	}
-
-	ll.Panic("Unexpected type", l.Object("field", d))
-	return ""
 }
 
 // ToTitleNorm ...
