@@ -147,7 +147,10 @@ func ToCamelGolangCase(str string) string {
 	for index, s := range arrStr {
 		word := s
 		if (index == 0 || index == len(arrStr)-1) && len(word) == 2 {
-			word = strings.ToUpper(word)
+			allowUpper := map[string]string{"id": "ID"}
+			if allowUpper[word] != "" {
+				word = strings.ToUpper(word)
+			}
 		}
 
 		word = ToCamel(word)
@@ -186,18 +189,3 @@ func DetectChanges(field models.Field) []string {
 	return changes
 }
 
-// GenSymbols ...
-func GenSymbols(num int, symbol string) string {
-	var genedSym string
-
-	for i := 1; i <= num; i++ {
-		genedSym += symbol
-	}
-
-	return genedSym
-}
-
-// Sum ...
-func Sum(x, y int) int {
-	return x + y
-}
