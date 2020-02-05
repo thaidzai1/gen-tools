@@ -102,6 +102,16 @@ schemas:
 ```
 version: 'version'
 version_name: 'name of version'
+
+package_name: 'name of package'
+go_repo: "name of imported package's repo"
+
+model:
+  name: 'model name'
+  key_field: 'model key field'
+required_store: 'boolen'
+
+
 fields:
   # migration properties
   - name: 'field name'
