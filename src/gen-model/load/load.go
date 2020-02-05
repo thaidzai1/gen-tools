@@ -96,7 +96,9 @@ func loadModelDefination(path string, genDesPath string, modelFileName string) *
 	byteModelFileContent, err := ioutil.ReadFile(path)
 	utilities.HandlePanic(err, "Read model config file failed")
 
-	modelDefination := &models.ModelDefination{}
+	modelDefination := &models.ModelDefination{
+		RequiredStore: true,
+	}
 	err = yaml.Unmarshal(byteModelFileContent, modelDefination)
 	utilities.HandlePanic(err, "Decoding model config file failed "+path)
 
