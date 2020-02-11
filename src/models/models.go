@@ -25,6 +25,7 @@ type ModelField struct {
 	GoType      string `yaml:"go_type"`
 	SkipInProto bool   `yaml:"skip_in_proto"`
 	SkipInDB    bool   `yaml:"skip_in_db"`
+	SkipInModel bool   `yaml:"skip_in_model"`
 	Gorm        string `yaml:"gorm"`
 	Ref         string `yaml:"ref"`
 	Filter      bool   `yaml:"filter"`
