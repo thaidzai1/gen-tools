@@ -72,9 +72,7 @@ func ToPb{{$.Model.Name}}(data *{{$.Model.Name}}) *{{GetPackageName}}.{{$.Model.
 		{{- if eq .GoType "jsonb"}}
 		{{ToCamel .Name}}: {{ToProtoField . "data"}}.RawMessage,
 		{{else}}
-		{{- if eq .SkipInModel}}
 		{{ToCamel .Name}}: {{ToProtoField . "data"}},
-		{{- end}}
 		{{- end}}
 	{{- end}}
 	{{- end}}
