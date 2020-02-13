@@ -91,7 +91,6 @@ import (
 {{- if eq .Model.KeyField "code"}}
 	"errors"
 {{- end}}
-	"time"
 	
 	{{GetPackageName}} "gido.vn/gic/grpc-protos/{{$.PackageName}}"
 	cm "gido.vn/gic/grpc-protos/common.git"
