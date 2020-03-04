@@ -34,6 +34,9 @@ Plan name is: 001-test => Create file in ./schema/functions/001-test.sql
 
 # USAGE
 
+## Examples structure & config
+https://github.com/thaidzai285/db-management-gen-tool-example
+
 ## Prepare schema folder
 
 ### Structure 
