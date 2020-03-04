@@ -15,14 +15,14 @@ export GOROOT=/usr/local/go
 
 Run in command 
 ```
-go get -u -v gido.vn/gic/databases/sqitch.git
+go get -u -v git@github.com:thaidzai285/gen-tools.git
 ```
 
 # Contribute 
 
 Run in command 
 ```
-git clone git@g.ghn.vn:gic/databases/sqitch.git
+git clone git@github.com:thaidzai285/gen-tools.git
 ```
 
 # Generate Migrate plan
@@ -105,6 +105,8 @@ version_name: 'name of version'
 
 package_name: 'name of package'
 go_repo: "name of imported package's repo"
+
+is_table: boolean
 
 model:
   name: 'model name'
